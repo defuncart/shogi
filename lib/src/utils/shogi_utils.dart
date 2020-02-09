@@ -1,5 +1,6 @@
 import '../configs/board_config.dart';
 import '../configs/game_boards.dart';
+import '../models/position.dart';
 import '../enums/player_type.dart';
 import '../models/board_piece.dart';
 import '../utils/package_utils.dart';
@@ -21,12 +22,21 @@ class ShogiUtils {
       components = strPiece.split('-');
       assert(components.length == 2);
 
-      // convert components into piece type and (row, column) - note adjusting value to be [0, 8]
+      // convert components into piece type and position
       final pieceType = PackageUtils.pieceStringToType(components[0]);
-      final row = int.parse(components[1][0]) - 1;
-      final column = int.parse(components[1][1]) - 1;
+      final column = int.parse(components[1][0]);
+      final row = int.parse(components[1][1]);
 
-      boardPieces.add(BoardPiece(row: row, column: column, pieceType: pieceType, player: player));
+      boardPieces.add(
+        BoardPiece(
+          position: Position(
+            column: column,
+            row: row,
+          ),
+          pieceType: pieceType,
+          player: player,
+        ),
+      );
     }
     return boardPieces;
   }
@@ -37,11 +47,20 @@ class ShogiUtils {
   static List<BoardPiece> flipBoardPieces(List<BoardPiece> originalPieces) {
     final newPieces = List<BoardPiece>();
     for (final piece in originalPieces) {
-      final newRow = (piece.row - (BoardConfig.numberRows - 1)).abs();
-      final newColumn = (piece.column - (BoardConfig.numberColumns - 1)).abs();
+      final newRow = (piece.position.row - BoardConfig.numberRows).abs() + 1;
+      final newColumn = (piece.position.column - BoardConfig.numberColumns).abs() + 1;
       final newPlayer = piece.player == PlayerType.gote ? PlayerType.sente : PlayerType.gote;
 
-      newPieces.add(BoardPiece(row: newRow, column: newColumn, pieceType: piece.pieceType, player: newPlayer));
+      newPieces.add(
+        BoardPiece(
+          position: Position(
+            row: newRow,
+            column: newColumn,
+          ),
+          pieceType: piece.pieceType,
+          player: newPlayer,
+        ),
+      );
     }
     return newPieces;
   }

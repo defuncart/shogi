@@ -1,17 +1,15 @@
-import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 
 import '../enums/piece_type.dart';
 import '../enums/player_type.dart';
+import '../models/position.dart';
 import '../utils/package_utils.dart';
+import '../utils/dart_utils.dart';
 
 /// A model representing a shogi board piece
 class BoardPiece {
-  /// The row index
-  final int row;
-
-  /// The column index
-  final int column;
+  /// The piece's board position
+  final Position position;
 
   /// The board piece type
   final PieceType pieceType;
@@ -20,8 +18,7 @@ class BoardPiece {
   final PlayerType player;
 
   const BoardPiece({
-    @required this.row,
-    @required this.column,
+    @required this.position,
     @required this.pieceType,
     this.player = PlayerType.sente,
   });
@@ -44,5 +41,5 @@ class BoardPiece {
 
   /// Returns a string representation of the model
   @override
-  String toString() => '($column, $row): ${describeEnum(player)} ${describeEnum(pieceType)}';
+  String toString() => '$position ${DartUtils.describeEnum(player)} ${DartUtils.describeEnum(pieceType)}';
 }
