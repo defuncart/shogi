@@ -9,6 +9,8 @@ import '../utils/dart_utils.dart';
 /// A model representing a shogi board piece
 class BoardPiece {
   /// The piece's board position
+  ///
+  /// `null` implies that the piece is in hand
   final Position position;
 
   /// The board piece type
@@ -21,7 +23,19 @@ class BoardPiece {
     @required this.position,
     @required this.pieceType,
     this.player = PlayerType.sente,
-  });
+  })  : assert(
+          position != null
+              ? true
+              : (pieceType == PieceType.pawn ||
+                  pieceType == PieceType.lance ||
+                  pieceType == PieceType.knight ||
+                  pieceType == PieceType.silver ||
+                  pieceType == PieceType.gold ||
+                  pieceType == PieceType.bishop ||
+                  pieceType == PieceType.rook),
+        ), // a promoted piece should not be possible if piece is in hand
+        assert(pieceType != null),
+        assert(player != null);
 
   /// Whether the piece belongs to sente
   bool get isSente => player == PlayerType.sente;
@@ -41,5 +55,7 @@ class BoardPiece {
 
   /// Returns a string representation of the model
   @override
-  String toString() => '$position ${DartUtils.describeEnum(player)} ${DartUtils.describeEnum(pieceType)}';
+  String toString() =>
+      (position == null ? 'InHand' : position.toString()) +
+      ' ${DartUtils.describeEnum(player)} ${DartUtils.describeEnum(pieceType)}';
 }
