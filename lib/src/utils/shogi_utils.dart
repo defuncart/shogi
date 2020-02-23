@@ -34,10 +34,10 @@ class ShogiUtils {
   static List<BoardPiece> stringArrayToBoardPiecesArray(List<String> strPieces, {player = PlayerType.sente}) {
     final boardPieces = List<BoardPiece>();
     for (var strPiece in strPieces) {
-      // split string S:K-59 into [S, K-59], if applicable
+      // split string ☗:K-59 into [☗, K-59], if applicable
       var components = strPiece.split(':');
       if (components.length > 1) {
-        player = components[0] == 'S' ? PlayerType.sente : PlayerType.gote;
+        player = components[0] == BoardConfig.gote ? PlayerType.gote : PlayerType.sente;
         strPiece = components[1];
       }
 
