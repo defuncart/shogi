@@ -19,7 +19,9 @@ Note that this package requires dart >= 2.3.0.
 import 'package:shogi/shogi.dart';
 
 void main() {
-  final boardPieces = ShogiUtils.initialBoard;
-  boardPieces.forEach((piece) => print(piece));
+  final gameBoard = ShogiUtils.initialBoard;
+  print(gameBoard.boardPieces);
+  print(gameBoard.sentePiecesInHand);
+  print(gameBoard.gotePiecesInHand);
 }
 ```
