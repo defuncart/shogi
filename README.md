@@ -54,7 +54,7 @@ If a position isn't given, then the piece is inferred as being in hand for that 
 
 Piece movement is denoted by `{Player}{PieceType}{CurrentPosition}-{TargetPosition}`, for instance `1: ☗P77-76`.
 
-Thus, given an initial board for Sente, a Yagura castle could be build using the following moves:
+Thus, given an initial board for Sente, a *Yagura castle* could be build using the following moves:
 
 ```
 1: ☗P77-76
