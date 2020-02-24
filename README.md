@@ -25,14 +25,16 @@ Note that this package requires dart >= 2.3.0.
 import 'package:shogi/shogi.dart';
 
 void main() {
-  final boardPieces = ShogiUtils.initialBoard;
-  boardPieces.forEach((piece) => print(piece));
+  final gameBoard = ShogiUtils.initialBoard;
+  print(gameBoard.boardPieces);
+  print(gameBoard.sentePiecesInHand);
+  print(gameBoard.gotePiecesInHand);
 }
 ```
 
 ## Importing a Game Board
 
-As the game board is presently static, a board position can be notated by `{PieceType}-{Row}{Column}`, i.e. `K-59`. Note that 11 is the top left board cell as per japanese notation.
+A board position is notated using `{PieceType}-{Row}{Column}`, i.e. `K-59`. Note that 11 is the top right board cell as per japanese notation.
 
 ```dart
 final yagura = ['L-99', 'N-89', 'K-88', 'G-78', 'P-97', 'P-87', 'S-77', 'G-67', 'P-76', 'P-66', 'P-56'];
@@ -40,17 +42,19 @@ final yagura = ['L-99', 'N-89', 'K-88', 'G-78', 'P-97', 'P-87', 'S-77', 'G-67', 
 final boardPieces = ShogiUtils.stringArrayToBoardPiecesArray(yagura);
 ```
 
-If Sente or Gote aren't specified, then Sente is chosen by default. To import pieces for both players, use the notation `{Player}:{PieceType}-{Row}{Column}`.
+If Sente or Gote aren't specified, then Sente is chosen by default. To import pieces for both players, use the notation `{Player}:{PieceType}-{Row}{Column}`, where `☗` and `☖` denote Sente and Gote respectively.
 
 ```dart
-final tsume1 = ['G:K-51', 'G:S-61', 'G:S-41', 'S:+P-53', 'S:+B-25'];
+final tsume1 = ['☖:K-51', '☖:S-61', '☖:S-41', '☗:+P-53', '☗:+B-25'];
 ```
+
+If a position isn't given, then the piece is inferred as being in hand for that player: `{PieceType}` for sente or `{Player}:{PieceType}` to choose specific player.
 
 ## Piece Movement
 
-Piece movement is denoted by `{Player}{PieceType}{CurrentPosition}-{TargetPosition}`, for instance `1: ☗P77-76` where `☗` and `☖` denote Sente and Gote respectively. 
+Piece movement is denoted by `{Player}{PieceType}{CurrentPosition}-{TargetPosition}`, for instance `1: ☗P77-76`.
 
-Thus, given an initial board for Sente, a Yagura castle could be build using the following moves:
+Thus, given an initial board for Sente, a *Yagura castle* could be build using the following moves:
 
 ```
 1: ☗P77-76

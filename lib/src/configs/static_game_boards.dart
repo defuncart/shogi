@@ -1,5 +1,5 @@
-/// A config file of various game boards
-class GameBoards {
+/// A config file of various static game boards
+class StaticGameBoards {
   /// The initial board pieces for sente.
   static const initialBoardSente = [
     'L-99',
@@ -114,10 +114,10 @@ class GameBoards {
   ];
 
   static const tsume1 = [
-    'G:K-51',
-    'G:S-61',
-    'G:S-41',
-    'S:+P-53',
-    'S:+B-25',
+    '☖:K-51',
+    '☖:S-61',
+    '☖:S-41',
+    '☗:+P-53',
+    '☗:+B-25',
   ];
 }
