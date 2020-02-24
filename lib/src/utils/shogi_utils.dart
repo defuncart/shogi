@@ -1,5 +1,5 @@
 import '../configs/board_config.dart';
-import '../configs/game_boards.dart';
+import '../configs/static_game_boards.dart';
 import '../models/position.dart';
 import '../models/game_board.dart';
 import '../enums/player_type.dart';
@@ -100,7 +100,7 @@ class ShogiUtils {
 
   /// A backing variable used for the overall initial board pieces
   static List<BoardPiece> _initialBoardPieces = [
-    ...(_initialBoardSente ??= stringArrayToBoardPiecesArray(GameBoards.initialBoardSente)),
+    ...(_initialBoardSente ??= stringArrayToBoardPiecesArray(StaticGameBoards.initialBoardSente)),
     ...(_initialBoardGote ??= flipBoardPieces(_initialBoardSente))
   ];
 

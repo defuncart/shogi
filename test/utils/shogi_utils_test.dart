@@ -369,7 +369,7 @@ main() {
   }
 
   test('flipBoardPieces', () {
-    final sentePieces = ShogiUtils.stringArrayToBoardPiecesArray(GameBoards.initialBoardSente);
+    final sentePieces = ShogiUtils.stringArrayToBoardPiecesArray(StaticGameBoards.initialBoardSente);
     assertInitalBoardSente(sentePieces);
 
     final gotePieces = ShogiUtils.flipBoardPieces(sentePieces);

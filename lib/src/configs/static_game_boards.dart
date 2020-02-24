@@ -1,5 +1,5 @@
-/// A config file of various game boards
-class GameBoards {
+/// A config file of various static game boards
+class StaticGameBoards {
   /// The initial board pieces for sente.
   static const initialBoardSente = [
     'L-99',
