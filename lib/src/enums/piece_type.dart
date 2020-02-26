@@ -28,6 +28,16 @@ extension PieceTypeExtensions on PieceType {
     PieceType.rook,
   ];
 
+  /// A list of promoted piece types
+  static const promotedPieces = const [
+    PieceType.pawnPromoted,
+    PieceType.lancePromoted,
+    PieceType.knightPromoted,
+    PieceType.silverPromoted,
+    PieceType.bishopPromoted,
+    PieceType.rookPromoted,
+  ];
+
   /// A map of piece type and their promoted equivalents
   static const convertPieceTypeToPromotedPieceType = const {
     PieceType.pawn: PieceType.pawnPromoted,
@@ -38,9 +48,17 @@ extension PieceTypeExtensions on PieceType {
     PieceType.rook: PieceType.rookPromoted,
   };
 
+  static final convertPromotedPieceTypeToPieceType = convertPieceTypeToPromotedPieceType.map((k, v) => MapEntry(v, k));
+
   /// Whether the piece type can be promoted
   bool get canBePromoted => piecesWhichCanBePromoted.contains(this);
 
   /// Returns a promoted equivalent for the piece type. Returns `null` if the piece type cannot be promoted.
-  PieceType get promoted => this.canBePromoted ? convertPieceTypeToPromotedPieceType[this] : null;
+  PieceType promote() => this.canBePromoted ? convertPieceTypeToPromotedPieceType[this] : null;
+
+  /// Whether the piece type is promoted
+  bool get isPromoted => promotedPieces.contains(this);
+
+  /// Returns a normalized equivalent for the piece type (i.e. PieceType.pawnPromoted => PieceType.pawn).
+  PieceType normalize() => this.isPromoted ? convertPromotedPieceTypeToPieceType[this] : this;
 }
