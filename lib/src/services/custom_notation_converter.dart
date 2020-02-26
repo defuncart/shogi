@@ -86,7 +86,7 @@ class CustomNotationConverter implements INotationConverter {
   /// 4. movement type, i.e. -, * or x
   /// 5. to, assumed to be two digits i.e. 11
   /// 6. promotion, can only match to + (optional)
-  static final _regExp = RegExp(r'([☗|☖])(\w)(\d{2})?([-|\*|x])(\d{2})(\+)?');
+  static final _regExp = RegExp(r'([☗☖])(P|L|N|S|G|K|B|R|\+P|\+L|\+N|\+S|\+B|\+R)(\d{2})?([-\*x])(\d{2})(\+)?');
 
   /// The number of groups captured by `_regExp`
   static const _numberCaptureGroups = 6;
