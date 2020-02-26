@@ -49,27 +49,29 @@ class CustomNotationConverter implements INotationConverter {
       for (final moveAsText in movesAsText) {
         // convert the move into a list of components
         final components = _convertMoveAsTextIntoComponents(moveAsText);
+        if (components != null) {
+          // parse each component
+          final player =
+              components[_CaptureGroup.player.index] == BoardConfig.gote ? PlayerType.gote : PlayerType.sente;
+          final piece = PackageUtils.pieceStringToType(components[_CaptureGroup.piece.index]);
+          final from = Position.fromString(components[_CaptureGroup.from.index]);
+          final isCapture = components[_CaptureGroup.movement.index] == _captureSymbol;
+          final isDrop = components[_CaptureGroup.movement.index] == _dropSymbol;
+          final to = Position.fromString(components[_CaptureGroup.to.index]);
+          final isPromotion = components[_CaptureGroup.promotion.index] == _promotionSymbol;
 
-        // parse each component
-        final player = components[_CaptureGroup.player.index] == BoardConfig.gote ? PlayerType.gote : PlayerType.sente;
-        final piece = PackageUtils.pieceStringToType(components[_CaptureGroup.piece.index]);
-        final from = Position.fromString(components[_CaptureGroup.from.index]);
-        final isCapture = components[_CaptureGroup.movement.index] == _captureSymbol;
-        final isDrop = components[_CaptureGroup.movement.index] == _dropSymbol;
-        final to = Position.fromString(components[_CaptureGroup.to.index]);
-        final isPromotion = components[_CaptureGroup.promotion.index] == _promotionSymbol;
-
-        moves.add(
-          Move(
-            player: player,
-            piece: piece,
-            from: from,
-            to: to,
-            isCapture: isCapture,
-            isDrop: isDrop,
-            isPromotion: isPromotion,
-          ),
-        );
+          moves.add(
+            Move(
+              player: player,
+              piece: piece,
+              from: from,
+              to: to,
+              isCapture: isCapture,
+              isDrop: isDrop,
+              isPromotion: isPromotion,
+            ),
+          );
+        }
       }
 
       return moves;
@@ -97,6 +99,6 @@ class CustomNotationConverter implements INotationConverter {
   /// Converts a move `☗S34x33+` into `[☗, S, 34, x,33, +]`
   List<String> _convertMoveAsTextIntoComponents(String moveAsText) {
     final matches = _regExp.allMatches(moveAsText);
-    return matches?.first?.groups(_groupIndeces);
+    return matches.length == 1 ? matches?.first?.groups(_groupIndeces) : null;
   }
 }
