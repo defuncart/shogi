@@ -1,20 +1,61 @@
-import '../models/move.dart';
+import '../enums/player_type.dart';
+import '../enums/piece_type.dart';
 import '../models/board_piece.dart';
+import '../models/game_board.dart';
+import '../models/move.dart';
 
 /// A simple shogi game engine
 ///
 /// Presently only moving pieces is supported
 class GameEngine {
-  /// Makes a given move for a list of given board pieces
-  static List<BoardPiece> makeMove(List<BoardPiece> pieces, Move move) {
-    final newBoard = List<BoardPiece>.from(pieces);
+  /// Makes a given move for a given game board
+  static GameBoard makeMove(GameBoard gameBoard, Move move) {
+    final boardPieces = List<BoardPiece>.from(gameBoard.boardPieces);
+    final sentePiecesInHand = List<BoardPiece>.from(gameBoard.sentePiecesInHand);
+    final gotePiecesInHand = List<BoardPiece>.from(gameBoard.gotePiecesInHand);
 
-    final oldPiece = pieces.firstWhere((piece) => piece.position == move.from);
-    newBoard.remove(oldPiece);
+    if (move.isDrop) {
+      final list = move.player == PlayerType.sente ? sentePiecesInHand : gotePiecesInHand;
+      final droppedPiece = list.firstWhere((piece) => piece.pieceType == move.piece);
+      list.remove(droppedPiece);
 
-    final newPiece = BoardPiece(player: move.player, pieceType: move.piece, position: move.to);
-    newBoard.add(newPiece);
+      boardPieces.add(
+        BoardPiece(
+          player: move.player,
+          pieceType: move.piece,
+          position: move.to,
+        ),
+      );
+    } else {
+      if (move.isCapture) {
+        final capturedPiece = boardPieces.firstWhere((piece) => piece.position == move.to);
+        boardPieces.remove(capturedPiece);
 
-    return newBoard;
+        final list = move.player == PlayerType.sente ? sentePiecesInHand : gotePiecesInHand;
+        list.add(
+          BoardPiece(
+            player: move.player,
+            pieceType: capturedPiece.pieceType.normalize(),
+            position: null,
+          ),
+        );
+      }
+
+      final oldPiece = boardPieces.firstWhere((piece) => piece.position == move.from);
+      boardPieces.remove(oldPiece);
+    }
+
+    final newPiece = BoardPiece(
+      player: move.player,
+      pieceType: move.isPromotion ? move.piece.promote() : move.piece,
+      position: move.to,
+    );
+    boardPieces.add(newPiece);
+
+    return GameBoard(
+      boardPieces: boardPieces,
+      sentePiecesInHand: sentePiecesInHand,
+      gotePiecesInHand: gotePiecesInHand,
+    );
   }
 }
