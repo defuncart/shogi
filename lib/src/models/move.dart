@@ -48,6 +48,19 @@ class Move {
         assert(isDrop ? from == null : from != null); //if isDrop, from should not be null otherwise should be null
 
   @override
+  bool operator ==(dynamic other) =>
+      other is Move &&
+      player == other.player &&
+      from == other.from &&
+      to == other.to &&
+      isPromotion == other.isPromotion &&
+      isCapture == other.isCapture &&
+      isDrop == other.isDrop;
+
+  @override
+  int get hashCode => player.hashCode ^ from.hashCode ^ to.hashCode;
+
+  @override
   String toString() =>
       '${DartUtils.describeEnum(player)} with ${DartUtils.describeEnum(piece)} from $from to $to. isPromotion: $isPromotion, isCapture: $isCapture, isDrop: $isDrop.';
 }

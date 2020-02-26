@@ -53,6 +53,13 @@ class BoardPiece {
       pieceType == PieceType.lancePromoted ||
       pieceType == PieceType.pawnPromoted;
 
+  @override
+  bool operator ==(dynamic other) =>
+      other is BoardPiece && position == other.position && player == other.player && pieceType == other.pieceType;
+
+  @override
+  int get hashCode => player.hashCode ^ pieceType.hashCode ^ position.hashCode;
+
   /// Returns a string representation of the model
   @override
   String toString() =>
