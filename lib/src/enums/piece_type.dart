@@ -48,6 +48,7 @@ extension PieceTypeExtensions on PieceType {
     PieceType.rook: PieceType.rookPromoted,
   };
 
+  /// A map of promoted piece types and their standard equivalents
   static final convertPromotedPieceTypeToPieceType = convertPieceTypeToPromotedPieceType.map((k, v) => MapEntry(v, k));
 
   /// Whether the piece type can be promoted

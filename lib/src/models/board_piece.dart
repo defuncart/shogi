@@ -38,20 +38,14 @@ class BoardPiece {
         assert(player != null);
 
   /// Whether the piece belongs to sente
-  bool get isSente => player == PlayerType.sente;
+  bool get isSente => player.isSente;
 
   /// The pieces display string
   String displayString({bool usesJapanese = true}) =>
       PackageUtils.pieceTypeToString(pieceType, usesJapanese: usesJapanese, isSente: isSente);
 
   /// Whether the piece is promoted
-  bool get isPromoted =>
-      pieceType == PieceType.rookPromoted ||
-      pieceType == PieceType.bishopPromoted ||
-      pieceType == PieceType.silverPromoted ||
-      pieceType == PieceType.knightPromoted ||
-      pieceType == PieceType.lancePromoted ||
-      pieceType == PieceType.pawnPromoted;
+  bool get isPromoted => pieceType.isPromoted;
 
   @override
   bool operator ==(dynamic other) =>

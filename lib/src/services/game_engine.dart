@@ -15,7 +15,7 @@ class GameEngine {
     final gotePiecesInHand = List<BoardPiece>.from(gameBoard.gotePiecesInHand);
 
     if (move.isDrop) {
-      final list = move.player == PlayerType.sente ? sentePiecesInHand : gotePiecesInHand;
+      final list = move.player.isSente ? sentePiecesInHand : gotePiecesInHand;
       final droppedPiece = list.firstWhere((piece) => piece.pieceType == move.piece);
       list.remove(droppedPiece);
 
@@ -31,7 +31,7 @@ class GameEngine {
         final capturedPiece = boardPieces.firstWhere((piece) => piece.position == move.to);
         boardPieces.remove(capturedPiece);
 
-        final list = move.player == PlayerType.sente ? sentePiecesInHand : gotePiecesInHand;
+        final list = move.player.isSente ? sentePiecesInHand : gotePiecesInHand;
         list.add(
           BoardPiece(
             player: move.player,
