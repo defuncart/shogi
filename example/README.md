@@ -11,7 +11,7 @@ dependencies:
   shogi:
 ```
 
-Note that this package requires dart >= 2.3.0.
+Note that this package requires dart >= 2.6.0.
 
 ## Example
 
