@@ -16,11 +16,11 @@ class ShogiUtils {
     final boardPieces = stringArrayToBoardPiecesArray(strPieces);
 
     final List<BoardPiece> sentePiecesInHand =
-        boardPieces.where((piece) => piece.position == null && piece.player == PlayerType.sente).toList();
+        boardPieces.where((piece) => piece.position == null && piece.player.isSente).toList();
     _removeElementsFromList(boardPieces, sentePiecesInHand);
 
     final List<BoardPiece> gotePiecesInHand =
-        boardPieces.where((piece) => piece.position == null && piece.player == PlayerType.gote).toList();
+        boardPieces.where((piece) => piece.position == null && piece.player.isGote).toList();
     _removeElementsFromList(boardPieces, gotePiecesInHand);
 
     return GameBoard(
@@ -76,7 +76,6 @@ class ShogiUtils {
     for (final piece in originalPieces) {
       final newRow = (piece.position.row - BoardConfig.numberRows).abs() + 1;
       final newColumn = (piece.position.column - BoardConfig.numberColumns).abs() + 1;
-      final newPlayer = piece.player == PlayerType.gote ? PlayerType.sente : PlayerType.gote;
 
       newPieces.add(
         BoardPiece(
@@ -85,7 +84,7 @@ class ShogiUtils {
             column: newColumn,
           ),
           pieceType: piece.pieceType,
-          player: newPlayer,
+          player: piece.player.flip(),
         ),
       );
     }

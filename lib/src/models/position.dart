@@ -20,9 +20,22 @@ class Position {
   })  : assert(column >= 1 && column <= BoardConfig.numberColumns),
         assert(row >= 1 && row <= BoardConfig.numberRows);
 
+  /// Constructs a `Position` from a string `11`
+  ///
+  /// Note that this can return `null`!!
+  factory Position.fromString(String position) {
+    if (position != null && position.length == 2) {
+      return Position(
+        column: int.tryParse(position[0]),
+        row: int.tryParse(position[1]),
+      );
+    }
+
+    return null;
+  }
+
   @override
-  bool operator ==(dynamic otherPosition) =>
-      otherPosition is Position && row == otherPosition.row && column == otherPosition.column;
+  bool operator ==(dynamic other) => other is Position && row == other.row && column == other.column;
 
   @override
   int get hashCode => row.hashCode ^ column.hashCode;

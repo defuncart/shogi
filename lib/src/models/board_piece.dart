@@ -38,20 +38,21 @@ class BoardPiece {
         assert(player != null);
 
   /// Whether the piece belongs to sente
-  bool get isSente => player == PlayerType.sente;
+  bool get isSente => player.isSente;
 
   /// The pieces display string
   String displayString({bool usesJapanese = true}) =>
       PackageUtils.pieceTypeToString(pieceType, usesJapanese: usesJapanese, isSente: isSente);
 
   /// Whether the piece is promoted
-  bool get isPromoted =>
-      pieceType == PieceType.rookPromoted ||
-      pieceType == PieceType.bishopPromoted ||
-      pieceType == PieceType.silverPromoted ||
-      pieceType == PieceType.knightPromoted ||
-      pieceType == PieceType.lancePromoted ||
-      pieceType == PieceType.pawnPromoted;
+  bool get isPromoted => pieceType.isPromoted;
+
+  @override
+  bool operator ==(dynamic other) =>
+      other is BoardPiece && position == other.position && player == other.player && pieceType == other.pieceType;
+
+  @override
+  int get hashCode => player.hashCode ^ pieceType.hashCode ^ position.hashCode;
 
   /// Returns a string representation of the model
   @override

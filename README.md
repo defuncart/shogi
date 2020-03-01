@@ -17,7 +17,7 @@ dependencies:
   shogi:
 ```
 
-Note that this package requires dart >= 2.3.0.
+Note that this package requires dart >= 2.6.0.
 
 ### Example
 
@@ -52,7 +52,17 @@ If a position isn't given, then the piece is inferred as being in hand for that 
 
 ## Piece Movement
 
-Piece movement is denoted by `{Player}{PieceType}{CurrentPosition}-{TargetPosition}`, for instance `1: ☗P77-76`.
+Piece movement is denoted by `{Player}{PieceType}{CurrentPosition}{Movement}{TargetPosition}{Promotion}`. 
+
+`{Promotion}` is optional, while if `{Player}` isn't specified, Sente is chosen by default. `{CurrentPosition}` is needed for all movement types, except drops. Movement is denoted by `-`, `x` and `*`, that is, simple movement, capture and drop respectfully. Some examples:
+ 
+| Type            | Example  | Explanation                                                                   |
+|-----------------|----------|-------------------------------------------------------------------------------|
+| Simple movement | ☗P77-76  | Sente's pawn moves from 77 to 76.                                             |
+| Capture         | ☗P75x74  | Sente's pawn moves from 77 to 74 and captures the piece at 74.                |
+| Drop            | ☗S*34    | Sente's drops a silver from in hand onto 34.                                  |
+| Combined        | ☗S34x33+ | Sente's silver moves from 34 to 33, captures the piece at 33 and is promoted. |
+
 
 Thus, given an initial board for Sente, a *Yagura castle* could be build using the following moves:
 
