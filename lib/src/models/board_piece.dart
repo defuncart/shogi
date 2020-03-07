@@ -60,3 +60,12 @@ class BoardPiece {
       (position == null ? 'InHand' : position.toString()) +
       ' ${DartUtils.describeEnum(player)} ${DartUtils.describeEnum(pieceType)}';
 }
+
+/// A class of extension methods for List<BoardPiece>
+extension ListBoardPieceExtensions on List<BoardPiece> {
+  /// Returns the piece at position (column, row). Returns `null` if no piece exists.
+  BoardPiece pieceAtPosition({@required int column, @required int row}) => this.firstWhere(
+        (piece) => piece.position.column == column && piece.position.row == row,
+        orElse: () => null,
+      );
+}
