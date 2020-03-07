@@ -4,6 +4,7 @@ import '../models/position.dart';
 import '../models/game_board.dart';
 import '../enums/player_type.dart';
 import '../models/board_piece.dart';
+import '../services/sfen_converter.dart';
 import '../utils/package_utils.dart';
 
 /// A class of utils methods used when constructing a shogi board
@@ -11,7 +12,10 @@ class ShogiUtils {
   // TODO: consider moving this to dart_extensions repo
   static void _removeElementsFromList<T>(List<T> list, List<T> elements) => elements.forEach((e) => list.remove(e));
 
-  /// Converts an array of strings [K-59, ...] into a game board
+  /// Converts a SFEN ascii string into a `GameBoard`
+  static GameBoard sfenStringToGameBoard(String string) => SFENConverter.sfenToGameBoard(string);
+
+  /// Converts an array of strings [K-59, ...] into a `GameBoard`
   static GameBoard stringArrayToGameBoard(List<String> strPieces, {player = PlayerType.sente}) {
     final boardPieces = stringArrayToBoardPiecesArray(strPieces);
 

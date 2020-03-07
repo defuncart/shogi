@@ -55,8 +55,6 @@ class SFENConverter {
             ),
           );
 
-          print('$matchText => ${boardPieces.last}');
-
           column--;
         }
       }
