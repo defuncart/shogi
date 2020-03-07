@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
 
-import '../enums/player_type.dart';
 import 'board_piece.dart';
 
 /// A model representing a shogi game board
