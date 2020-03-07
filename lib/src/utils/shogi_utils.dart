@@ -9,30 +9,13 @@ import '../utils/package_utils.dart';
 
 /// A class of utils methods used when constructing a shogi board
 class ShogiUtils {
-  // TODO: consider moving this to dart_extensions repo
-  static void _removeElementsFromList<T>(List<T> list, List<T> elements) => elements.forEach((e) => list.remove(e));
-
   /// Converts a SFEN ascii string into a `GameBoard`
   static GameBoard sfenStringToGameBoard(String string) => SFENConverter.sfenToGameBoard(string);
 
   /// Converts an array of strings [K-59, ...] into a `GameBoard`
-  static GameBoard stringArrayToGameBoard(List<String> strPieces, {player = PlayerType.sente}) {
-    final boardPieces = stringArrayToBoardPiecesArray(strPieces);
-
-    final List<BoardPiece> sentePiecesInHand =
-        boardPieces.where((piece) => piece.position == null && piece.player.isSente).toList();
-    _removeElementsFromList(boardPieces, sentePiecesInHand);
-
-    final List<BoardPiece> gotePiecesInHand =
-        boardPieces.where((piece) => piece.position == null && piece.player.isGote).toList();
-    _removeElementsFromList(boardPieces, gotePiecesInHand);
-
-    return GameBoard(
-      boardPieces: boardPieces,
-      sentePiecesInHand: sentePiecesInHand,
-      gotePiecesInHand: gotePiecesInHand,
-    );
-  }
+  static GameBoard stringArrayToGameBoard(List<String> strPieces, {player = PlayerType.sente}) => GameBoard(
+        boardPieces: stringArrayToBoardPiecesArray(strPieces, player: player),
+      );
 
   /// Converts an array of strings [K-59, ...] into an array of board pieces
   static List<BoardPiece> stringArrayToBoardPiecesArray(List<String> strPieces, {player = PlayerType.sente}) {

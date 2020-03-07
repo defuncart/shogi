@@ -64,8 +64,6 @@ class SFENConverter {
 
     // TODO presently ignoreing player to move
 
-    final sentePiecesInHand = <BoardPiece>[];
-    final gotePiecesInHand = <BoardPiece>[];
     if (sections.last != _noPiecesInHand) {
       final matches = _piecesInHandRegExp.allMatches(sections.last);
       for (final match in matches) {
@@ -75,9 +73,8 @@ class SFENConverter {
           final pieceText = matchText.length > 1 ? matchText.last : matchText;
           final player = pieceText.last.isLowerCase ? PlayerType.gote : PlayerType.sente;
           final pieceType = PackageUtils.pieceStringToType(pieceText.toUpperCase());
-          final list = player.isGote ? gotePiecesInHand : sentePiecesInHand;
           for (int i = 0; i < count; i++) {
-            list.add(
+            boardPieces.add(
               BoardPiece(
                 player: player,
                 pieceType: pieceType,
@@ -89,10 +86,6 @@ class SFENConverter {
       }
     }
 
-    return GameBoard(
-      boardPieces: boardPieces,
-      sentePiecesInHand: sentePiecesInHand,
-      gotePiecesInHand: gotePiecesInHand,
-    );
+    return GameBoard(boardPieces: boardPieces);
   }
 }
