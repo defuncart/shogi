@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
-import '../models/board_piece.dart';
+import '../enums/player_type.dart';
+import 'board_piece.dart';
 
 /// A model representing a shogi game board
 class GameBoard {
@@ -13,16 +14,21 @@ class GameBoard {
   /// A list of sente's pieces in hand
   final List<BoardPiece> gotePiecesInHand;
 
+  /// The player to move
+  final PlayerType playerToMove;
+
   const GameBoard({
     @required this.boardPieces,
     this.sentePiecesInHand = const [],
     this.gotePiecesInHand = const [],
+    this.playerToMove = PlayerType.sente,
   })  : assert(boardPieces != null),
         assert(sentePiecesInHand != null),
-        assert(gotePiecesInHand != null);
+        assert(gotePiecesInHand != null),
+        assert(playerToMove != null);
 
   /// Returns a string representation of the model
   @override
   String toString() =>
-      '{boardPieces: $boardPieces, sentePiecesInHand: $sentePiecesInHand, gotePiecesInHand: $gotePiecesInHand}';
+      '{boardPieces: $boardPieces, sentePiecesInHand: $sentePiecesInHand, gotePiecesInHand: $gotePiecesInHand, playerToMove: $playerToMove}';
 }
