@@ -3,6 +3,8 @@ import 'package:shogi/shogi.dart';
 
 import 'board_piece.dart';
 import '../enums/player_type.dart';
+import '../extensions/board_piece_extensions.dart';
+import '../extensions/list_board_pieces_extensions.dart';
 
 /// A model representing a shogi game board
 class GameBoard {
@@ -26,4 +28,31 @@ class GameBoard {
   @override
   String toString() =>
       '{boardPieces: $boardPieces, sentePiecesInHand: $sentePiecesInHand, gotePiecesInHand: $gotePiecesInHand}';
+
+  /// Prints the game board to console using lower case for gote and upper case for sente
+  void printToConsole() {
+    const space = ' ';
+    const delimiter = '|';
+    final buffer = StringBuffer();
+
+    buffer.write(gotePiecesInHand.toSFEN());
+    for (int row = 1; row <= BoardConfig.numberRows; row++) {
+      for (int column = 9; column >= 1; column--) {
+        buffer.write(delimiter);
+        final piece = boardPieces.pieceAtPosition(column: column, row: row);
+        if (piece == null) {
+          buffer.write(space * 2);
+        } else {
+          buffer.write(piece.toSFEN());
+          if (!piece.isPromoted) {
+            buffer.write(space);
+          }
+        }
+      }
+      buffer.writeln(delimiter);
+    }
+    buffer.write(sentePiecesInHand.toSFEN());
+
+    print(buffer.toString());
+  }
 }
