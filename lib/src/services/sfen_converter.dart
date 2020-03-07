@@ -62,7 +62,7 @@ class SFENConverter {
       row++;
     }
 
-    final playerToMove = sections[10] == 'w' ? PlayerType.gote : PlayerType.sente;
+    // TODO presently ignoreing player to move
 
     final sentePiecesInHand = <BoardPiece>[];
     final gotePiecesInHand = <BoardPiece>[];
@@ -93,7 +93,6 @@ class SFENConverter {
       boardPieces: boardPieces,
       sentePiecesInHand: sentePiecesInHand,
       gotePiecesInHand: gotePiecesInHand,
-      playerToMove: playerToMove,
     );
   }
 }

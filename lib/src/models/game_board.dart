@@ -14,21 +14,16 @@ class GameBoard {
   /// A list of sente's pieces in hand
   final List<BoardPiece> gotePiecesInHand;
 
-  /// The player to move
-  final PlayerType playerToMove;
-
   const GameBoard({
     @required this.boardPieces,
     this.sentePiecesInHand = const [],
     this.gotePiecesInHand = const [],
-    this.playerToMove = PlayerType.sente,
   })  : assert(boardPieces != null),
         assert(sentePiecesInHand != null),
-        assert(gotePiecesInHand != null),
-        assert(playerToMove != null);
+        assert(gotePiecesInHand != null);
 
   /// Returns a string representation of the model
   @override
   String toString() =>
-      '{boardPieces: $boardPieces, sentePiecesInHand: $sentePiecesInHand, gotePiecesInHand: $gotePiecesInHand, playerToMove: $playerToMove}';
+      '{boardPieces: $boardPieces, sentePiecesInHand: $sentePiecesInHand, gotePiecesInHand: $gotePiecesInHand';
 }
