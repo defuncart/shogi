@@ -25,4 +25,14 @@ extension StringExtensions on String {
     final firstLetter = this.first;
     return firstLetter.toUpperCase() == firstLetter;
   }
+
+  /// Checks if the first character is lower case
+  bool get isLowerCase {
+    if (this == null || this.isEmpty || this.trim().isEmpty) {
+      return false;
+    }
+
+    final firstLetter = this.first;
+    return firstLetter.toLowerCase() == firstLetter;
+  }
 }

@@ -92,4 +92,31 @@ main() {
       expect(string.isUpperCase, isFalse);
     });
   });
+
+  group('isLowerCase', () {
+    test('null', () {
+      String string;
+      expect(string.isLowerCase, isFalse);
+    });
+
+    test('Empty', () {
+      String string = '';
+      expect(string.isLowerCase, isFalse);
+    });
+
+    test('Whitespace', () {
+      String string = ' ';
+      expect(string.isLowerCase, isFalse);
+    });
+
+    test('First character uppercase', () {
+      String string = 'A string';
+      expect(string.isLowerCase, isFalse);
+    });
+
+    test('First character lowercase', () {
+      String string = 'a string';
+      expect(string.isLowerCase, isTrue);
+    });
+  });
 }
