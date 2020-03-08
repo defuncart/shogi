@@ -78,18 +78,6 @@ class ShogiUtils {
     return newPieces;
   }
 
-  /// A backing variable used for sente's initial board pieces
-  static List<BoardPiece> _initialBoardSente;
-
-  /// A backing variable used for gote's initial board pieces
-  static List<BoardPiece> _initialBoardGote;
-
-  /// A backing variable used for the overall initial board pieces
-  static List<BoardPiece> _initialBoardPieces = [
-    ...(_initialBoardSente ??= stringArrayToBoardPiecesArray(StaticGameBoards.initialBoardSente)),
-    ...(_initialBoardGote ??= flipBoardPieces(_initialBoardSente))
-  ];
-
   /// The initial board
-  static GameBoard initialBoard = GameBoard(boardPieces: _initialBoardPieces);
+  static final initialBoard = sfenStringToGameBoard(StaticGameBoards.sfenInitialBoardString);
 }
