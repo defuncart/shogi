@@ -8,7 +8,7 @@ enum _TestEnum {
 
 main() {
   test('describeEnum', () {
-    final describeEnum = DartUtils.describeEnum(_TestEnum.value1);
-    expect(describeEnum, 'value1');
+    expect(DartUtils.describeEnum(_TestEnum.value1), 'value1');
+    expect(DartUtils.describeEnum(_TestEnum.value2), 'value2');
   });
 }

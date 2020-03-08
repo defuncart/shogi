@@ -1,6 +1,3 @@
-import 'package:meta/meta.dart';
-
-import '../configs/board_config.dart';
 import '../enums/piece_type.dart';
 import '../enums/player_type.dart';
 import 'list_extensions.dart';
