@@ -20,8 +20,6 @@ import 'package:shogi/shogi.dart';
 
 void main() {
   final gameBoard = ShogiUtils.initialBoard;
-  print(gameBoard.boardPieces);
-  print(gameBoard.sentePiecesInHand);
-  print(gameBoard.gotePiecesInHand);
+  gameBoard.printToConsole();
 }
 ```
