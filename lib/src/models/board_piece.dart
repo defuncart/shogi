@@ -20,10 +20,12 @@ class BoardPiece {
   final PlayerType player;
 
   const BoardPiece({
-    @required this.position,
-    @required this.pieceType,
     this.player = PlayerType.sente,
-  })  : assert(
+    @required this.pieceType,
+    this.position,
+  })  : assert(player != null),
+        assert(pieceType != null),
+        assert(
           position != null
               ? true
               : (pieceType == PieceType.pawn ||
@@ -33,9 +35,7 @@ class BoardPiece {
                   pieceType == PieceType.gold ||
                   pieceType == PieceType.bishop ||
                   pieceType == PieceType.rook),
-        ), // a promoted piece should not be possible if piece is in hand
-        assert(pieceType != null),
-        assert(player != null);
+        ); // a promoted piece should not be possible if piece is in hand
 
   /// Whether the piece belongs to sente
   bool get isSente => player.isSente;
@@ -59,4 +59,13 @@ class BoardPiece {
   String toString() =>
       (position == null ? 'InHand' : position.toString()) +
       ' ${DartUtils.describeEnum(player)} ${DartUtils.describeEnum(pieceType)}';
+}
+
+/// A class of extension methods for List<BoardPiece>
+extension ListBoardPieceExtensions on List<BoardPiece> {
+  /// Returns the piece at position (column, row). Returns `null` if no piece exists.
+  BoardPiece pieceAtPosition({@required int column, @required int row}) => this.firstWhere(
+        (piece) => piece.position.column == column && piece.position.row == row,
+        orElse: () => null,
+      );
 }

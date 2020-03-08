@@ -26,20 +26,41 @@ import 'package:shogi/shogi.dart';
 
 void main() {
   final gameBoard = ShogiUtils.initialBoard;
-  print(gameBoard.boardPieces);
-  print(gameBoard.sentePiecesInHand);
-  print(gameBoard.gotePiecesInHand);
+  gameBoard.printToConsole();
 }
 ```
 
 ## Importing a Game Board
 
+### SFEN
+
+A game board can be imported using a SFEN ascii string:
+
+```dart
+final sfenString = 'lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -';
+final gameBoard = ShogiUtils.sfenStringToGameBoard(sfenString);
+gameBoard.printToConsole();
+```
+
+```
+|l |n |s |g |k |g |s |n |l |
+|  |r |  |  |  |  |  |b |  |
+|p |p |p |p |p |p |p |p |p |
+|  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |  |
+|P |P |P |P |P |P |P |P |P |
+|  |B |  |  |  |  |  |R |  |
+|L |N |S |G |K |G |S |N |L |
+```
+
+### Custom Notation
+
 A board position is notated using `{PieceType}-{Row}{Column}`, i.e. `K-59`. Note that 11 is the top right board cell as per japanese notation.
 
 ```dart
 final yagura = ['L-99', 'N-89', 'K-88', 'G-78', 'P-97', 'P-87', 'S-77', 'G-67', 'P-76', 'P-66', 'P-56'];
-
-final boardPieces = ShogiUtils.stringArrayToBoardPiecesArray(yagura);
+final gameBoard = ShogiUtils.stringArrayToGameBoard(yagura);
 ```
 
 If Sente or Gote aren't specified, then Sente is chosen by default. To import pieces for both players, use the notation `{Player}:{PieceType}-{Row}{Column}`, where `☗` and `☖` denote Sente and Gote respectively.
@@ -63,7 +84,6 @@ Piece movement is denoted by `{Player}{PieceType}{CurrentPosition}{Movement}{Tar
 | Drop            | ☗S*34    | Sente's drops a silver from in hand onto 34.                                  |
 | Combined        | ☗S34x33+ | Sente's silver moves from 34 to 33, captures the piece at 33 and is promoted. |
 
-
 Thus, given an initial board for Sente, a *Yagura castle* could be build using the following moves:
 
 ```
@@ -81,8 +101,6 @@ Thus, given an initial board for Sente, a *Yagura castle* could be build using t
 12: ☗K69-79
 13: ☗K79-88
 ```
-
-Note that presently only piece movement is considered, drops and captures are not yet implemented.
 
 ## Future Plans
 

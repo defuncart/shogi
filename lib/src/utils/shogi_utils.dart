@@ -4,31 +4,18 @@ import '../models/position.dart';
 import '../models/game_board.dart';
 import '../enums/player_type.dart';
 import '../models/board_piece.dart';
+import '../services/sfen_converter.dart';
 import '../utils/package_utils.dart';
 
 /// A class of utils methods used when constructing a shogi board
 class ShogiUtils {
-  // TODO: consider moving this to dart_extensions repo
-  static void _removeElementsFromList<T>(List<T> list, List<T> elements) => elements.forEach((e) => list.remove(e));
+  /// Converts a SFEN ascii string into a `GameBoard`
+  static GameBoard sfenStringToGameBoard(String string) => SFENConverter.sfenToGameBoard(string);
 
-  /// Converts an array of strings [K-59, ...] into a game board
-  static GameBoard stringArrayToGameBoard(List<String> strPieces, {player = PlayerType.sente}) {
-    final boardPieces = stringArrayToBoardPiecesArray(strPieces);
-
-    final List<BoardPiece> sentePiecesInHand =
-        boardPieces.where((piece) => piece.position == null && piece.player.isSente).toList();
-    _removeElementsFromList(boardPieces, sentePiecesInHand);
-
-    final List<BoardPiece> gotePiecesInHand =
-        boardPieces.where((piece) => piece.position == null && piece.player.isGote).toList();
-    _removeElementsFromList(boardPieces, gotePiecesInHand);
-
-    return GameBoard(
-      boardPieces: boardPieces,
-      sentePiecesInHand: sentePiecesInHand,
-      gotePiecesInHand: gotePiecesInHand,
-    );
-  }
+  /// Converts an array of strings [K-59, ...] into a `GameBoard`
+  static GameBoard stringArrayToGameBoard(List<String> strPieces, {player = PlayerType.sente}) => GameBoard(
+        boardPieces: stringArrayToBoardPiecesArray(strPieces, player: player),
+      );
 
   /// Converts an array of strings [K-59, ...] into an array of board pieces
   static List<BoardPiece> stringArrayToBoardPiecesArray(List<String> strPieces, {player = PlayerType.sente}) {
@@ -91,18 +78,6 @@ class ShogiUtils {
     return newPieces;
   }
 
-  /// A backing variable used for sente's initial board pieces
-  static List<BoardPiece> _initialBoardSente;
-
-  /// A backing variable used for gote's initial board pieces
-  static List<BoardPiece> _initialBoardGote;
-
-  /// A backing variable used for the overall initial board pieces
-  static List<BoardPiece> _initialBoardPieces = [
-    ...(_initialBoardSente ??= stringArrayToBoardPiecesArray(StaticGameBoards.initialBoardSente)),
-    ...(_initialBoardGote ??= flipBoardPieces(_initialBoardSente))
-  ];
-
   /// The initial board
-  static GameBoard initialBoard = GameBoard(boardPieces: _initialBoardPieces);
+  static final initialBoard = sfenStringToGameBoard(StaticGameBoards.sfenInitialBoardString);
 }
