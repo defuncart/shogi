@@ -2,6 +2,8 @@
 
 A simple shogi engine for Dart and Flutter. This engine can be combined with [flutter_shogi_board](https://github.com/defuncart/flutter_shogi_board) to render static game board positions, tsume problems or shogi castles.
 
+Shogi (将棋) is a two-player strategy board game native to Japan, belonging to the same family as chess and xiangqi.
+
 Presently the package is very basic in which it can determine the static board position for a given game and move pieces from one position to another. As it is still highly experimental, 0.0.x versioning is used.
 
 ## Getting Started
