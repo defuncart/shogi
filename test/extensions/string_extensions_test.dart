@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:shogi/src/extensions/string_extensions.dart';
+import 'package:test/test.dart';
 
 main() {
   group('isNullOrEmpty', () {

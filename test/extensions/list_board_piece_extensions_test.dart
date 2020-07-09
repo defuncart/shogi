@@ -1,7 +1,6 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
-
 import 'package:shogi/shogi.dart';
+import 'package:test/test.dart';
 
 main() {
   final boardPieces = ShogiUtils.initialBoard.boardPieces;

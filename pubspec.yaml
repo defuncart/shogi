@@ -4,15 +4,10 @@ version: 0.0.3
 homepage: https://github.com/defuncart/shogi
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   meta: ^1.1.6
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-flutter:
+  test: ^1.15.0
