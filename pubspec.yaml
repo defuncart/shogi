@@ -1,7 +1,9 @@
 name: shogi
-description: A simple shogi engine for Dart and Flutter. This engine can be combined with `flutter_shogi_board` to render static game board positions, tsume problems or shogi castles.
+description: A simple shogi engine for Dart and Flutter. This engine can be combined with flutter_shogi_board to render static game board positions, tsume problems or shogi castles.
 version: 0.0.3
 homepage: https://github.com/defuncart/shogi
+repository: https://github.com/defuncart/shogi
+issue_tracker: https://github.com/defuncart/shogi/issues
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
