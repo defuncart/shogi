@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:shogi/src/utils/dart_utils.dart';
+import 'package:test/test.dart';
 
 enum _TestEnum {
   value1,
