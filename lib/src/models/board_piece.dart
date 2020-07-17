@@ -3,8 +3,8 @@ import 'package:meta/meta.dart';
 import '../enums/piece_type.dart';
 import '../enums/player_type.dart';
 import '../models/position.dart';
-import '../utils/package_utils.dart';
 import '../utils/dart_utils.dart';
+import '../utils/package_utils.dart';
 
 /// A model representing a shogi board piece
 class BoardPiece {
@@ -42,7 +42,7 @@ class BoardPiece {
 
   /// The pieces display string
   String displayString({bool usesJapanese = true}) =>
-      PackageUtils.pieceTypeToString(pieceType, usesJapanese: usesJapanese, isSente: isSente);
+      PackageUtils.pieceTypeToDisplayString(pieceType, usesJapanese: usesJapanese, isSente: isSente);
 
   /// Whether the piece is promoted
   bool get isPromoted => pieceType.isPromoted;

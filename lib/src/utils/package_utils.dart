@@ -52,6 +52,17 @@ class PackageUtils {
     }
   }
 
+  /// Converts a piece type to a display string
+  ///
+  /// The difference from `pieceTypeToString` is that gote display strings for latin are in lowercase
+  static String pieceTypeToDisplayString(PieceType pieceType, {bool usesJapanese = true, bool isSente = true}) {
+    if (usesJapanese) {
+      return !isSente && pieceType == PieceType.king ? _kingGoteJP : _piecesJP[pieceType];
+    } else {
+      return isSente ? _piecesEN[pieceType] : _piecesEN[pieceType].toLowerCase();
+    }
+  }
+
   /// Converts a string to piece type
   ///
   /// `usesJapanese` is optional and default to `false`
