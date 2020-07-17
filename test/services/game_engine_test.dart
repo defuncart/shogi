@@ -1,9 +1,9 @@
 import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   test('GameEngine.makeMove()', () {
-    const initialBoard = const [
+    const initialBoard = [
       '☖:K-51',
       '☖:S-52',
       '☗:P-53',
@@ -58,7 +58,7 @@ main() {
       ),
     ]);
 
-    List<GameBoard> gameBoards = [];
+    final gameBoards = [];
     for (final move in moves) {
       gameBoard = GameEngine.makeMove(gameBoard, move);
       gameBoards.add(gameBoard);

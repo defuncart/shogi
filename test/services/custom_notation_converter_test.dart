@@ -1,7 +1,7 @@
 import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   final converter = CustomNotationConverter();
 
   test('movesFromFile: test against null input', () {

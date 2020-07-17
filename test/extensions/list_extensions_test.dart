@@ -1,7 +1,7 @@
 import 'package:shogi/src/extensions/list_extensions.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   test('Null', () {
     List list;
     final map = list.convertToMapWithCountUniqueElements();

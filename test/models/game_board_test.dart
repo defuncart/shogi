@@ -1,7 +1,7 @@
 import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   test('Null', () {
     final gameBoard = GameBoard(boardPieces: null);
     expect(gameBoard, isNotNull);

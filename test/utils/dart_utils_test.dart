@@ -6,7 +6,7 @@ enum _TestEnum {
   value2,
 }
 
-main() {
+void main() {
   test('describeEnum', () {
     expect(DartUtils.describeEnum(_TestEnum.value1), 'value1');
     expect(DartUtils.describeEnum(_TestEnum.value2), 'value2');
