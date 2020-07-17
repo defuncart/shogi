@@ -78,6 +78,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+  effective_dart:
+    dependency: transitive
+    description:
+      name: effective_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.3"
+  flutter_analysis_options:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "972b5461f4c9977286707dfa40ee098227ccd8e1"
+      url: "https://github.com/defuncart/flutter_analysis_options"
+    source: git
+    version: "0.0.1"
   glob:
     dependency: transitive
     description:
