@@ -1,11 +1,12 @@
 import 'package:meta/meta.dart';
 
-import 'position.dart';
 import '../enums/piece_type.dart';
 import '../enums/player_type.dart';
 import '../utils/dart_utils.dart';
+import 'position.dart';
 
 /// A model representing a shogi game move
+@immutable
 class Move {
   /// The player
   final PlayerType player;

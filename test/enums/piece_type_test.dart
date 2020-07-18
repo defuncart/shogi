@@ -1,7 +1,7 @@
 import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   test('PieceType.pawn', () {
     final pieceType = PieceType.pawn;
     expect(pieceType.canBePromoted, true);

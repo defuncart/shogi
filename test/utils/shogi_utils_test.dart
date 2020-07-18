@@ -1,7 +1,7 @@
 import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   void assertInitalBoardSente(List<BoardPiece> boardPieces) {
     expect(
         boardPieces.where(

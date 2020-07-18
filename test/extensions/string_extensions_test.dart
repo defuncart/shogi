@@ -1,7 +1,7 @@
 import 'package:shogi/src/extensions/string_extensions.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   group('isNullOrEmpty', () {
     test('null', () {
       String string;
@@ -9,17 +9,17 @@ main() {
     });
 
     test('Empty', () {
-      String string = '';
+      final string = '';
       expect(string.isNullOrEmpty, isTrue);
     });
 
     test('Whitespace', () {
-      String string = ' ';
+      final string = ' ';
       expect(string.isNullOrEmpty, isFalse);
     });
 
     test('Character', () {
-      String string = ' hello';
+      final string = ' hello';
       expect(string.isNullOrEmpty, isFalse);
     });
   });
@@ -31,12 +31,12 @@ main() {
     });
 
     test('Empty', () {
-      String string = '';
+      final string = '';
       expect(string.first, isNull);
     });
 
     test('Character', () {
-      String string = ' hello';
+      final string = ' hello';
       expect(string.first, ' ');
     });
   });
@@ -48,12 +48,12 @@ main() {
     });
 
     test('Empty', () {
-      String string = '';
+      final string = '';
       expect(string.last, isNull);
     });
 
     test('Character', () {
-      String string = ' hello';
+      final string = ' hello';
       expect(string.last, 'o');
     });
   });
@@ -73,22 +73,22 @@ main() {
     });
 
     test('Empty', () {
-      String string = '';
+      final string = '';
       expect(string.isUpperCase, isFalse);
     });
 
     test('Whitespace', () {
-      String string = ' ';
+      final string = ' ';
       expect(string.isUpperCase, isFalse);
     });
 
     test('First character uppercase', () {
-      String string = 'A string';
+      final string = 'A string';
       expect(string.isUpperCase, isTrue);
     });
 
     test('First character lowercase', () {
-      String string = 'a string';
+      final string = 'a string';
       expect(string.isUpperCase, isFalse);
     });
   });
@@ -100,22 +100,22 @@ main() {
     });
 
     test('Empty', () {
-      String string = '';
+      final string = '';
       expect(string.isLowerCase, isFalse);
     });
 
     test('Whitespace', () {
-      String string = ' ';
+      final string = ' ';
       expect(string.isLowerCase, isFalse);
     });
 
     test('First character uppercase', () {
-      String string = 'A string';
+      final string = 'A string';
       expect(string.isLowerCase, isFalse);
     });
 
     test('First character lowercase', () {
-      String string = 'a string';
+      final string = 'a string';
       expect(string.isLowerCase, isTrue);
     });
   });

@@ -19,7 +19,7 @@ enum PieceType {
 /// A class of extensions for PieceType
 extension PieceTypeExtensions on PieceType {
   /// A list of piece types which can be promoted
-  static const piecesWhichCanBePromoted = const [
+  static const piecesWhichCanBePromoted = [
     PieceType.pawn,
     PieceType.lance,
     PieceType.knight,
@@ -29,7 +29,7 @@ extension PieceTypeExtensions on PieceType {
   ];
 
   /// A list of promoted piece types
-  static const promotedPieces = const [
+  static const promotedPieces = [
     PieceType.pawnPromoted,
     PieceType.lancePromoted,
     PieceType.knightPromoted,
@@ -39,7 +39,7 @@ extension PieceTypeExtensions on PieceType {
   ];
 
   /// A map of piece type and their promoted equivalents
-  static const convertPieceTypeToPromotedPieceType = const {
+  static const convertPieceTypeToPromotedPieceType = {
     PieceType.pawn: PieceType.pawnPromoted,
     PieceType.lance: PieceType.lancePromoted,
     PieceType.knight: PieceType.knightPromoted,
@@ -55,11 +55,11 @@ extension PieceTypeExtensions on PieceType {
   bool get canBePromoted => piecesWhichCanBePromoted.contains(this);
 
   /// Returns a promoted equivalent for the piece type. Returns `null` if the piece type cannot be promoted.
-  PieceType promote() => this.canBePromoted ? convertPieceTypeToPromotedPieceType[this] : null;
+  PieceType promote() => canBePromoted ? convertPieceTypeToPromotedPieceType[this] : null;
 
   /// Whether the piece type is promoted
   bool get isPromoted => promotedPieces.contains(this);
 
   /// Returns a normalized equivalent for the piece type (i.e. PieceType.pawnPromoted => PieceType.pawn).
-  PieceType normalize() => this.isPromoted ? convertPromotedPieceTypeToPieceType[this] : this;
+  PieceType normalize() => isPromoted ? convertPromotedPieceTypeToPieceType[this] : this;
 }

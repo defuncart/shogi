@@ -1,9 +1,9 @@
 import '../configs/board_config.dart';
-import '../extensions/string_extensions.dart';
-import '../models/position.dart';
-import '../models/game_board.dart';
 import '../enums/player_type.dart';
+import '../extensions/string_extensions.dart';
 import '../models/board_piece.dart';
+import '../models/game_board.dart';
+import '../models/position.dart';
 import '../utils/package_utils.dart';
 
 /// A service which converts to/from SFEN notation for a static game position
@@ -30,7 +30,7 @@ class SFENConverter {
     assert(sections.length == _numberExpectedSections);
 
     final boardPieces = <BoardPiece>[];
-    int row = 1; //SFEN notation begins at 91
+    var row = 1; //SFEN notation begins at 91
     int column;
     for (final section in sections.take(BoardConfig.numberRows)) {
       column = BoardConfig.numberColumns;
@@ -38,7 +38,7 @@ class SFENConverter {
       final matches = _sfenRegExp.allMatches(section);
       for (final match in matches) {
         final matchText = match.group(0);
-        int valueAsInt = int.tryParse(matchText);
+        final valueAsInt = int.tryParse(matchText);
         if (valueAsInt != null) {
           assert(valueAsInt <= BoardConfig.numberColumns);
           if (valueAsInt <= BoardConfig.numberColumns) {
@@ -73,7 +73,7 @@ class SFENConverter {
           final pieceText = matchText.length > 1 ? matchText.last : matchText;
           final player = pieceText.last.isLowerCase ? PlayerType.gote : PlayerType.sente;
           final pieceType = PackageUtils.pieceStringToType(pieceText.toUpperCase());
-          for (int i = 0; i < count; i++) {
+          for (var i = 0; i < count; i++) {
             boardPieces.add(
               BoardPiece(
                 player: player,

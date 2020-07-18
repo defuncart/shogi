@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   final boardPieces = ShogiUtils.initialBoard.boardPieces;
 
   void _testPosition({

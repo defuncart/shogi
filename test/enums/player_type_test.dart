@@ -1,7 +1,7 @@
 import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
-main() {
+void main() {
   test('PlayerType.sente', () {
     final playerType = PlayerType.sente;
     expect(playerType.isSente, true);
