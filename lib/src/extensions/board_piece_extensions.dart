@@ -5,8 +5,8 @@ import '../utils/package_utils.dart';
 extension BoardPieceExtensionsInternal on BoardPiece {
   String toSFEN() {
     if (this != null) {
-      final pieceText = PackageUtils.pieceTypeToString(this.pieceType, usesJapanese: false);
-      return this.isSente ? pieceText : pieceText.toLowerCase();
+      final pieceText = PackageUtils.pieceTypeToString(pieceType, usesJapanese: false);
+      return isSente ? pieceText : pieceText.toLowerCase();
     }
 
     return null;

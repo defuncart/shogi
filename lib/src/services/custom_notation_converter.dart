@@ -1,9 +1,9 @@
-import 'i_notation_converter.dart';
 import '../configs/board_config.dart';
 import '../enums/player_type.dart';
 import '../models/move.dart';
 import '../models/position.dart';
 import '../utils/package_utils.dart';
+import 'i_notation_converter.dart';
 
 /// An enum describing the types of capture groups
 enum _CaptureGroup {

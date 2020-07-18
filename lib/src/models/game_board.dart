@@ -1,10 +1,10 @@
 import 'package:meta/meta.dart';
-import 'package:shogi/shogi.dart';
 
-import 'board_piece.dart';
+import '../configs/board_config.dart';
 import '../enums/player_type.dart';
 import '../extensions/board_piece_extensions.dart';
 import '../extensions/list_board_pieces_extensions.dart';
+import 'board_piece.dart';
 
 /// A model representing a shogi game board
 class GameBoard {
@@ -18,7 +18,7 @@ class GameBoard {
   final List<BoardPiece> gotePiecesInHand;
 
   GameBoard({@required List<BoardPiece> boardPieces})
-      : this.boardPieces = boardPieces?.where((piece) => piece.position != null)?.toList() ?? const [],
+      : boardPieces = boardPieces?.where((piece) => piece.position != null)?.toList() ?? const [],
         sentePiecesInHand =
             boardPieces?.where((piece) => piece.position == null && piece.player.isSente)?.toList() ?? const [],
         gotePiecesInHand =
@@ -36,8 +36,8 @@ class GameBoard {
     final buffer = StringBuffer();
 
     buffer.write(gotePiecesInHand.toSFEN());
-    for (int row = 1; row <= BoardConfig.numberRows; row++) {
-      for (int column = 9; column >= 1; column--) {
+    for (var row = 1; row <= BoardConfig.numberRows; row++) {
+      for (var column = 9; column >= 1; column--) {
         buffer.write(delimiter);
         final piece = boardPieces.pieceAtPosition(column: column, row: row);
         if (piece == null) {

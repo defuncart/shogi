@@ -7,6 +7,7 @@ import '../utils/dart_utils.dart';
 import '../utils/package_utils.dart';
 
 /// A model representing a shogi board piece
+@immutable
 class BoardPiece {
   /// The piece's board position
   ///
@@ -57,14 +58,13 @@ class BoardPiece {
   /// Returns a string representation of the model
   @override
   String toString() =>
-      (position == null ? 'InHand' : position.toString()) +
-      ' ${DartUtils.describeEnum(player)} ${DartUtils.describeEnum(pieceType)}';
+      '${position == null ? 'InHand' : position.toString()} ${DartUtils.describeEnum(player)} ${DartUtils.describeEnum(pieceType)}';
 }
 
 /// A class of extension methods for List<BoardPiece>
 extension ListBoardPieceExtensions on List<BoardPiece> {
   /// Returns the piece at position (column, row). Returns `null` if no piece exists.
-  BoardPiece pieceAtPosition({@required int column, @required int row}) => this.firstWhere(
+  BoardPiece pieceAtPosition({@required int column, @required int row}) => firstWhere(
         (piece) => piece.position.column == column && piece.position.row == row,
         orElse: () => null,
       );

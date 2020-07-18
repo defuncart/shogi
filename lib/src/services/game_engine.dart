@@ -1,5 +1,5 @@
-import '../enums/player_type.dart';
 import '../enums/piece_type.dart';
+import '../enums/player_type.dart';
 import '../models/board_piece.dart';
 import '../models/game_board.dart';
 import '../models/move.dart';

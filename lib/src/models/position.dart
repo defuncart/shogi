@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import '../configs/board_config.dart';
 
 /// A class representing a position on a shogi game board
+@immutable
 class Position {
   /// The column index
   ///

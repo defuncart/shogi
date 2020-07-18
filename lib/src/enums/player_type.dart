@@ -13,5 +13,5 @@ extension PlayerTypeExtensions on PlayerType {
   bool get isGote => this == PlayerType.gote;
 
   /// Flips the player type, i.e. `PlayerType.sente` => `PlayerType.gote`
-  PlayerType flip() => this.isSente ? PlayerType.gote : PlayerType.sente;
+  PlayerType flip() => isSente ? PlayerType.gote : PlayerType.sente;
 }
