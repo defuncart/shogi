@@ -9,10 +9,10 @@ void main() {
       '☗:P-53',
     ];
 
-    final movesFile = """
+    final movesFile = '''
 ☗P53x52+
 ☖K51x52
-""";
+''';
 
     final converter = CustomNotationConverter();
     var gameBoard = ShogiUtils.stringArrayToGameBoard(initialBoard);
