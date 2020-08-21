@@ -24,10 +24,10 @@ void main() {
   });
 
   test('movesFromFile: test against incorrect & correct input', () {
-    final game = """
+    final game = '''
 1: ☗P77-76
 bla
-""";
+''';
     final moves = converter.movesFromFile(game);
     expect(moves, isNotNull);
     expect(moves.length, 1);
