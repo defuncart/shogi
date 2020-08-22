@@ -15,14 +15,15 @@ class SFENConverter {
   static final _sectionsRegExp = RegExp(r'/|\s');
 
   /// A regexp used to parse a row using SFEN notation
-  static final _sfenRegExp =
-      RegExp(r'(P|L|N|S|G|K|B|R|\+P|\+L|\+N|\+S|\+B|\+R|[1-9]|p|l|n|s|g|k|b|r|\+p|\+l|\+n|\+s|\+b|\+r|-)');
+  static final _sfenRegExp = RegExp(
+      r'(P|L|N|S|G|K|B|R|\+P|\+L|\+N|\+S|\+B|\+R|[1-9]|p|l|n|s|g|k|b|r|\+p|\+l|\+n|\+s|\+b|\+r|-)');
 
   /// A delimited to state that neither player has any pieces in hand
   static const _noPiecesInHand = '-';
 
   /// A regexp used to parse pieces in hand using SFEN notation
-  static final _piecesInHandRegExp = RegExp(r'\d*[P|L|N|S|G|B|R|p|l|n|s|g|b|r]');
+  static final _piecesInHandRegExp =
+      RegExp(r'\d*[P|L|N|S|G|B|R|p|l|n|s|g|b|r]');
 
   /// Converts a board notated using SFEN notation into a `GameBoard`
   static GameBoard sfenToGameBoard(String string) {
@@ -45,8 +46,10 @@ class SFENConverter {
             column -= valueAsInt;
           }
         } else {
-          final player = matchText.last.isLowerCase ? PlayerType.gote : PlayerType.sente;
-          final pieceType = PackageUtils.pieceStringToType(matchText.toUpperCase());
+          final player =
+              matchText.last.isLowerCase ? PlayerType.gote : PlayerType.sente;
+          final pieceType =
+              PackageUtils.pieceStringToType(matchText.toUpperCase());
           boardPieces.add(
             BoardPiece(
               player: player,
@@ -71,8 +74,10 @@ class SFENConverter {
         if (matchText != null) {
           final count = int.tryParse(matchText.first) ?? 1;
           final pieceText = matchText.length > 1 ? matchText.last : matchText;
-          final player = pieceText.last.isLowerCase ? PlayerType.gote : PlayerType.sente;
-          final pieceType = PackageUtils.pieceStringToType(pieceText.toUpperCase());
+          final player =
+              pieceText.last.isLowerCase ? PlayerType.gote : PlayerType.sente;
+          final pieceType =
+              PackageUtils.pieceStringToType(pieceText.toUpperCase());
           for (var i = 0; i < count; i++) {
             boardPieces.add(
               BoardPiece(

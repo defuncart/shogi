@@ -36,7 +36,8 @@ class Position {
   }
 
   @override
-  bool operator ==(dynamic other) => other is Position && row == other.row && column == other.column;
+  bool operator ==(dynamic other) =>
+      other is Position && row == other.row && column == other.column;
 
   @override
   int get hashCode => row.hashCode ^ column.hashCode;

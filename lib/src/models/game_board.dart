@@ -18,11 +18,19 @@ class GameBoard {
   final List<BoardPiece> gotePiecesInHand;
 
   GameBoard({@required List<BoardPiece> boardPieces})
-      : boardPieces = boardPieces?.where((piece) => piece.position != null)?.toList() ?? const [],
-        sentePiecesInHand =
-            boardPieces?.where((piece) => piece.position == null && piece.player.isSente)?.toList() ?? const [],
-        gotePiecesInHand =
-            boardPieces?.where((piece) => piece.position == null && piece.player.isGote)?.toList() ?? const [];
+      : boardPieces =
+            boardPieces?.where((piece) => piece.position != null)?.toList() ??
+                const [],
+        sentePiecesInHand = boardPieces
+                ?.where(
+                    (piece) => piece.position == null && piece.player.isSente)
+                ?.toList() ??
+            const [],
+        gotePiecesInHand = boardPieces
+                ?.where(
+                    (piece) => piece.position == null && piece.player.isGote)
+                ?.toList() ??
+            const [];
 
   /// Returns a string representation of the model
   @override

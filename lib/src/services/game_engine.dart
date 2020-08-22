@@ -11,12 +11,14 @@ class GameEngine {
   /// Makes a given move for a given game board
   static GameBoard makeMove(GameBoard gameBoard, Move move) {
     final boardPieces = List<BoardPiece>.from(gameBoard.boardPieces);
-    final sentePiecesInHand = List<BoardPiece>.from(gameBoard.sentePiecesInHand);
+    final sentePiecesInHand =
+        List<BoardPiece>.from(gameBoard.sentePiecesInHand);
     final gotePiecesInHand = List<BoardPiece>.from(gameBoard.gotePiecesInHand);
 
     if (move.isDrop) {
       final list = move.player.isSente ? sentePiecesInHand : gotePiecesInHand;
-      final droppedPiece = list.firstWhere((piece) => piece.pieceType == move.piece);
+      final droppedPiece =
+          list.firstWhere((piece) => piece.pieceType == move.piece);
       list.remove(droppedPiece);
 
       boardPieces.add(
@@ -28,7 +30,8 @@ class GameEngine {
       );
     } else {
       if (move.isCapture) {
-        final capturedPiece = boardPieces.firstWhere((piece) => piece.position == move.to);
+        final capturedPiece =
+            boardPieces.firstWhere((piece) => piece.position == move.to);
         boardPieces.remove(capturedPiece);
 
         final list = move.player.isSente ? sentePiecesInHand : gotePiecesInHand;
@@ -41,7 +44,8 @@ class GameEngine {
         );
       }
 
-      final oldPiece = boardPieces.firstWhere((piece) => piece.position == move.from);
+      final oldPiece =
+          boardPieces.firstWhere((piece) => piece.position == move.from);
       boardPieces.remove(oldPiece);
     }
 

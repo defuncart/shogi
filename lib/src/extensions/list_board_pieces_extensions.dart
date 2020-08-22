@@ -10,11 +10,14 @@ extension ListBoardPiecesExtensionsInternal on List<BoardPiece> {
       final buffer = StringBuffer();
 
       if (length > 0) {
-        final mapPieceCount = map((piece) => piece.pieceType).toList().convertToMapWithCountUniqueElements<PieceType>();
+        final mapPieceCount = map((piece) => piece.pieceType)
+            .toList()
+            .convertToMapWithCountUniqueElements<PieceType>();
         final player = first.player;
 
         for (final kvp in mapPieceCount.entries) {
-          final pieceText = PackageUtils.pieceTypeToString(kvp.key, usesJapanese: false);
+          final pieceText =
+              PackageUtils.pieceTypeToString(kvp.key, usesJapanese: false);
           if (kvp.value > 1) {
             buffer.write(kvp.value);
           }

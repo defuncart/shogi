@@ -1,3 +1,10 @@
+## [0.0.4] - 22/08/2020
+
+* Removes dependency on Flutter, thus Dart-only projects can now also avail of this package.
+* To improve readability, gote's latin piece symbols now use lower case (when usesJapaneses = false).
+* Raises sdk version to >= 2.7.
+* Aligns analysis options with pedantic.
+
 ## [0.0.3] - 11/03/2020
 
 * Breaking changes: A game board is now represented by `GameBoard`, not simply by `List<BoardPiece>`.

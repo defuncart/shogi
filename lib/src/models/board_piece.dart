@@ -43,14 +43,18 @@ class BoardPiece {
 
   /// The pieces display string
   String displayString({bool usesJapanese = true}) =>
-      PackageUtils.pieceTypeToDisplayString(pieceType, usesJapanese: usesJapanese, isSente: isSente);
+      PackageUtils.pieceTypeToDisplayString(pieceType,
+          usesJapanese: usesJapanese, isSente: isSente);
 
   /// Whether the piece is promoted
   bool get isPromoted => pieceType.isPromoted;
 
   @override
   bool operator ==(dynamic other) =>
-      other is BoardPiece && position == other.position && player == other.player && pieceType == other.pieceType;
+      other is BoardPiece &&
+      position == other.position &&
+      player == other.player &&
+      pieceType == other.pieceType;
 
   @override
   int get hashCode => player.hashCode ^ pieceType.hashCode ^ position.hashCode;
@@ -64,7 +68,8 @@ class BoardPiece {
 /// A class of extension methods for List<BoardPiece>
 extension ListBoardPieceExtensions on List<BoardPiece> {
   /// Returns the piece at position (column, row). Returns `null` if no piece exists.
-  BoardPiece pieceAtPosition({@required int column, @required int row}) => firstWhere(
+  BoardPiece pieceAtPosition({@required int column, @required int row}) =>
+      firstWhere(
         (piece) => piece.position.column == column && piece.position.row == row,
         orElse: () => null,
       );

@@ -52,13 +52,20 @@ class CustomNotationConverter implements INotationConverter {
         if (components != null) {
           // parse each component
           final player =
-              components[_CaptureGroup.player.index] == BoardConfig.gote ? PlayerType.gote : PlayerType.sente;
-          final piece = PackageUtils.pieceStringToType(components[_CaptureGroup.piece.index]);
-          final from = Position.fromString(components[_CaptureGroup.from.index]);
-          final isCapture = components[_CaptureGroup.movement.index] == _captureSymbol;
-          final isDrop = components[_CaptureGroup.movement.index] == _dropSymbol;
+              components[_CaptureGroup.player.index] == BoardConfig.gote
+                  ? PlayerType.gote
+                  : PlayerType.sente;
+          final piece = PackageUtils.pieceStringToType(
+              components[_CaptureGroup.piece.index]);
+          final from =
+              Position.fromString(components[_CaptureGroup.from.index]);
+          final isCapture =
+              components[_CaptureGroup.movement.index] == _captureSymbol;
+          final isDrop =
+              components[_CaptureGroup.movement.index] == _dropSymbol;
           final to = Position.fromString(components[_CaptureGroup.to.index]);
-          final isPromotion = components[_CaptureGroup.promotion.index] == _promotionSymbol;
+          final isPromotion =
+              components[_CaptureGroup.promotion.index] == _promotionSymbol;
 
           moves.add(
             Move(
@@ -88,13 +95,15 @@ class CustomNotationConverter implements INotationConverter {
   /// 4. movement type, i.e. -, * or x
   /// 5. to, assumed to be two digits i.e. 11
   /// 6. promotion, can only match to + (optional)
-  static final _regExp = RegExp(r'([☗☖])(P|L|N|S|G|K|B|R|\+P|\+L|\+N|\+S|\+B|\+R)(\d{2})?([-\*x])(\d{2})(\+)?');
+  static final _regExp = RegExp(
+      r'([☗☖])(P|L|N|S|G|K|B|R|\+P|\+L|\+N|\+S|\+B|\+R)(\d{2})?([-\*x])(\d{2})(\+)?');
 
   /// The number of groups captured by `_regExp`
   static const _numberCaptureGroups = 6;
 
   /// A list of group indeces from 1 to 6, used to get all matched groups from `_regExp`
-  static final _groupIndeces = List.generate(_numberCaptureGroups, (index) => index + 1);
+  static final _groupIndeces =
+      List.generate(_numberCaptureGroups, (index) => index + 1);
 
   /// Converts a move `☗S34x33+` into `[☗, S, 34, x,33, +]`
   List<String> _convertMoveAsTextIntoComponents(String moveAsText) {

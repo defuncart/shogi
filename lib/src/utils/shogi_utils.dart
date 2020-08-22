@@ -10,7 +10,8 @@ import '../utils/package_utils.dart';
 /// A class of utils methods used when constructing a shogi board
 class ShogiUtils {
   /// Converts a SFEN ascii string into a `GameBoard`
-  static GameBoard sfenStringToGameBoard(String string) => SFENConverter.sfenToGameBoard(string);
+  static GameBoard sfenStringToGameBoard(String string) =>
+      SFENConverter.sfenToGameBoard(string);
 
   /// Converts an array of strings [K-59, ...] into a `GameBoard`
   static GameBoard stringArrayToGameBoard(
@@ -31,7 +32,9 @@ class ShogiUtils {
       // split string ☗:K-59 into [☗, K-59], if applicable
       var components = strPiece.split(':');
       if (components.length > 1) {
-        player = components[0] == BoardConfig.gote ? PlayerType.gote : PlayerType.sente;
+        player = components[0] == BoardConfig.gote
+            ? PlayerType.gote
+            : PlayerType.sente;
         strPiece = components[1];
       }
 
@@ -69,7 +72,8 @@ class ShogiUtils {
     final newPieces = <BoardPiece>[];
     for (final piece in originalPieces) {
       final newRow = (piece.position.row - BoardConfig.numberRows).abs() + 1;
-      final newColumn = (piece.position.column - BoardConfig.numberColumns).abs() + 1;
+      final newColumn =
+          (piece.position.column - BoardConfig.numberColumns).abs() + 1;
 
       newPieces.add(
         BoardPiece(
@@ -86,5 +90,6 @@ class ShogiUtils {
   }
 
   /// The initial board
-  static final initialBoard = sfenStringToGameBoard(StaticGameBoards.sfenInitialBoardString);
+  static final initialBoard =
+      sfenStringToGameBoard(StaticGameBoards.sfenInitialBoardString);
 }

@@ -49,17 +49,20 @@ extension PieceTypeExtensions on PieceType {
   };
 
   /// A map of promoted piece types and their standard equivalents
-  static final convertPromotedPieceTypeToPieceType = convertPieceTypeToPromotedPieceType.map((k, v) => MapEntry(v, k));
+  static final convertPromotedPieceTypeToPieceType =
+      convertPieceTypeToPromotedPieceType.map((k, v) => MapEntry(v, k));
 
   /// Whether the piece type can be promoted
   bool get canBePromoted => piecesWhichCanBePromoted.contains(this);
 
   /// Returns a promoted equivalent for the piece type. Returns `null` if the piece type cannot be promoted.
-  PieceType promote() => canBePromoted ? convertPieceTypeToPromotedPieceType[this] : null;
+  PieceType promote() =>
+      canBePromoted ? convertPieceTypeToPromotedPieceType[this] : null;
 
   /// Whether the piece type is promoted
   bool get isPromoted => promotedPieces.contains(this);
 
   /// Returns a normalized equivalent for the piece type (i.e. PieceType.pawnPromoted => PieceType.pawn).
-  PieceType normalize() => isPromoted ? convertPromotedPieceTypeToPieceType[this] : this;
+  PieceType normalize() =>
+      isPromoted ? convertPromotedPieceTypeToPieceType[this] : this;
 }

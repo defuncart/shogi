@@ -14,12 +14,10 @@ To import this package, simply add `shogi` as a dependency in `pubspec.yaml`
 
 ```yaml
 dependencies:
-  flutter:
-    sdk: flutter
   shogi:
 ```
 
-Note that this package requires dart >= 2.6.0.
+Note that this package requires dart >= 2.7.0.
 
 ### Example
 
@@ -82,7 +80,7 @@ Piece movement is denoted by `{Player}{PieceType}{CurrentPosition}{Movement}{Tar
 | Type            | Example  | Explanation                                                                   |
 |-----------------|----------|-------------------------------------------------------------------------------|
 | Simple movement | ☗P77-76  | Sente's pawn moves from 77 to 76.                                             |
-| Capture         | ☗P75x74  | Sente's pawn moves from 77 to 74 and captures the piece at 74.                |
+| Capture         | ☗P75x74  | Sente's pawn moves from 75 to 74 and captures the piece at 74.                |
 | Drop            | ☗S*34    | Sente's drops a silver from in hand onto 34.                                  |
 | Combined        | ☗S34x33+ | Sente's silver moves from 34 to 33, captures the piece at 33 and is promoted. |
 

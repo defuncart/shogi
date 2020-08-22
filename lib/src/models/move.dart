@@ -45,8 +45,12 @@ class Move {
         assert(isPromotion != null),
         assert(isCapture != null),
         assert(isDrop != null),
-        assert(!(isPromotion && isDrop)), //a move cannot have isDrop and isPromotion
-        assert(isDrop ? from == null : from != null); //if isDrop, from should not be null otherwise should be null
+        assert(!(isPromotion &&
+            isDrop)), //a move cannot have isDrop and isPromotion
+        assert(isDrop
+            ? from == null
+            : from !=
+                null); //if isDrop, from should not be null otherwise should be null
 
   @override
   bool operator ==(dynamic other) =>
