@@ -1,4 +1,4 @@
-import '../models/move.dart';
+import '../../models/move.dart';
 
 /// An interface which different notations (kifu, custom) can implement
 abstract class INotationConverter {
