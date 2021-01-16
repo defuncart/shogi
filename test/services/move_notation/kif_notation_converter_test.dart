@@ -1,0 +1,72 @@
+import 'package:shogi/shogi.dart';
+import 'package:shogi/src/services/move_notation/kif_notation_converter.dart';
+import 'package:test/test.dart';
+
+void main() {
+  final converter = KIFNotationConverter();
+
+  test('', () {
+    final kif = '''
+手合割：平手
+先手：
+後手：
+
+手数----指手----消費時間--
+   1 ７六歩(77)
+   2 ３四歩(33)
+   3 ２二角成(88)
+   4 同　銀(31)
+   5 １五角打
+''';
+    final moves = converter.movesFromFile(kif);
+    expect(moves, isNotNull);
+    expect(moves.length, 5);
+    expect(moves, [
+      Move(
+        player: PlayerType.sente,
+        piece: PieceType.pawn,
+        from: Position.fromString('77'),
+        to: Position.fromString('76'),
+        isCapture: false,
+        isDrop: false,
+        isPromotion: false,
+      ),
+      Move(
+        player: PlayerType.gote,
+        piece: PieceType.pawn,
+        from: Position.fromString('33'),
+        to: Position.fromString('34'),
+        isCapture: false,
+        isDrop: false,
+        isPromotion: false,
+      ),
+      Move(
+        player: PlayerType.sente,
+        piece: PieceType.bishop,
+        from: Position.fromString('88'),
+        to: Position.fromString('22'),
+        isCapture: true,
+        isDrop: false,
+        isPromotion: true,
+      ),
+      Move(
+        player: PlayerType.gote,
+        piece: PieceType.silver,
+        from: Position.fromString('31'),
+        to: Position.fromString('22'),
+        isCapture: true,
+        isDrop: false,
+        isPromotion: false,
+      ),
+      Move(
+        player: PlayerType.sente,
+        piece: PieceType.bishop,
+        from: null,
+        to: Position.fromString('15'),
+        isCapture: false,
+        isDrop: true,
+        isPromotion: false,
+      ),
+    ]);
+  });
+}
