@@ -200,7 +200,7 @@ class KIFNotationConverter implements INotationConverter {
       final movesAsText = <String>[];
       for (final line in lines) {
         final moveRegex = RegExp(
-            r'\d\s[１２３４５６７８９一二三四五六七八九同投了\s]+[歩香桂銀金角飛玉王と杏圭全馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
+            r'\d\s[１２３４５６７８９一二三四五六七八九同\s]+[歩香桂銀金角飛玉王と杏圭全馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
         final moveAsText = moveRegex.firstMatch(line)?.group(0);
         if (moveAsText != null) {
           movesAsText.add(moveAsText);
