@@ -5,6 +5,7 @@ export 'src/configs/static_game_boards.dart';
 export 'src/enums/piece_type.dart';
 export 'src/enums/player_type.dart';
 export 'src/models/board_piece.dart';
+export 'src/models/game.dart';
 export 'src/models/game_board.dart';
 export 'src/models/move.dart';
 export 'src/models/position.dart';
