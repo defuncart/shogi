@@ -156,7 +156,7 @@ class KIFNotationConverter implements INotationConverter {
   /// 4. movement type, i.e. 打 (optional)
   /// 5. from, assumed to be two digits i.e. 11 (optional)
   static final _regExp = RegExp(
-      r'([１２３４５６７８９][一二三四五六七八九同]|同\s)([歩香桂銀金角飛玉王と杏圭全馬龍])(成)*(打)*(\((\d\d)\))*');
+      r'([１２３４５６７８９][一二三四五六七八九]|同\s)([歩香桂銀金角飛玉王と杏圭全馬龍])(成)*(打)*(\((\d\d)\))*');
 
   /// The number of groups captured by `_regExp`
   static int get _numberCaptureGroups => _CaptureGroup.values.length;
@@ -175,6 +175,7 @@ class KIFNotationConverter implements INotationConverter {
     return null;
   }
 
+  /// Determines the game's winner
   PlayerType determineWinner(String file) {
     if (file != null) {
       final line = file.split('\n').firstWhere(
@@ -187,6 +188,26 @@ class KIFNotationConverter implements INotationConverter {
           return lineNumber % 2 == 1 ? PlayerType.gote : PlayerType.sente;
         }
       }
+    }
+
+    return null;
+  }
+
+  /// Parses a list of moves as text from file
+  List<String> movesAsText(String file) {
+    if (file != null) {
+      final lines = _determineMoves(file);
+      final movesAsText = <String>[];
+      for (final line in lines) {
+        final moveRegex = RegExp(
+            r'\d\s[１２３４５６７８９一二三四五六七八九同投了\s]+[歩香桂銀金角飛玉王と杏圭全馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
+        final moveAsText = moveRegex.firstMatch(line)?.group(0);
+        if (moveAsText != null) {
+          movesAsText.add(moveAsText);
+        }
+      }
+
+      return movesAsText;
     }
 
     return null;
