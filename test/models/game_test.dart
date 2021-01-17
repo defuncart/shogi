@@ -34,4 +34,30 @@ void main() {
     final game = Game.fromKif('bla');
     expect(game, isNull);
   });
+
+  test('Equality', () {
+    final move = Move(
+      player: PlayerType.sente,
+      piece: PieceType.pawn,
+      from: Position.fromString('77'),
+      to: Position.fromString('76'),
+    );
+    final game1 = Game(
+      gameBoards: [
+        ShogiUtils.initialBoard,
+        GameEngine.makeMove(ShogiUtils.initialBoard, move)
+      ],
+      moves: [move],
+    );
+    final game2 = Game(
+      gameBoards: [
+        ShogiUtils.initialBoard,
+        GameEngine.makeMove(ShogiUtils.initialBoard, move)
+      ],
+      moves: [move],
+    );
+    expect(game1, isNotNull);
+    expect(game2, isNotNull);
+    expect(game1, game2);
+  });
 }

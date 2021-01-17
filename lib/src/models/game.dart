@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import '../enums/player_type.dart';
 import '../services/game_engine.dart';
 import '../services/move_notation/kif_notation_converter.dart';
+import '../utils/dart_utils.dart';
 import '../utils/shogi_utils.dart';
 import 'game_board.dart';
 import 'move.dart';
@@ -50,4 +51,17 @@ class Game {
 
     return null;
   }
+
+  @override
+  bool operator ==(dynamic other) =>
+      other is Game &&
+      DartUtils.listEquals(gameBoards, other.gameBoards) &&
+      DartUtils.listEquals(moves, other.moves) &&
+      winner == other.winner;
+
+  @override
+  int get hashCode => gameBoards.hashCode ^ winner.hashCode;
+
+  @override
+  String toString() => 'Game with ${moves.length} moves.';
 }
