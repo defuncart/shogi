@@ -4,6 +4,7 @@ import '../configs/board_config.dart';
 import '../enums/player_type.dart';
 import '../extensions/board_piece_extensions.dart';
 import '../extensions/list_board_pieces_extensions.dart';
+import '../utils/dart_utils.dart';
 import 'board_piece.dart';
 
 /// A model representing a shogi game board
@@ -32,11 +33,6 @@ class GameBoard {
                 ?.toList() ??
             const [];
 
-  /// Returns a string representation of the model
-  @override
-  String toString() =>
-      '{boardPieces: $boardPieces, sentePiecesInHand: $sentePiecesInHand, gotePiecesInHand: $gotePiecesInHand}';
-
   /// Prints the game board to console using lower case for gote and upper case for sente
   void printToConsole() {
     const space = ' ';
@@ -63,4 +59,21 @@ class GameBoard {
 
     print(buffer.toString());
   }
+
+  @override
+  bool operator ==(dynamic other) =>
+      other is GameBoard &&
+      DartUtils.listEquals(boardPieces, other.boardPieces) &&
+      DartUtils.listEquals(sentePiecesInHand, other.sentePiecesInHand) &&
+      DartUtils.listEquals(gotePiecesInHand, other.gotePiecesInHand);
+
+  @override
+  int get hashCode =>
+      boardPieces.hashCode ^
+      sentePiecesInHand.hashCode ^
+      gotePiecesInHand.hashCode;
+
+  @override
+  String toString() =>
+      '{boardPieces: $boardPieces, sentePiecesInHand: $sentePiecesInHand, gotePiecesInHand: $gotePiecesInHand}';
 }

@@ -20,14 +20,6 @@ class GameEngine {
       final droppedPiece =
           list.firstWhere((piece) => piece.pieceType == move.piece);
       list.remove(droppedPiece);
-
-      boardPieces.add(
-        BoardPiece(
-          player: move.player,
-          pieceType: move.piece,
-          position: move.to,
-        ),
-      );
     } else {
       if (move.isCapture) {
         final capturedPiece =

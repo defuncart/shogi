@@ -1,8 +1,8 @@
-import '../configs/board_config.dart';
-import '../enums/player_type.dart';
-import '../models/move.dart';
-import '../models/position.dart';
-import '../utils/package_utils.dart';
+import '../../configs/board_config.dart';
+import '../../enums/player_type.dart';
+import '../../models/move.dart';
+import '../../models/position.dart';
+import '../../utils/package_utils.dart';
 import 'i_notation_converter.dart';
 
 /// An enum describing the types of capture groups
@@ -99,13 +99,13 @@ class CustomNotationConverter implements INotationConverter {
       r'([☗☖])(P|L|N|S|G|K|B|R|\+P|\+L|\+N|\+S|\+B|\+R)(\d{2})?([-\*x])(\d{2})(\+)?');
 
   /// The number of groups captured by `_regExp`
-  static const _numberCaptureGroups = 6;
+  static int get _numberCaptureGroups => _CaptureGroup.values.length;
 
   /// A list of group indeces from 1 to 6, used to get all matched groups from `_regExp`
   static final _groupIndeces =
       List.generate(_numberCaptureGroups, (index) => index + 1);
 
-  /// Converts a move `☗S34x33+` into `[☗, S, 34, x,33, +]`
+  /// Converts a move `☗S34x33+` into `[☗, S, 34, x, 33, +]`
   List<String> _convertMoveAsTextIntoComponents(String moveAsText) {
     final matches = _regExp.allMatches(moveAsText);
     return matches.length == 1 ? matches?.first?.groups(_groupIndeces) : null;

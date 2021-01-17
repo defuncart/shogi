@@ -31,6 +31,9 @@ class Move {
   /// Whether the move drops a piece onto the board
   final bool isDrop;
 
+  /// A representation of the move in kif notation
+  final String asKif;
+
   const Move({
     @required this.player,
     @required this.piece,
@@ -39,6 +42,7 @@ class Move {
     this.isPromotion = false,
     this.isCapture = false,
     this.isDrop = false,
+    this.asKif,
   })  : assert(player != null),
         assert(piece != null),
         assert(to != null),
@@ -60,12 +64,14 @@ class Move {
       to == other.to &&
       isPromotion == other.isPromotion &&
       isCapture == other.isCapture &&
-      isDrop == other.isDrop;
+      isDrop == other.isDrop &&
+      asKif == other.asKif;
 
   @override
   int get hashCode => player.hashCode ^ from.hashCode ^ to.hashCode;
 
   @override
   String toString() =>
+      asKif ??
       '${DartUtils.describeEnum(player)} with ${DartUtils.describeEnum(piece)} from $from to $to. isPromotion: $isPromotion, isCapture: $isCapture, isDrop: $isDrop.';
 }
