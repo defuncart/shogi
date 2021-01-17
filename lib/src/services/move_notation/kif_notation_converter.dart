@@ -111,6 +111,7 @@ class KIFNotationConverter implements INotationConverter {
               isCapture: isCapture,
               isDrop: isDrop,
               isPromotion: isPromotion,
+              asKif: _cleanKif(line),
             ),
           );
         }
@@ -193,21 +194,12 @@ class KIFNotationConverter implements INotationConverter {
     return null;
   }
 
-  /// Parses a list of moves as text from file
-  List<String> movesAsText(String file) {
-    if (file != null) {
-      final lines = _determineMoves(file);
-      final movesAsText = <String>[];
-      for (final line in lines) {
-        final moveRegex = RegExp(
-            r'\d\s[１２３４５６７８９一二三四五六七八九同\s]+[歩香桂銀金角飛玉王と杏圭全馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
-        final moveAsText = moveRegex.firstMatch(line)?.group(0);
-        if (moveAsText != null) {
-          movesAsText.add(moveAsText);
-        }
-      }
-
-      return movesAsText;
+  /// Cleans a line of the form `   1 ７六歩(77) (00:00:00)` into `1 ７六歩(77)`
+  String _cleanKif(String line) {
+    if (line != null) {
+      final moveRegex = RegExp(
+          r'\d\s[１２３４５６７８９一二三四五六七八九同\s]+[歩香桂銀金角飛玉王と杏圭全馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
+      return moveRegex.firstMatch(line)?.group(0);
     }
 
     return null;

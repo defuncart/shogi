@@ -29,6 +29,7 @@ void main() {
         isCapture: false,
         isDrop: false,
         isPromotion: false,
+        asKif: '1 ７六歩(77)',
       ),
       Move(
         player: PlayerType.gote,
@@ -38,6 +39,7 @@ void main() {
         isCapture: false,
         isDrop: false,
         isPromotion: false,
+        asKif: '2 ３四歩(33)',
       ),
       Move(
         player: PlayerType.sente,
@@ -47,6 +49,7 @@ void main() {
         isCapture: true,
         isDrop: false,
         isPromotion: true,
+        asKif: '3 ２二角成(88)',
       ),
       Move(
         player: PlayerType.gote,
@@ -56,6 +59,7 @@ void main() {
         isCapture: true,
         isDrop: false,
         isPromotion: false,
+        asKif: '4 同　銀(31)',
       ),
       Move(
         player: PlayerType.sente,
@@ -65,6 +69,7 @@ void main() {
         isCapture: false,
         isDrop: true,
         isPromotion: false,
+        asKif: '5 １五角打',
       ),
     ]);
   });
@@ -96,23 +101,5 @@ void main() {
 ''';
     final winner = converter.determineWinner(kifu);
     expect(winner, PlayerType.gote);
-  });
-
-  test('movesAsText', () {
-    final kifu = '''
-手合割：平手
-先手
-後手　
-
-手数----指手----消費時間--
-   1 ７六歩(77)
-   2 ３四歩(33)
-   3 ２二角成(88)
-   4 同　銀(31)
-   5 投了
-''';
-    final movesAsText = converter.movesAsText(kifu);
-    expect(movesAsText, isNotNull);
-    expect(movesAsText.length, 4);
   });
 }
