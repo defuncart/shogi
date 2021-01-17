@@ -174,4 +174,21 @@ class KIFNotationConverter implements INotationConverter {
 
     return null;
   }
+
+  PlayerType determineWinner(String file) {
+    if (file != null) {
+      final line = file.split('\n').firstWhere(
+            (element) => element.contains('投了'),
+            orElse: () => null,
+          );
+      if (line != null) {
+        final lineNumber = int.tryParse(line.trimLeft().split(' ').first);
+        if (lineNumber != null) {
+          return lineNumber % 2 == 1 ? PlayerType.gote : PlayerType.sente;
+        }
+      }
+    }
+
+    return null;
+  }
 }
