@@ -19,6 +19,9 @@ void main() {
     expect(game, isNotNull);
     expect(game.gameBoards, isNotNull);
     expect(game.gameBoards, isNotEmpty);
+    expect(game.movesAsText, isNotNull);
+    expect(game.movesAsText, isNotEmpty);
+    expect(game.gameBoards.length, game.movesAsText.length + 1);
     expect(game.winner, isNotNull);
   });
 
