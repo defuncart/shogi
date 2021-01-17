@@ -1,12 +1,11 @@
 import 'package:shogi/shogi.dart';
-import 'package:shogi/src/services/move_notation/kif_notation_converter.dart';
 import 'package:test/test.dart';
 
 void main() {
   final converter = KIFNotationConverter();
 
-  test('', () {
-    final kif = '''
+  test('Valid format', () {
+    final kifu = '''
 手合割：平手
 先手：
 後手：
@@ -18,7 +17,7 @@ void main() {
    4 同　銀(31)
    5 １五角打
 ''';
-    final moves = converter.movesFromFile(kif);
+    final moves = converter.movesFromFile(kifu);
     expect(moves, isNotNull);
     expect(moves.length, 5);
     expect(moves, [
@@ -68,5 +67,17 @@ void main() {
         isPromotion: false,
       ),
     ]);
+  });
+
+  test('Invalid format', () {
+    final kifu = '''
+初期局面
+1: ☗７六歩
+    2 歩(33)
+    3 ２二成(88)
+4: ☖同銀
+''';
+    final moves = converter.movesFromFile(kifu);
+    expect(moves, isEmpty);
   });
 }

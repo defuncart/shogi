@@ -60,6 +60,17 @@ class KIFNotationConverter implements INotationConverter {
       for (final line in lines) {
         final components = _convertMoveAsTextIntoComponents(line);
         if (components != null) {
+          if (components[_CaptureGroup.to.index] == null) {
+            break;
+          }
+          if (components[_CaptureGroup.piece.index] == null) {
+            break;
+          }
+          if (components[_CaptureGroup.movement.index] == null &&
+              components[_CaptureGroup.from.index] == null) {
+            break;
+          }
+
           int row, column;
           var isCapture = false;
           if (components[_CaptureGroup.to.index][0] == _sameSymbol) {
