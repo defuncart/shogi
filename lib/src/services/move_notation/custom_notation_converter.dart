@@ -38,6 +38,7 @@ class CustomNotationConverter implements INotationConverter {
   ParsedGame parseGame(String file) => ParsedGame(
         initalGameBoard: ShogiUtils.initialBoard,
         moves: movesFromFile(file),
+        winner: determineWinner(file),
       );
 
   /// Converts a file of the form
@@ -121,4 +122,9 @@ class CustomNotationConverter implements INotationConverter {
     final matches = _regExp.allMatches(moveAsText);
     return matches.length == 1 ? matches?.first?.groups(_groupIndeces) : null;
   }
+
+  /// Determines the game's winner
+  @override
+  @visibleForTesting
+  PlayerType determineWinner(String file) => null;
 }

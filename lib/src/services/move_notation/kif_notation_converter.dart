@@ -45,6 +45,7 @@ class KIFNotationConverter implements INotationConverter {
   ParsedGame parseGame(String file) => ParsedGame(
         initalGameBoard: ShogiUtils.initialBoard,
         moves: movesFromFile(file),
+        winner: determineWinner(file),
       );
 
   /// Converts a file of the form
@@ -187,6 +188,8 @@ class KIFNotationConverter implements INotationConverter {
   }
 
   /// Determines the game's winner
+  @override
+  @visibleForTesting
   PlayerType determineWinner(String file) {
     if (file != null) {
       final line = file.split('\n').firstWhere(

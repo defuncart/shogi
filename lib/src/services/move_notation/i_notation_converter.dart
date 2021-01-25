@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../../enums/player_type.dart';
 import '../../models/move.dart';
 import '../../models/parsed_game.dart';
 
@@ -11,4 +12,8 @@ abstract class INotationConverter {
   /// Converts a text file into a list of moves
   @visibleForTesting
   List<Move> movesFromFile(String file);
+
+  /// Determines the game's winner
+  @visibleForTesting
+  PlayerType determineWinner(String file);
 }
