@@ -1,6 +1,7 @@
 import '../../configs/board_config.dart';
 import '../../enums/player_type.dart';
 import '../../models/move.dart';
+import '../../models/parsed_game.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
 import 'i_notation_converter.dart';
@@ -29,6 +30,9 @@ class CustomNotationConverter implements INotationConverter {
 
   /// The symbol used to represent promotion
   static const _promotionSymbol = '+';
+
+  @override
+  ParsedGame parseGame(String file) => throw UnimplementedError();
 
   /// Converts a game of the form
   ///

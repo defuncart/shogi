@@ -1,9 +1,10 @@
-import 'package:shogi/shogi.dart';
-
 import '../../enums/player_type.dart';
 import '../../models/move.dart';
+import '../../models/parsed_game.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
+import '../../utils/shogi_utils.dart';
+import '../game_engine.dart';
 import 'i_notation_converter.dart';
 
 /// An enum describing the types of capture groups
@@ -37,6 +38,9 @@ class KIFNotationConverter implements INotationConverter {
 
   /// The symbol used to represent promotion
   static const _promotionSymbol = '成';
+
+  @override
+  ParsedGame parseGame(String file) => throw UnimplementedError();
 
   /// Converts a game of the form
   ///
