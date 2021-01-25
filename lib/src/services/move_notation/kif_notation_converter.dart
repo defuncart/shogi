@@ -3,12 +3,11 @@ import 'package:meta/meta.dart';
 import '../../enums/player_type.dart';
 import '../../models/game_board.dart';
 import '../../models/move.dart';
-import '../../models/parsed_game.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
 import '../../utils/shogi_utils.dart';
 import '../game_engine.dart';
-import 'i_notation_converter.dart';
+import 'base_notation_converter.dart';
 
 /// An enum describing the types of capture groups
 enum _CaptureGroup {
@@ -32,7 +31,7 @@ enum _CaptureGroup {
 */
 
 /// A service which uses a kif notation
-class KIFNotationConverter implements INotationConverter {
+class KIFNotationConverter extends BaseNotationConverter {
   /// The symbol used when to coords are same as last move
   static const _sameSymbol = '同';
 
@@ -42,14 +41,6 @@ class KIFNotationConverter implements INotationConverter {
   /// The symbol used to represent promotion
   static const _promotionSymbol = '成';
 
-  @override
-  ParsedGame parseGame(String file) => ParsedGame(
-        initalGameBoard: determineInitialBoard(file),
-        moves: movesFromFile(file),
-        winner: determineWinner(file),
-      );
-
-  /// Determines the initial board
   @override
   @visibleForTesting
   GameBoard determineInitialBoard(String file) => ShogiUtils.initialBoard;
@@ -193,7 +184,6 @@ class KIFNotationConverter implements INotationConverter {
     return null;
   }
 
-  /// Determines the game's winner
   @override
   @visibleForTesting
   PlayerType determineWinner(String file) {

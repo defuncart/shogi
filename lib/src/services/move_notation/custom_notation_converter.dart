@@ -4,10 +4,9 @@ import '../../../shogi.dart';
 import '../../configs/board_config.dart';
 import '../../enums/player_type.dart';
 import '../../models/move.dart';
-import '../../models/parsed_game.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
-import 'i_notation_converter.dart';
+import 'base_notation_converter.dart';
 
 /// An enum describing the types of capture groups
 enum _CaptureGroup {
@@ -20,7 +19,7 @@ enum _CaptureGroup {
 }
 
 /// A service which uses a custom notation developed for this package
-class CustomNotationConverter implements INotationConverter {
+class CustomNotationConverter extends BaseNotationConverter {
   /// The symbol used to represent simple movement
   /// ignore: unused_field
   static const _moveSymbol = '-';
@@ -34,14 +33,6 @@ class CustomNotationConverter implements INotationConverter {
   /// The symbol used to represent promotion
   static const _promotionSymbol = '+';
 
-  @override
-  ParsedGame parseGame(String file) => ParsedGame(
-        initalGameBoard: determineInitialBoard(file),
-        moves: movesFromFile(file),
-        winner: determineWinner(file),
-      );
-
-  /// Determines the initial board
   @override
   @visibleForTesting
   GameBoard determineInitialBoard(String file) => ShogiUtils.initialBoard;
@@ -128,7 +119,6 @@ class CustomNotationConverter implements INotationConverter {
     return matches.length == 1 ? matches?.first?.groups(_groupIndeces) : null;
   }
 
-  /// Determines the game's winner
   @override
   @visibleForTesting
   PlayerType determineWinner(String file) => null;
