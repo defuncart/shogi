@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import '../../enums/player_type.dart';
 import '../../models/move.dart';
 import '../../models/parsed_game.dart';
@@ -42,17 +44,18 @@ class KIFNotationConverter implements INotationConverter {
   @override
   ParsedGame parseGame(String file) => throw UnimplementedError();
 
-  /// Converts a game of the form
+  /// Converts a file of the form
   ///
   /// ```
   /// 1 ７六歩(77)
   /// 2 ３四歩(33)
   /// ```
   ///
-  /// to a format that the game engine can understand.
+  /// to a list of game moves.
   ///
   /// Assumes that Sente and Gote alternate moves.
   @override
+  @visibleForTesting
   List<Move> movesFromFile(String file) {
     const _cols = ['１', '２', '３', '４', '５', '６', '７', '８', '９'];
     const _rows = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];

@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import '../../models/move.dart';
 import '../../models/parsed_game.dart';
 
@@ -6,7 +8,7 @@ abstract class INotationConverter {
   /// Parses a game from a text file
   ParsedGame parseGame(String file);
 
-  // TODO depricated
-  /// Converts a game from text into a list of moves
+  /// Converts a text file into a list of moves
+  @visibleForTesting
   List<Move> movesFromFile(String file);
 }

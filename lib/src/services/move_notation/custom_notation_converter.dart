@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import '../../configs/board_config.dart';
 import '../../enums/player_type.dart';
 import '../../models/move.dart';
@@ -34,15 +36,16 @@ class CustomNotationConverter implements INotationConverter {
   @override
   ParsedGame parseGame(String file) => throw UnimplementedError();
 
-  /// Converts a game of the form
+  /// Converts a file of the form
   ///
   /// ```
   /// 1: ☗P77-76
   /// 2: ☗S79-68
   /// ```
   ///
-  /// to a format that the game engine can understand.
+  /// to a list of game moves.
   @override
+  @visibleForTesting
   List<Move> movesFromFile(String file) {
     if (file != null) {
       /// firstly split file into a list of moves, ignoring any prepending number indicators
