@@ -1,10 +1,10 @@
-import '../configs/board_config.dart';
-import '../enums/player_type.dart';
-import '../extensions/string_extensions.dart';
-import '../models/board_piece.dart';
-import '../models/game_board.dart';
-import '../models/position.dart';
-import '../utils/package_utils.dart';
+import '../../configs/board_config.dart';
+import '../../enums/player_type.dart';
+import '../../extensions/string_extensions.dart';
+import '../../models/board_piece.dart';
+import '../../models/game_board.dart';
+import '../../models/position.dart';
+import '../../utils/package_utils.dart';
 
 /// A service which converts to/from SFEN notation for a static game position
 class SFENConverter {

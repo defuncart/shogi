@@ -4,7 +4,7 @@ import '../enums/player_type.dart';
 import '../models/board_piece.dart';
 import '../models/game_board.dart';
 import '../models/position.dart';
-import '../services/sfen_converter.dart';
+import '../services/board_notation/sfen_converter.dart';
 import '../utils/package_utils.dart';
 
 /// A class of utils methods used when constructing a shogi board
