@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
 import '../../enums/player_type.dart';
+import '../../models/game_board.dart';
 import '../../models/move.dart';
 import '../../models/parsed_game.dart';
 import '../../models/position.dart';
@@ -43,10 +44,15 @@ class KIFNotationConverter implements INotationConverter {
 
   @override
   ParsedGame parseGame(String file) => ParsedGame(
-        initalGameBoard: ShogiUtils.initialBoard,
+        initalGameBoard: determineInitialBoard(file),
         moves: movesFromFile(file),
         winner: determineWinner(file),
       );
+
+  /// Determines the initial board
+  @override
+  @visibleForTesting
+  GameBoard determineInitialBoard(String file) => ShogiUtils.initialBoard;
 
   /// Converts a file of the form
   ///

@@ -36,10 +36,15 @@ class CustomNotationConverter implements INotationConverter {
 
   @override
   ParsedGame parseGame(String file) => ParsedGame(
-        initalGameBoard: ShogiUtils.initialBoard,
+        initalGameBoard: determineInitialBoard(file),
         moves: movesFromFile(file),
         winner: determineWinner(file),
       );
+
+  /// Determines the initial board
+  @override
+  @visibleForTesting
+  GameBoard determineInitialBoard(String file) => ShogiUtils.initialBoard;
 
   /// Converts a file of the form
   ///
