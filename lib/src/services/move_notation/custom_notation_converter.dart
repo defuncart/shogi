@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../../../shogi.dart';
 import '../../configs/board_config.dart';
 import '../../enums/player_type.dart';
 import '../../models/move.dart';
@@ -34,7 +35,10 @@ class CustomNotationConverter implements INotationConverter {
   static const _promotionSymbol = '+';
 
   @override
-  ParsedGame parseGame(String file) => throw UnimplementedError();
+  ParsedGame parseGame(String file) => ParsedGame(
+        initalGameBoard: ShogiUtils.initialBoard,
+        moves: movesFromFile(file),
+      );
 
   /// Converts a file of the form
   ///

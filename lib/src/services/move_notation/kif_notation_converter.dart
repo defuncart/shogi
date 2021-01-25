@@ -42,7 +42,10 @@ class KIFNotationConverter implements INotationConverter {
   static const _promotionSymbol = '成';
 
   @override
-  ParsedGame parseGame(String file) => throw UnimplementedError();
+  ParsedGame parseGame(String file) => ParsedGame(
+        initalGameBoard: ShogiUtils.initialBoard,
+        moves: movesFromFile(file),
+      );
 
   /// Converts a file of the form
   ///
