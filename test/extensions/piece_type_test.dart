@@ -65,4 +65,20 @@ void main() {
     expect(PieceType.lancePromoted.normalize(), PieceType.lance);
     expect(PieceType.pawnPromoted.normalize(), PieceType.pawn);
   });
+
+  test('canBeInHand', () {
+    expect(PieceType.king.canBeInHand, isFalse);
+    expect(PieceType.rook.canBeInHand, isTrue);
+    expect(PieceType.bishop.canBeInHand, isTrue);
+    expect(PieceType.gold.canBeInHand, isTrue);
+    expect(PieceType.silver.canBeInHand, isTrue);
+    expect(PieceType.knight.canBeInHand, isTrue);
+    expect(PieceType.lance.canBeInHand, isTrue);
+    expect(PieceType.pawn.canBeInHand, isTrue);
+    expect(PieceType.rookPromoted.canBeInHand, isFalse);
+    expect(PieceType.bishopPromoted.canBeInHand, isFalse);
+    expect(PieceType.silverPromoted.canBeInHand, isFalse);
+    expect(PieceType.lancePromoted.canBeInHand, isFalse);
+    expect(PieceType.pawnPromoted.canBeInHand, isFalse);
+  });
 }

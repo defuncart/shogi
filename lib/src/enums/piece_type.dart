@@ -65,4 +65,7 @@ extension PieceTypeExtensions on PieceType {
   /// Returns a normalized equivalent for the piece type (i.e. PieceType.pawnPromoted => PieceType.pawn).
   PieceType normalize() =>
       isPromoted ? convertPromotedPieceTypeToPieceType[this] : this;
+
+  /// Returns whether a piece can be in hand
+  bool get canBeInHand => !isPromoted && this != PieceType.king;
 }
