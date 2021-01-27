@@ -79,4 +79,75 @@ class PackageUtils {
           .where((p) => p.value == pieceString)
           .first
           .key;
+
+  static const _mapArabicJapaneseDigits = {
+    1: '１',
+    2: '２',
+    3: '３',
+    4: '４',
+    5: '５',
+    6: '６',
+    7: '７',
+    8: '８',
+    9: '９',
+  };
+
+  static final _mapArabicJapaneseDigitsInverse =
+      _mapArabicJapaneseDigits.map((k, v) => MapEntry(v, k));
+
+  static const _mapArabicJapaneseKanji = {
+    1: '一',
+    2: '二',
+    3: '三',
+    4: '四',
+    5: '五',
+    6: '六',
+    7: '七',
+    8: '八',
+    9: '九',
+    10: '十',
+    11: '十一',
+    12: '十二',
+    13: '十三',
+    14: '十四',
+    15: '十五',
+    16: '十六',
+    17: '十七',
+    18: '十八',
+  };
+
+  static final _mapArabicJapaneseKanjiInverse =
+      _mapArabicJapaneseKanji.map((k, v) => MapEntry(v, k));
+
+  static String arabicToJapaneseDigit(int number) {
+    if (number < 1 || number > 9) {
+      throw ArgumentError('$number isn\'t a valid argument');
+    }
+
+    return _mapArabicJapaneseDigits[number];
+  }
+
+  static int japaneseDigitToArabic(String digit) {
+    if (!_mapArabicJapaneseDigits.containsValue(digit)) {
+      throw ArgumentError('$digit isn\'t a valid argument');
+    }
+
+    return _mapArabicJapaneseDigitsInverse[digit];
+  }
+
+  static String arabicToJapaneseKanji(int number) {
+    if (number < 1 || number > 18) {
+      throw ArgumentError('$number isn\'t a valid argument');
+    }
+
+    return _mapArabicJapaneseKanji[number];
+  }
+
+  static int japaneseKaniToArabic(String digit) {
+    if (!_mapArabicJapaneseKanji.containsValue(digit)) {
+      throw ArgumentError('$digit isn\'t a valid argument');
+    }
+
+    return _mapArabicJapaneseKanjiInverse[digit];
+  }
 }
