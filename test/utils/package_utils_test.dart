@@ -1,8 +1,139 @@
+import 'package:shogi/shogi.dart';
 import 'package:shogi/src/utils/package_utils.dart';
 import 'package:test/test.dart';
 
 void main() {
-  //TODO tests for pieceTypeToString, pieceTypeToDisplayString, pieceStringToType
+  test('pieceTypeToString', () {
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.king, usesJapanese: false),
+      'K',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.rook, usesJapanese: false),
+      'R',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.bishop, usesJapanese: false),
+      'B',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.gold, usesJapanese: false),
+      'G',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.silver, usesJapanese: false),
+      'S',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.knight, usesJapanese: false),
+      'N',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.lance, usesJapanese: false),
+      'L',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.pawn, usesJapanese: false),
+      'P',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.rookPromoted,
+          usesJapanese: false),
+      '+R',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.bishopPromoted,
+          usesJapanese: false),
+      '+B',
+    );
+    expect(
+        PackageUtils.pieceTypeToString(PieceType.silverPromoted,
+            usesJapanese: false),
+        '+S');
+    expect(
+        PackageUtils.pieceTypeToString(PieceType.knightPromoted,
+            usesJapanese: false),
+        '+N');
+    expect(
+        PackageUtils.pieceTypeToString(PieceType.lancePromoted,
+            usesJapanese: false),
+        '+L');
+    expect(
+        PackageUtils.pieceTypeToString(PieceType.pawnPromoted,
+            usesJapanese: false),
+        '+P');
+
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.king, usesJapanese: true),
+      '玉',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.rook, usesJapanese: true),
+      '飛',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.bishop, usesJapanese: true),
+      '角',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.gold, usesJapanese: true),
+      '金',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.silver, usesJapanese: true),
+      '銀',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.knight, usesJapanese: true),
+      '桂',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.lance, usesJapanese: true),
+      '香',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.pawn, usesJapanese: true),
+      '歩',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.rookPromoted,
+          usesJapanese: true),
+      '龍',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.bishopPromoted,
+          usesJapanese: true),
+      '馬',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.silverPromoted,
+          usesJapanese: true),
+      '全',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.knightPromoted,
+          usesJapanese: true),
+      '圭',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.lancePromoted,
+          usesJapanese: true),
+      '杏',
+    );
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.pawnPromoted,
+          usesJapanese: true),
+      'と',
+    );
+
+    expect(
+      PackageUtils.pieceTypeToString(PieceType.king,
+          usesJapanese: true, isSente: false),
+      '王',
+    );
+  });
+
+  //TODO tests for pieceTypeToDisplayString, pieceStringToType
 
   test('arabicToJapaneseDigit', () {
     expect(PackageUtils.arabicToJapaneseDigit(1), '１');
