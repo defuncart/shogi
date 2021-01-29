@@ -18,7 +18,14 @@ class GameBoard {
   /// A list of sente's pieces in hand
   final List<BoardPiece> gotePiecesInHand;
 
-  GameBoard({@required List<BoardPiece> boardPieces})
+  const GameBoard({
+    @required this.boardPieces,
+    @required this.sentePiecesInHand,
+    @required this.gotePiecesInHand,
+  });
+
+  // TODO consider removing
+  GameBoard.fromPieces({@required List<BoardPiece> boardPieces})
       : boardPieces =
             boardPieces?.where((piece) => piece.position != null)?.toList() ??
                 const [],
