@@ -1,12 +1,10 @@
-import 'package:meta/meta.dart';
-
 import '../../../shogi.dart';
 import '../../configs/board_config.dart';
 import '../../enums/player_type.dart';
 import '../../models/move.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
-import 'base_notation_converter.dart';
+import 'i_move_notation_converter.dart';
 
 /// An enum describing the types of capture groups
 enum _CaptureGroup {
@@ -19,7 +17,7 @@ enum _CaptureGroup {
 }
 
 /// A service which uses a custom notation developed for this package
-class CustomNotationConverter extends BaseNotationConverter {
+class CustomNotationConverter implements IMoveNotationConverter {
   /// The symbol used to represent simple movement
   /// ignore: unused_field
   static const _moveSymbol = '-';
@@ -33,10 +31,6 @@ class CustomNotationConverter extends BaseNotationConverter {
   /// The symbol used to represent promotion
   static const _promotionSymbol = '+';
 
-  @override
-  @visibleForTesting
-  GameBoard determineInitialBoard(String file) => ShogiUtils.initialBoard;
-
   /// Converts a file of the form
   ///
   /// ```
@@ -46,7 +40,6 @@ class CustomNotationConverter extends BaseNotationConverter {
   ///
   /// to a list of game moves.
   @override
-  @visibleForTesting
   List<Move> movesFromFile(String file) {
     if (file != null) {
       /// firstly split file into a list of moves, ignoring any prepending number indicators
@@ -120,6 +113,5 @@ class CustomNotationConverter extends BaseNotationConverter {
   }
 
   @override
-  @visibleForTesting
   PlayerType determineWinner(String file) => null;
 }

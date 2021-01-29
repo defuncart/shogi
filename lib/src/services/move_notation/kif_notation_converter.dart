@@ -1,13 +1,10 @@
-import 'package:meta/meta.dart';
-
 import '../../enums/player_type.dart';
-import '../../models/game_board.dart';
 import '../../models/move.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
 import '../../utils/shogi_utils.dart';
 import '../game_engine.dart';
-import 'base_notation_converter.dart';
+import 'i_move_notation_converter.dart';
 
 /// An enum describing the types of capture groups
 enum _CaptureGroup {
@@ -31,7 +28,7 @@ enum _CaptureGroup {
 */
 
 /// A service which uses a kif notation
-class KIFNotationConverter extends BaseNotationConverter {
+class KIFNotationConverter implements IMoveNotationConverter {
   /// The symbol used when to coords are same as last move
   static const _sameSymbol = '同';
 
@@ -40,10 +37,6 @@ class KIFNotationConverter extends BaseNotationConverter {
 
   /// The symbol used to represent promotion
   static const _promotionSymbol = '成';
-
-  @override
-  @visibleForTesting
-  GameBoard determineInitialBoard(String file) => ShogiUtils.initialBoard;
 
   /// Converts a file of the form
   ///
@@ -56,7 +49,6 @@ class KIFNotationConverter extends BaseNotationConverter {
   ///
   /// Assumes that Sente and Gote alternate moves.
   @override
-  @visibleForTesting
   List<Move> movesFromFile(String file) {
     const _cols = ['１', '２', '３', '４', '５', '６', '７', '８', '９'];
     const _rows = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];
@@ -185,7 +177,6 @@ class KIFNotationConverter extends BaseNotationConverter {
   }
 
   @override
-  @visibleForTesting
   PlayerType determineWinner(String file) {
     if (file != null) {
       final line = file.split('\n').firstWhere(
