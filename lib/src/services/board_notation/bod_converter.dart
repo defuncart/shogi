@@ -1,11 +1,11 @@
 import 'package:meta/meta.dart';
-import 'package:shogi/shogi.dart';
 
 import '../../configs/board_config.dart';
 import '../../enums/piece_type.dart';
 import '../../enums/player_type.dart';
 import '../../models/board_piece.dart';
 import '../../models/game_board.dart';
+import '../../models/position.dart';
 import '../../utils/package_utils.dart';
 
 /// A service which converts to/from BOD notation for a static game position
