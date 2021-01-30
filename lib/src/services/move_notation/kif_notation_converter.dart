@@ -57,7 +57,7 @@ class KIFNotationConverter implements IMoveNotationConverter {
     if (file != null) {
       var player = PlayerType.sente;
       final lines = _determineMoves(file);
-      initialBoard ?? ShogiUtils.initialBoard;
+      initialBoard ??= ShogiUtils.initialBoard;
       final moves = <Move>[];
       for (final line in lines) {
         final components = _convertMoveAsTextIntoComponents(line);
