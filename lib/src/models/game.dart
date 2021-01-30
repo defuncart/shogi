@@ -4,7 +4,6 @@ import '../enums/player_type.dart';
 import '../services/game_engine.dart';
 import '../services/parser/game_parser.dart';
 import '../utils/dart_utils.dart';
-import '../utils/shogi_utils.dart';
 import 'game_board.dart';
 import 'move.dart';
 
@@ -33,7 +32,7 @@ class Game {
     final parsedGame = GameParser.fromKif(file);
 
     if (parsedGame != null) {
-      final _gameBoards = [ShogiUtils.initialBoard];
+      final _gameBoards = [parsedGame.initalGameBoard];
       for (final move in parsedGame.moves) {
         _gameBoards.add(
           GameEngine.makeMove(_gameBoards.last, move),
