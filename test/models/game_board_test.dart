@@ -9,9 +9,13 @@ void main() {
       gotePiecesInHand: null,
     );
     expect(gameBoard, isNotNull);
-    expect(gameBoard.boardPieces, isNull);
-    expect(gameBoard.sentePiecesInHand, isNull);
-    expect(gameBoard.gotePiecesInHand, isNull);
+    expect(gameBoard.boardPieces, isNotNull);
+    expect(gameBoard.boardPieces, isEmpty);
+    expect(gameBoard.sentePiecesInHand, isNotNull);
+    expect(gameBoard.sentePiecesInHand, isEmpty);
+    expect(gameBoard.gotePiecesInHand, isNotNull);
+    expect(gameBoard.gotePiecesInHand, isEmpty);
+    expect(gameBoard.isEmpty, isTrue);
   });
 
   test('Empty', () {
@@ -24,6 +28,16 @@ void main() {
     expect(gameBoard.boardPieces, isEmpty);
     expect(gameBoard.sentePiecesInHand, isEmpty);
     expect(gameBoard.gotePiecesInHand, isEmpty);
+    expect(gameBoard.isEmpty, isTrue);
+  });
+
+  test('Empty named constructor', () {
+    final gameBoard = GameBoard.empty();
+    expect(gameBoard, isNotNull);
+    expect(gameBoard.boardPieces, isEmpty);
+    expect(gameBoard.sentePiecesInHand, isEmpty);
+    expect(gameBoard.gotePiecesInHand, isEmpty);
+    expect(gameBoard.isEmpty, isTrue);
   });
 
   test('Equality', () {
@@ -86,5 +100,7 @@ void main() {
     expect(gameBoard1, isNotNull);
     expect(gameBoard2, isNotNull);
     expect(gameBoard1, gameBoard2);
+    expect(gameBoard1.isEmpty, isFalse);
+    expect(gameBoard2.isEmpty, isFalse);
   });
 }
