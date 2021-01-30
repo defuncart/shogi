@@ -32,7 +32,7 @@ class Game {
     final parsedGame = GameParser.fromKif(file);
 
     if (parsedGame != null) {
-      final _gameBoards = [parsedGame.initalGameBoard];
+      final _gameBoards = [parsedGame.initalBoard];
       for (final move in parsedGame.moves) {
         _gameBoards.add(
           GameEngine.makeMove(_gameBoards.last, move),

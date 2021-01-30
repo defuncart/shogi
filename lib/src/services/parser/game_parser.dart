@@ -12,7 +12,7 @@ abstract class GameParser {
 
     if (initialBoard != null && moves != null && moves.isNotEmpty) {
       return ParsedGame(
-        initalGameBoard: initialBoard,
+        initalBoard: initialBoard,
         moves: moves,
         winner: winner,
       );
