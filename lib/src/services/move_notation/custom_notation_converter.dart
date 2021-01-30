@@ -40,7 +40,7 @@ class CustomNotationConverter implements IMoveNotationConverter {
   ///
   /// to a list of game moves.
   @override
-  List<Move> movesFromFile(String file) {
+  List<Move> movesFromFile(String file, {GameBoard initialBoard}) {
     if (file != null) {
       /// firstly split file into a list of moves, ignoring any prepending number indicators
       final movesAsText = file.replaceAll(RegExp(r'\d+\:\s'), '').split('\n');

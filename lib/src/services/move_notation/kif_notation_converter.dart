@@ -1,4 +1,5 @@
 import '../../enums/player_type.dart';
+import '../../models/game_board.dart';
 import '../../models/move.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
@@ -49,13 +50,14 @@ class KIFNotationConverter implements IMoveNotationConverter {
   ///
   /// Assumes that Sente and Gote alternate moves.
   @override
-  List<Move> movesFromFile(String file) {
+  List<Move> movesFromFile(String file, {GameBoard initialBoard}) {
     const _cols = ['１', '２', '３', '４', '５', '６', '７', '８', '９'];
     const _rows = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];
 
     if (file != null) {
       var player = PlayerType.sente;
       final lines = _determineMoves(file);
+      initialBoard ?? ShogiUtils.initialBoard;
       final moves = <Move>[];
       for (final line in lines) {
         final components = _convertMoveAsTextIntoComponents(line);
@@ -80,8 +82,11 @@ class KIFNotationConverter implements IMoveNotationConverter {
           } else {
             column = _cols.indexOf(components[_CaptureGroup.to.index][0]) + 1;
             row = _rows.indexOf(components[_CaptureGroup.to.index][1]) + 1;
-            isCapture =
-                _determineCapture(moves, Position(column: column, row: row));
+            isCapture = _determineCapture(
+              initialBoard,
+              moves,
+              Position(column: column, row: row),
+            );
           }
 
           // parse each component
@@ -138,8 +143,12 @@ class KIFNotationConverter implements IMoveNotationConverter {
   }
 
   /// Determines if the move results in a capture
-  bool _determineCapture(List<Move> moves, Position postion) {
-    var gameBoard = ShogiUtils.initialBoard;
+  bool _determineCapture(
+    GameBoard initialBoard,
+    List<Move> moves,
+    Position postion,
+  ) {
+    var gameBoard = initialBoard;
     for (final move in moves) {
       gameBoard = GameEngine.makeMove(gameBoard, move);
     }
