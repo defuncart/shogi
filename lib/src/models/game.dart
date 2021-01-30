@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 import '../enums/player_type.dart';
 import '../services/game_engine.dart';
-import '../services/move_notation/kif_notation_converter.dart';
+import '../services/parser/game_parser.dart';
 import '../utils/dart_utils.dart';
 import '../utils/shogi_utils.dart';
 import 'game_board.dart';
@@ -30,13 +30,11 @@ class Game {
 
   /// Constructs a [Game] from a kif file
   factory Game.fromKif(String file) {
-    final converter = KIFNotationConverter();
-    final moves = converter.movesFromFile(file);
-    final winner = converter.determineWinner(file);
+    final parsedGame = GameParser.fromKif(file);
 
-    if (moves != null && moves.isNotEmpty) {
+    if (parsedGame != null) {
       final _gameBoards = [ShogiUtils.initialBoard];
-      for (final move in moves) {
+      for (final move in parsedGame.moves) {
         _gameBoards.add(
           GameEngine.makeMove(_gameBoards.last, move),
         );
@@ -44,8 +42,8 @@ class Game {
 
       return Game(
         gameBoards: _gameBoards,
-        moves: moves,
-        winner: winner,
+        moves: parsedGame.moves,
+        winner: parsedGame.winner,
       );
     }
 
