@@ -36,56 +36,56 @@ class BODConverter {
     PieceType.pawn,
   ];
 
-  /// Converts a board notated using SFEN notation into a `GameBoard`
+  /// Converts a board notated using BOD notation into a `GameBoard`
   static GameBoard bodToGameBoard(String string) {
-    var lines = string.split('\n');
-    var index1 = lines
-        .indexWhere((element) => element == '+---------------------------+');
-    if (index1 != -1 && index1 < lines.length - 1) {
-      index1++;
-      final index2 = lines.indexWhere(
-        (element) => element == '+---------------------------+',
-        index1,
-      );
-      if (index2 != -1) {
-        assert(index2 - index1 == BoardConfig.numberRows);
+    if (string != null && string.isNotEmpty) {
+      var lines = string.split('\n');
+      var index1 = lines
+          .indexWhere((element) => element == '+---------------------------+');
+      if (index1 != -1 && index1 < lines.length - 1) {
+        index1++;
+        final index2 = lines.indexWhere(
+          (element) => element == '+---------------------------+',
+          index1,
+        );
+        if (index2 != -1 && index2 - index1 == BoardConfig.numberRows) {
+          final gotePiecesInHand = _inHand(lines, PlayerType.gote);
 
-        final gotePiecesInHand = _inHand(lines, PlayerType.gote);
-
-        final boardPieces = <BoardPiece>[];
-        final parsedBoard = _parseBoard(lines.sublist(index1, index2));
-        for (var r = 0; r < 9; r++) {
-          for (var c = 0; c < 9; c++) {
-            final pieceType = PackageUtils.pieceStringToType(
-              parsedBoard[r][c][1],
-              usesJapanese: true,
-            );
-            if (pieceType != null) {
-              final player = parsedBoard[r][c][0] == _gotePieceSymbol
-                  ? PlayerType.gote
-                  : PlayerType.sente;
-              boardPieces.add(
-                BoardPiece(
-                  pieceType: pieceType,
-                  player: player,
-                  position: Position(row: r + 1, column: 9 - c),
-                ),
+          final boardPieces = <BoardPiece>[];
+          final parsedBoard = _parseBoard(lines.sublist(index1, index2));
+          for (var r = 0; r < 9; r++) {
+            for (var c = 0; c < 9; c++) {
+              final pieceType = PackageUtils.pieceStringToType(
+                parsedBoard[r][c][1],
+                usesJapanese: true,
               );
+              if (pieceType != null) {
+                final player = parsedBoard[r][c][0] == _gotePieceSymbol
+                    ? PlayerType.gote
+                    : PlayerType.sente;
+                boardPieces.add(
+                  BoardPiece(
+                    pieceType: pieceType,
+                    player: player,
+                    position: Position(row: r + 1, column: 9 - c),
+                  ),
+                );
+              }
             }
           }
+
+          final sentePiecesInHand = _inHand(lines, PlayerType.sente);
+
+          return GameBoard(
+            boardPieces: boardPieces,
+            sentePiecesInHand: sentePiecesInHand,
+            gotePiecesInHand: gotePiecesInHand,
+          );
         }
-
-        final sentePiecesInHand = _inHand(lines, PlayerType.sente);
-
-        return GameBoard(
-          boardPieces: boardPieces,
-          sentePiecesInHand: sentePiecesInHand,
-          gotePiecesInHand: gotePiecesInHand,
-        );
       }
     }
 
-    return null;
+    return GameBoard.empty();
   }
 
   static List<BoardPiece> _inHand(List<String> lines, PlayerType playerType) {
