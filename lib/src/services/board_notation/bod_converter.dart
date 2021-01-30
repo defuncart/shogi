@@ -103,8 +103,8 @@ class BODConverter {
       if (line != _noPieces) {
         final components =
             line.split(_space).where((element) => element.isNotEmpty);
-        if (components.length > 1) {
-          for (final component in components) {
+        for (final component in components) {
+          if (component.isNotEmpty) {
             final pieceType = PackageUtils.pieceStringToType(component[0],
                 usesJapanese: true);
             final count = component.length > 1
