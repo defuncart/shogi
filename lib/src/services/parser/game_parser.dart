@@ -9,14 +9,14 @@ abstract class GameParser {
     final moves = KIFNotationConverter().movesFromFile(file);
     final winner = KIFNotationConverter().determineWinner(file);
 
-    if (initialBoard == null || moves == null) {
-      return null;
+    if (initialBoard != null && moves != null && moves.isNotEmpty) {
+      return ParsedGame(
+        initalGameBoard: initialBoard,
+        moves: moves,
+        winner: winner,
+      );
     }
 
-    return ParsedGame(
-      initalGameBoard: initialBoard,
-      moves: moves,
-      winner: winner,
-    );
+    return null;
   }
 }
