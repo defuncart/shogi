@@ -54,26 +54,54 @@ gameBoard.printToConsole();
 |L |N |S |G |K |G |S |N |L |
 ```
 
-### Custom Notation
+### BOD
 
-A board position is notated using `{PieceType}-{Row}{Column}`, i.e. `K-59`. Note that 11 is the top right board cell as per japanese notation.
-
-```dart
-final yagura = ['L-99', 'N-89', 'K-88', 'G-78', 'P-97', 'P-87', 'S-77', 'G-67', 'P-76', 'P-66', 'P-56'];
-final gameBoard = ShogiUtils.stringArrayToGameBoard(yagura);
-```
-
-If Sente or Gote aren't specified, then Sente is chosen by default. To import pieces for both players, use the notation `{Player}:{PieceType}-{Row}{Column}`, where `☗` and `☖` denote Sente and Gote respectively.
+Alternatively, a game board can be imported using a BOD string:
 
 ```dart
-final tsume1 = ['☖:K-51', '☖:S-61', '☖:S-41', '☗:+P-53', '☗:+B-25'];
+final bodString = '''
+後手の持駒：なし
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+先手の持駒：なし
+''';
+final gameBoard = ShogiUtils.bodStringToGameBoard(bodString);
 ```
-
-If a position isn't given, then the piece is inferred as being in hand for that player: `{PieceType}` for sente or `{Player}:{PieceType}` to choose specific player.
 
 ## Piece Movement
 
-Piece movement is denoted by `{Player}{PieceType}{CurrentPosition}{Movement}{TargetPosition}{Promotion}`. 
+### KIF
+
+Piece movement can be specified using KIF notation:
+
+```dart
+var gameBoard = ShogiUtils.initialBoard;
+final kif = '''
+1 ７六歩(77)
+2 ３四歩(33)
+3 ２二角成(88)
+4 同　銀(31)
+5 投了
+''';
+final moves = KIFNotationConverter().movesFromFile(kif);
+gameBoard = GameEngine.makeMove(gameBoard, moves.first);
+gameBoard.printToConsole();
+```
+
+
+### Custom
+
+Alternatively, piece movement can be specified using the custom notation `{Player}{PieceType}{CurrentPosition}{Movement}{TargetPosition}{Promotion}`. 
 
 `{Promotion}` is optional, while if `{Player}` isn't specified, Sente is chosen by default. `{CurrentPosition}` is needed for all movement types, except drops. Movement is denoted by `-`, `x` and `*`, that is, simple movement, capture and drop respectfully. Some examples:
  
@@ -107,14 +135,6 @@ Thus, given an initial board for Sente, a *Yagura castle* could be build using t
 The packages `shogi` and `flutter_shogi_board` grew out of my desired to visualize shogi castles in Flutter, and with no game board widget or even a shogi engine available, I decided to roll my own.
 
 In the future I would like to utilize these packages not just for displaying static game boards, but also for tsume problems, thus user interaction may be considered.
-
-The notation `☗P77-76` is currently utilized to denote moves, however `KIF` may be more suitable for future versions:
-
-```
-1 ７六歩(77)
-2 ３四歩(33)
-3 ７五歩(76)
-```
 
 ## Raising Issues and Contributing
 
