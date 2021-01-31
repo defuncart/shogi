@@ -85,7 +85,10 @@ void main() {
     3 ２二成(88)
 4: ☖同銀
 ''';
-    final moves = converter.movesFromFile(kifu);
+    final moves = converter.movesFromFile(
+      kifu,
+      initialBoard: ShogiUtils.initialBoard,
+    );
     expect(moves, isEmpty);
   });
 
