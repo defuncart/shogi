@@ -1,5 +1,6 @@
 import '../configs/board_config.dart';
 import '../configs/static_game_boards.dart';
+import '../enums/piece_type.dart';
 import '../enums/player_type.dart';
 import '../models/board_piece.dart';
 import '../models/game_board.dart';
@@ -16,6 +17,17 @@ class ShogiUtils {
   /// Converts a BOD string into a `GameBoard`
   static GameBoard bodStringToGameBoard(String string) =>
       BODConverter.bodToGameBoard(string);
+
+  /// A list of the order in which pieces in hand are displayed
+  static const piecesInHandOrder = [
+    PieceType.rook,
+    PieceType.bishop,
+    PieceType.gold,
+    PieceType.silver,
+    PieceType.knight,
+    PieceType.lance,
+    PieceType.pawn,
+  ];
 
   /// Flips a list of board pieces to another player
   ///
