@@ -3,7 +3,6 @@ import '../../models/game_board.dart';
 import '../../models/move.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
-import '../../utils/shogi_utils.dart';
 import '../game_engine.dart';
 import 'i_move_notation_converter.dart';
 
@@ -54,10 +53,11 @@ class KIFNotationConverter implements IMoveNotationConverter {
     const _cols = ['１', '２', '３', '４', '５', '６', '７', '８', '９'];
     const _rows = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];
 
+    assert(initialBoard != null && !initialBoard.isEmpty);
+
     if (file != null) {
       var player = PlayerType.sente;
       final lines = _determineMoves(file);
-      initialBoard ??= ShogiUtils.initialBoard;
       final moves = <Move>[];
       for (final line in lines) {
         final components = _convertMoveAsTextIntoComponents(line);

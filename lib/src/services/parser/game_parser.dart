@@ -1,16 +1,20 @@
 import '../../models/parsed_game.dart';
+import '../../utils/shogi_utils.dart';
 import '../board_notation/bod_converter.dart';
 import '../move_notation/kif_notation_converter.dart';
 
 abstract class GameParser {
   /// Parses a game from a text file
   static ParsedGame fromKif(String file) {
-    final initialBoard = BODConverter.bodToGameBoard(file);
+    var initialBoard = BODConverter.bodToGameBoard(file);
+    if (initialBoard.isEmpty) {
+      initialBoard = ShogiUtils.initialBoard;
+    }
     final moves =
         KIFNotationConverter().movesFromFile(file, initialBoard: initialBoard);
     final winner = KIFNotationConverter().determineWinner(file);
 
-    if (initialBoard != null && moves != null && moves.isNotEmpty) {
+    if (moves != null && moves.isNotEmpty) {
       return ParsedGame(
         initalBoard: initialBoard,
         moves: moves,
