@@ -7,6 +7,7 @@ import '../../models/board_piece.dart';
 import '../../models/game_board.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
+import '../../utils/shogi_utils.dart';
 
 /// A service which converts to/from BOD notation for a static game position
 class BODConverter {
@@ -25,16 +26,6 @@ class BODConverter {
   static const _space = '　';
 
   static const _gotePieceSymbol = 'v';
-
-  static const _piecesInHandOrder = [
-    PieceType.rook,
-    PieceType.bishop,
-    PieceType.gold,
-    PieceType.silver,
-    PieceType.knight,
-    PieceType.lance,
-    PieceType.pawn,
-  ];
 
   /// Converts a board notated using BOD notation into a `GameBoard`
   static GameBoard bodToGameBoard(String string) {
@@ -150,7 +141,7 @@ class BODConverter {
       if (gameboard.gotePiecesInHand.isEmpty) {
         sb.writeln(_noPieces);
       } else {
-        for (final piece in _piecesInHandOrder) {
+        for (final piece in ShogiUtils.piecesInHandOrder) {
           final count = gameboard.countPiecesInHand(
               pieceType: piece, playerType: PlayerType.gote);
           if (count > 0) {
@@ -193,7 +184,7 @@ class BODConverter {
       if (gameboard.sentePiecesInHand.isEmpty) {
         sb.writeln(_noPieces);
       } else {
-        for (final piece in _piecesInHandOrder) {
+        for (final piece in ShogiUtils.piecesInHandOrder) {
           final count = gameboard.countPiecesInHand(
               pieceType: piece, playerType: PlayerType.sente);
           if (count > 0) {
