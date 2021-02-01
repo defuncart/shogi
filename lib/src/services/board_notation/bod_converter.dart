@@ -31,12 +31,11 @@ class BODConverter {
   static GameBoard bodToGameBoard(String string) {
     if (string != null && string.isNotEmpty) {
       var lines = string.split('\n');
-      var index1 = lines
-          .indexWhere((element) => element == '+---------------------------+');
+      var index1 = lines.indexWhere((element) => element == _horizontalBorder);
       if (index1 != -1 && index1 < lines.length - 1) {
         index1++;
         final index2 = lines.indexWhere(
-          (element) => element == '+---------------------------+',
+          (element) => element == _horizontalBorder,
           index1,
         );
         if (index2 != -1 && index2 - index1 == BoardConfig.numberRows) {
