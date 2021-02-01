@@ -1,6 +1,6 @@
-import '../../../shogi.dart';
 import '../../configs/board_config.dart';
 import '../../enums/player_type.dart';
+import '../../models/game_board.dart';
 import '../../models/move.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
