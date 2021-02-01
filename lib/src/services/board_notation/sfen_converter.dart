@@ -23,7 +23,7 @@ class SFENConverter {
 
   /// A regexp used to parse pieces in hand using SFEN notation
   static final _piecesInHandRegExp =
-      RegExp(r'\d*[P|L|N|S|G|B|R|p|l|n|s|g|b|r]');
+      RegExp(r'(\d*)([P|L|N|S|G|B|R|p|l|n|s|g|b|r])');
 
   /// Converts a board notated using SFEN notation into a `GameBoard`
   static GameBoard sfenToGameBoard(String string) {
@@ -72,12 +72,12 @@ class SFENConverter {
     if (sections.last != _noPiecesInHand) {
       final matches = _piecesInHandRegExp.allMatches(sections.last);
       for (final match in matches) {
-        final matchText = match.group(0);
-        if (matchText != null) {
-          final count = int.tryParse(matchText.first) ?? 1;
-          final pieceText = matchText.length > 1 ? matchText.last : matchText;
+        if (match != null && match.groupCount == 2) {
+          final countText = match.group(1);
+          final pieceText = match.group(2);
+          final count = int.tryParse(countText) ?? 1;
           final player =
-              pieceText.last.isLowerCase ? PlayerType.gote : PlayerType.sente;
+              pieceText.isLowerCase ? PlayerType.gote : PlayerType.sente;
           final pieceType =
               PackageUtils.pieceStringToType(pieceText.toUpperCase());
           for (var i = 0; i < count; i++) {
