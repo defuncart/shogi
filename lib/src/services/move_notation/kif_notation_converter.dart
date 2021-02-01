@@ -1,10 +1,12 @@
-import 'package:shogi/shogi.dart';
+import 'package:meta/meta.dart';
 
 import '../../enums/player_type.dart';
+import '../../models/game_board.dart';
 import '../../models/move.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
-import 'i_notation_converter.dart';
+import '../game_engine.dart';
+import 'i_move_notation_converter.dart';
 
 /// An enum describing the types of capture groups
 enum _CaptureGroup {
@@ -28,7 +30,7 @@ enum _CaptureGroup {
 */
 
 /// A service which uses a kif notation
-class KIFNotationConverter implements INotationConverter {
+class KIFNotationConverter implements IMoveNotationConverter {
   /// The symbol used when to coords are same as last move
   static const _sameSymbol = '同';
 
@@ -38,20 +40,19 @@ class KIFNotationConverter implements INotationConverter {
   /// The symbol used to represent promotion
   static const _promotionSymbol = '成';
 
-  /// Converts a game of the form
+  /// Converts a file of the form
   ///
   /// ```
   /// 1 ７六歩(77)
   /// 2 ３四歩(33)
   /// ```
   ///
-  /// to a format that the game engine can understand.
+  /// to a list of game moves.
   ///
   /// Assumes that Sente and Gote alternate moves.
   @override
-  List<Move> movesFromFile(String file) {
-    const _cols = ['１', '２', '３', '４', '５', '６', '７', '８', '９'];
-    const _rows = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];
+  List<Move> movesFromFile(String file, {@required GameBoard initialBoard}) {
+    assert(initialBoard != null && !initialBoard.isEmpty);
 
     if (file != null) {
       var player = PlayerType.sente;
@@ -78,10 +79,15 @@ class KIFNotationConverter implements INotationConverter {
             row = moves.last.to.row;
             isCapture = true;
           } else {
-            column = _cols.indexOf(components[_CaptureGroup.to.index][0]) + 1;
-            row = _rows.indexOf(components[_CaptureGroup.to.index][1]) + 1;
-            isCapture =
-                _determineCapture(moves, Position(column: column, row: row));
+            column = PackageUtils.japaneseDigitToArabic(
+                components[_CaptureGroup.to.index][0]);
+            row = PackageUtils.japaneseKaniToArabic(
+                components[_CaptureGroup.to.index][1]);
+            isCapture = _determineCapture(
+              initialBoard,
+              moves,
+              Position(column: column, row: row),
+            );
           }
 
           // parse each component
@@ -138,8 +144,12 @@ class KIFNotationConverter implements INotationConverter {
   }
 
   /// Determines if the move results in a capture
-  bool _determineCapture(List<Move> moves, Position postion) {
-    var gameBoard = ShogiUtils.initialBoard;
+  bool _determineCapture(
+    GameBoard initialBoard,
+    List<Move> moves,
+    Position postion,
+  ) {
+    var gameBoard = initialBoard;
     for (final move in moves) {
       gameBoard = GameEngine.makeMove(gameBoard, move);
     }
@@ -176,7 +186,7 @@ class KIFNotationConverter implements INotationConverter {
     return null;
   }
 
-  /// Determines the game's winner
+  @override
   PlayerType determineWinner(String file) {
     if (file != null) {
       final line = file.split('\n').firstWhere(

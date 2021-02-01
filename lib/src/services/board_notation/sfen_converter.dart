@@ -1,10 +1,10 @@
-import '../configs/board_config.dart';
-import '../enums/player_type.dart';
-import '../extensions/string_extensions.dart';
-import '../models/board_piece.dart';
-import '../models/game_board.dart';
-import '../models/position.dart';
-import '../utils/package_utils.dart';
+import '../../configs/board_config.dart';
+import '../../enums/player_type.dart';
+import '../../extensions/string_extensions.dart';
+import '../../models/board_piece.dart';
+import '../../models/game_board.dart';
+import '../../models/position.dart';
+import '../../utils/package_utils.dart';
 
 /// A service which converts to/from SFEN notation for a static game position
 class SFENConverter {
@@ -65,8 +65,10 @@ class SFENConverter {
       row++;
     }
 
-    // TODO presently ignoreing player to move
+    // TODO presently ignoring player to move
 
+    final sentePiecesInHand = <BoardPiece>[];
+    final gotePiecesInHand = <BoardPiece>[];
     if (sections.last != _noPiecesInHand) {
       final matches = _piecesInHandRegExp.allMatches(sections.last);
       for (final match in matches) {
@@ -79,7 +81,7 @@ class SFENConverter {
           final pieceType =
               PackageUtils.pieceStringToType(pieceText.toUpperCase());
           for (var i = 0; i < count; i++) {
-            boardPieces.add(
+            (player.isSente ? sentePiecesInHand : gotePiecesInHand).add(
               BoardPiece(
                 player: player,
                 pieceType: pieceType,
@@ -91,6 +93,10 @@ class SFENConverter {
       }
     }
 
-    return GameBoard(boardPieces: boardPieces);
+    return GameBoard(
+      boardPieces: boardPieces,
+      sentePiecesInHand: sentePiecesInHand,
+      gotePiecesInHand: gotePiecesInHand,
+    );
   }
 }

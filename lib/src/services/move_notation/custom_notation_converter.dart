@@ -1,9 +1,10 @@
 import '../../configs/board_config.dart';
 import '../../enums/player_type.dart';
+import '../../models/game_board.dart';
 import '../../models/move.dart';
 import '../../models/position.dart';
 import '../../utils/package_utils.dart';
-import 'i_notation_converter.dart';
+import 'i_move_notation_converter.dart';
 
 /// An enum describing the types of capture groups
 enum _CaptureGroup {
@@ -16,7 +17,7 @@ enum _CaptureGroup {
 }
 
 /// A service which uses a custom notation developed for this package
-class CustomNotationConverter implements INotationConverter {
+class CustomNotationConverter implements IMoveNotationConverter {
   /// The symbol used to represent simple movement
   /// ignore: unused_field
   static const _moveSymbol = '-';
@@ -30,16 +31,16 @@ class CustomNotationConverter implements INotationConverter {
   /// The symbol used to represent promotion
   static const _promotionSymbol = '+';
 
-  /// Converts a game of the form
+  /// Converts a file of the form
   ///
   /// ```
   /// 1: ☗P77-76
   /// 2: ☗S79-68
   /// ```
   ///
-  /// to a format that the game engine can understand.
+  /// to a list of game moves.
   @override
-  List<Move> movesFromFile(String file) {
+  List<Move> movesFromFile(String file, {GameBoard initialBoard}) {
     if (file != null) {
       /// firstly split file into a list of moves, ignoring any prepending number indicators
       final movesAsText = file.replaceAll(RegExp(r'\d+\:\s'), '').split('\n');
@@ -110,4 +111,7 @@ class CustomNotationConverter implements INotationConverter {
     final matches = _regExp.allMatches(moveAsText);
     return matches.length == 1 ? matches?.first?.groups(_groupIndeces) : null;
   }
+
+  @override
+  PlayerType determineWinner(String file) => null;
 }

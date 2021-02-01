@@ -17,7 +17,10 @@ void main() {
    4 同　銀(31)
    5 １五角打
 ''';
-    final moves = converter.movesFromFile(kifu);
+    final moves = converter.movesFromFile(
+      kifu,
+      initialBoard: ShogiUtils.initialBoard,
+    );
     expect(moves, isNotNull);
     expect(moves.length, 5);
     expect(moves, [
@@ -82,7 +85,10 @@ void main() {
     3 ２二成(88)
 4: ☖同銀
 ''';
-    final moves = converter.movesFromFile(kifu);
+    final moves = converter.movesFromFile(
+      kifu,
+      initialBoard: ShogiUtils.initialBoard,
+    );
     expect(moves, isEmpty);
   });
 

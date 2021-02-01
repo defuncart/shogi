@@ -49,11 +49,9 @@ class GameEngine {
     boardPieces.add(newPiece);
 
     return GameBoard(
-      boardPieces: [
-        ...boardPieces,
-        ...sentePiecesInHand,
-        ...gotePiecesInHand,
-      ],
+      boardPieces: boardPieces,
+      sentePiecesInHand: sentePiecesInHand,
+      gotePiecesInHand: gotePiecesInHand,
     );
   }
 }

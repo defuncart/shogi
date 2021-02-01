@@ -2,6 +2,21 @@ import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
 void main() {
+  test('Ensure piecesInHandOrder cannot be modified', () {
+    expect(
+      () => ShogiUtils.piecesInHandOrder[0] = null,
+      throwsA(isA<UnsupportedError>()),
+    );
+    expect(
+      () => ShogiUtils.piecesInHandOrder.add(null),
+      throwsA(isA<UnsupportedError>()),
+    );
+    expect(
+      () => ShogiUtils.piecesInHandOrder.removeLast(),
+      throwsA(isA<UnsupportedError>()),
+    );
+  });
+
   void assertInitalBoardSente(List<BoardPiece> boardPieces) {
     expect(
         boardPieces.where(
@@ -369,8 +384,9 @@ void main() {
   }
 
   test('flipBoardPieces', () {
-    final sentePieces = ShogiUtils.stringArrayToBoardPiecesArray(
-        StaticGameBoards.initialBoardSente);
+    final sentePieces = ShogiUtils.initialBoard.boardPieces
+        .where((piece) => piece.isSente)
+        .toList();
     assertInitalBoardSente(sentePieces);
 
     final gotePieces = ShogiUtils.flipBoardPieces(sentePieces);

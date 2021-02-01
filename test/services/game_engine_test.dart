@@ -3,11 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   test('GameEngine.makeMove()', () {
-    const initialBoard = [
-      '☖:K-51',
-      '☖:S-52',
-      '☗:P-53',
-    ];
+    const initialBoard = '4k4/4s4/4P4/9/9/9/9/9/9 b -';
 
     final movesFile = '''
 ☗P53x52+
@@ -15,7 +11,7 @@ void main() {
 ''';
 
     final converter = CustomNotationConverter();
-    var gameBoard = ShogiUtils.stringArrayToGameBoard(initialBoard);
+    var gameBoard = ShogiUtils.sfenStringToGameBoard(initialBoard);
     expect(gameBoard.boardPieces, [
       BoardPiece(
         player: PlayerType.gote,

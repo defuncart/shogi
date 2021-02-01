@@ -44,8 +44,11 @@ class PackageUtils {
   /// Converts a piece type to string
   ///
   /// `usesJapanese` and `isSente` are both optional and default to `true`
-  static String pieceTypeToString(PieceType pieceType,
-      {bool usesJapanese = true, bool isSente = true}) {
+  static String pieceTypeToString(
+    PieceType pieceType, {
+    bool usesJapanese = true,
+    bool isSente = true,
+  }) {
     if (usesJapanese && !isSente && pieceType == PieceType.king) {
       return _kingGoteJP;
     } else {
@@ -56,8 +59,11 @@ class PackageUtils {
   /// Converts a piece type to a display string
   ///
   /// The difference from `pieceTypeToString` is that gote display strings for latin are in lowercase
-  static String pieceTypeToDisplayString(PieceType pieceType,
-      {bool usesJapanese = true, bool isSente = true}) {
+  static String pieceTypeToDisplayString(
+    PieceType pieceType, {
+    bool usesJapanese = true,
+    bool isSente = true,
+  }) {
     if (usesJapanese) {
       return !isSente && pieceType == PieceType.king
           ? _kingGoteJP
@@ -72,11 +78,91 @@ class PackageUtils {
   /// Converts a string to piece type
   ///
   /// `usesJapanese` is optional and default to `false`
-  static PieceType pieceStringToType(String pieceString,
-          {bool usesJapanese = false}) =>
+  /// Returns null if the piece doesn't exist
+  static PieceType pieceStringToType(
+    String pieceString, {
+    bool usesJapanese = false,
+  }) =>
       (usesJapanese ? _piecesJP : _piecesEN)
           .entries
-          .where((p) => p.value == pieceString)
-          .first
-          .key;
+          .firstWhere(
+            (kvp) => kvp.value == pieceString,
+            orElse: () => null,
+          )
+          ?.key;
+
+  static const _mapArabicJapaneseDigits = {
+    1: '１',
+    2: '２',
+    3: '３',
+    4: '４',
+    5: '５',
+    6: '６',
+    7: '７',
+    8: '８',
+    9: '９',
+  };
+
+  static final _mapArabicJapaneseDigitsInverse =
+      _mapArabicJapaneseDigits.map((k, v) => MapEntry(v, k));
+
+  static const _mapArabicJapaneseKanji = {
+    1: '一',
+    2: '二',
+    3: '三',
+    4: '四',
+    5: '五',
+    6: '六',
+    7: '七',
+    8: '八',
+    9: '九',
+    10: '十',
+    11: '十一',
+    12: '十二',
+    13: '十三',
+    14: '十四',
+    15: '十五',
+    16: '十六',
+    17: '十七',
+    18: '十八',
+  };
+
+  static final _mapArabicJapaneseKanjiInverse =
+      _mapArabicJapaneseKanji.map((k, v) => MapEntry(v, k));
+
+  /// Returns a japanese digit for a given arabic number (i.e. 1 -> １)
+  static String arabicToJapaneseDigit(int number) {
+    if (number < 1 || number > 9) {
+      throw ArgumentError('$number isn\'t a valid argument');
+    }
+
+    return _mapArabicJapaneseDigits[number];
+  }
+
+  /// Returns an arabic number for a given japanese digit (i.e. １ -> 1)
+  static int japaneseDigitToArabic(String digit) {
+    if (!_mapArabicJapaneseDigits.containsValue(digit)) {
+      throw ArgumentError('$digit isn\'t a valid argument');
+    }
+
+    return _mapArabicJapaneseDigitsInverse[digit];
+  }
+
+  /// Returns an japanese kanji for a given arabic number (i.e. １ -> 一)
+  static String arabicToJapaneseKanji(int number) {
+    if (number < 1 || number > 18) {
+      throw ArgumentError('$number isn\'t a valid argument');
+    }
+
+    return _mapArabicJapaneseKanji[number];
+  }
+
+  /// Returns an arabic number for a given japanese kanji (i.e. 一 -> 1)
+  static int japaneseKaniToArabic(String digit) {
+    if (!_mapArabicJapaneseKanji.containsValue(digit)) {
+      throw ArgumentError('$digit isn\'t a valid argument');
+    }
+
+    return _mapArabicJapaneseKanjiInverse[digit];
+  }
 }

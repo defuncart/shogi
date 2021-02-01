@@ -1,11 +1,12 @@
 import '../configs/board_config.dart';
 import '../configs/static_game_boards.dart';
+import '../enums/piece_type.dart';
 import '../enums/player_type.dart';
 import '../models/board_piece.dart';
 import '../models/game_board.dart';
 import '../models/position.dart';
-import '../services/sfen_converter.dart';
-import '../utils/package_utils.dart';
+import '../services/board_notation/bod_converter.dart';
+import '../services/board_notation/sfen_converter.dart';
 
 /// A class of utils methods used when constructing a shogi board
 class ShogiUtils {
@@ -13,61 +14,24 @@ class ShogiUtils {
   static GameBoard sfenStringToGameBoard(String string) =>
       SFENConverter.sfenToGameBoard(string);
 
-  /// Converts an array of strings [K-59, ...] into a `GameBoard`
-  static GameBoard stringArrayToGameBoard(
-    List<String> strPieces, {
-    PlayerType player = PlayerType.sente,
-  }) =>
-      GameBoard(
-        boardPieces: stringArrayToBoardPiecesArray(strPieces, player: player),
-      );
+  /// Converts a BOD string into a `GameBoard`
+  static GameBoard bodStringToGameBoard(String string) =>
+      BODConverter.bodToGameBoard(string);
 
-  /// Converts an array of strings [K-59, ...] into an array of board pieces
-  static List<BoardPiece> stringArrayToBoardPiecesArray(
-    List<String> strPieces, {
-    PlayerType player = PlayerType.sente,
-  }) {
-    final boardPieces = <BoardPiece>[];
-    for (var strPiece in strPieces) {
-      // split string ☗:K-59 into [☗, K-59], if applicable
-      var components = strPiece.split(':');
-      if (components.length > 1) {
-        player = components[0] == BoardConfig.gote
-            ? PlayerType.gote
-            : PlayerType.sente;
-        strPiece = components[1];
-      }
-
-      // split string K-59 into [K, 59]
-      components = strPiece.split('-');
-
-      // convert components into piece type and position
-      final pieceType = PackageUtils.pieceStringToType(components[0]);
-      Position position;
-      if (components.length == 2) {
-        final column = int.tryParse(components[1][0]);
-        final row = int.tryParse(components[1][1]);
-        position = Position(
-          column: column,
-          row: row,
-        );
-      }
-
-      boardPieces.add(
-        BoardPiece(
-          position: position,
-          pieceType: pieceType,
-          player: player,
-        ),
-      );
-    }
-
-    return boardPieces;
-  }
+  /// A list of the order in which pieces in hand are displayed
+  static const piecesInHandOrder = [
+    PieceType.rook,
+    PieceType.bishop,
+    PieceType.gold,
+    PieceType.silver,
+    PieceType.knight,
+    PieceType.lance,
+    PieceType.pawn,
+  ];
 
   /// Flips a list of board pieces to another player
   ///
-  /// Thus sente K-59 would be gote K-51 etc.
+  /// Thus sente K59 would be gote K51 etc.
   static List<BoardPiece> flipBoardPieces(List<BoardPiece> originalPieces) {
     final newPieces = <BoardPiece>[];
     for (final piece in originalPieces) {

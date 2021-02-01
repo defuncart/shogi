@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import '../configs/board_config.dart';
-import '../enums/player_type.dart';
 import '../extensions/board_piece_extensions.dart';
 import '../extensions/list_board_pieces_extensions.dart';
 import '../utils/dart_utils.dart';
@@ -18,20 +17,30 @@ class GameBoard {
   /// A list of sente's pieces in hand
   final List<BoardPiece> gotePiecesInHand;
 
-  GameBoard({@required List<BoardPiece> boardPieces})
-      : boardPieces =
-            boardPieces?.where((piece) => piece.position != null)?.toList() ??
-                const [],
-        sentePiecesInHand = boardPieces
-                ?.where(
-                    (piece) => piece.position == null && piece.player.isSente)
-                ?.toList() ??
-            const [],
-        gotePiecesInHand = boardPieces
-                ?.where(
-                    (piece) => piece.position == null && piece.player.isGote)
-                ?.toList() ??
-            const [];
+  /// Creates a [GameBoard] with a list of board pieces
+  /// and sente's and gote's pieces in hand
+  ///
+  /// If [boardPieces], [sentePiecesInHand] or [gotePiecesInHand]
+  /// are null, they are defaulted to empty
+  const GameBoard({
+    @required List<BoardPiece> boardPieces,
+    @required List<BoardPiece> sentePiecesInHand,
+    @required List<BoardPiece> gotePiecesInHand,
+  })  : boardPieces = boardPieces ?? const [],
+        sentePiecesInHand = sentePiecesInHand ?? const [],
+        gotePiecesInHand = gotePiecesInHand ?? const [];
+
+  /// Creates an empty [GameBoard]
+  const GameBoard.empty()
+      : boardPieces = const [],
+        sentePiecesInHand = const [],
+        gotePiecesInHand = const [];
+
+  /// Returns whether the [GameBoard] is empty
+  bool get isEmpty =>
+      boardPieces.isEmpty &&
+      sentePiecesInHand.isEmpty &&
+      gotePiecesInHand.isEmpty;
 
   /// Prints the game board to console using lower case for gote and upper case for sente
   void printToConsole() {
