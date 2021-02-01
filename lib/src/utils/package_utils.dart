@@ -130,6 +130,7 @@ class PackageUtils {
   static final _mapArabicJapaneseKanjiInverse =
       _mapArabicJapaneseKanji.map((k, v) => MapEntry(v, k));
 
+  /// Returns a japanese digit for a given arabic number (i.e. 1 -> １)
   static String arabicToJapaneseDigit(int number) {
     if (number < 1 || number > 9) {
       throw ArgumentError('$number isn\'t a valid argument');
@@ -138,6 +139,7 @@ class PackageUtils {
     return _mapArabicJapaneseDigits[number];
   }
 
+  /// Returns an arabic number for a given japanese digit (i.e. １ -> 1)
   static int japaneseDigitToArabic(String digit) {
     if (!_mapArabicJapaneseDigits.containsValue(digit)) {
       throw ArgumentError('$digit isn\'t a valid argument');
@@ -146,6 +148,7 @@ class PackageUtils {
     return _mapArabicJapaneseDigitsInverse[digit];
   }
 
+  /// Returns an japanese kanji for a given arabic number (i.e. １ -> 一)
   static String arabicToJapaneseKanji(int number) {
     if (number < 1 || number > 18) {
       throw ArgumentError('$number isn\'t a valid argument');
@@ -154,6 +157,7 @@ class PackageUtils {
     return _mapArabicJapaneseKanji[number];
   }
 
+  /// Returns an arabic number for a given japanese kanji (i.e. 一 -> 1)
   static int japaneseKaniToArabic(String digit) {
     if (!_mapArabicJapaneseKanji.containsValue(digit)) {
       throw ArgumentError('$digit isn\'t a valid argument');
