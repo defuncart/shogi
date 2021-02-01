@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import '../../enums/player_type.dart';
 import '../../models/game_board.dart';
 import '../../models/move.dart';
@@ -49,10 +51,7 @@ class KIFNotationConverter implements IMoveNotationConverter {
   ///
   /// Assumes that Sente and Gote alternate moves.
   @override
-  List<Move> movesFromFile(String file, {GameBoard initialBoard}) {
-    const _cols = ['１', '２', '３', '４', '５', '６', '７', '８', '９'];
-    const _rows = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];
-
+  List<Move> movesFromFile(String file, {@required GameBoard initialBoard}) {
     assert(initialBoard != null && !initialBoard.isEmpty);
 
     if (file != null) {
@@ -80,8 +79,10 @@ class KIFNotationConverter implements IMoveNotationConverter {
             row = moves.last.to.row;
             isCapture = true;
           } else {
-            column = _cols.indexOf(components[_CaptureGroup.to.index][0]) + 1;
-            row = _rows.indexOf(components[_CaptureGroup.to.index][1]) + 1;
+            column = PackageUtils.japaneseDigitToArabic(
+                components[_CaptureGroup.to.index][0]);
+            row = PackageUtils.japaneseKaniToArabic(
+                components[_CaptureGroup.to.index][1]);
             isCapture = _determineCapture(
               initialBoard,
               moves,
