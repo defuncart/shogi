@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 
+import '../../enums/piece_type.dart';
 import '../../enums/player_type.dart';
 import '../../models/game_board.dart';
 import '../../models/move.dart';
@@ -39,6 +40,30 @@ class KIFNotationConverter implements IMoveNotationConverter {
 
   /// The symbol used to represent promotion
   static const _promotionSymbol = '成';
+
+  /// Maps PieceType to String
+  ///
+  /// Note that this is different from [PackageUtils.pieceTypeToString(pieceType)]
+  /// due to `成香`, `成桂`, `成銀` kif-specific notation
+  static const _mapPieceString = {
+    PieceType.king: '玉',
+    PieceType.rook: '飛',
+    PieceType.bishop: '角',
+    PieceType.gold: '金',
+    PieceType.silver: '銀',
+    PieceType.knight: '桂',
+    PieceType.lance: '香',
+    PieceType.pawn: '歩',
+    PieceType.rookPromoted: '龍',
+    PieceType.bishopPromoted: '馬',
+    PieceType.silverPromoted: '成銀',
+    PieceType.knightPromoted: '成桂',
+    PieceType.lancePromoted: '成香',
+    PieceType.pawnPromoted: 'と',
+  };
+
+  /// Maps String to PieceType
+  final _mapStringPiece = _mapPieceString.map((k, v) => MapEntry(v, k));
 
   /// Converts a file of the form
   ///
@@ -91,10 +116,7 @@ class KIFNotationConverter implements IMoveNotationConverter {
           }
 
           // parse each component
-          final piece = PackageUtils.pieceStringToType(
-            components[_CaptureGroup.piece.index],
-            usesJapanese: true,
-          );
+          final piece = _mapStringPiece[components[_CaptureGroup.piece.index]];
           final isDrop =
               components[_CaptureGroup.movement.index] == _dropSymbol;
           final from = isDrop
@@ -167,7 +189,7 @@ class KIFNotationConverter implements IMoveNotationConverter {
   /// 4. movement type, i.e. 打 (optional)
   /// 5. from, assumed to be two digits i.e. 11 (optional)
   static final _regExp = RegExp(
-      r'([１２３４５６７８９][一二三四五六七八九]|同\s)([歩香桂銀金角飛玉王と杏圭全馬龍])(成)*(打)*(\((\d\d)\))*');
+      r'([１２３４５６７８９][一二三四五六七八九]|同\s)(歩|香|桂|銀|金|角|飛|玉|王|と|成香|成桂|成銀|馬|龍)(成)*(打)*(\((\d\d)\))*');
 
   /// The number of groups captured by `_regExp`
   static int get _numberCaptureGroups => _CaptureGroup.values.length;
@@ -208,7 +230,7 @@ class KIFNotationConverter implements IMoveNotationConverter {
   String _cleanKif(String line) {
     if (line != null) {
       final moveRegex = RegExp(
-          r'\d+\s[１２３４５６７８９一二三四五六七八九同\s]+[歩香桂銀金角飛玉王と杏圭全馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
+          r'\d+\s[１２３４５６７８９一二三四五六七八九同\s]+[歩香桂銀金角飛玉王と成馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
       return moveRegex.firstMatch(line)?.group(0);
     }
 

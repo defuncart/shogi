@@ -30,6 +30,7 @@ class BODConverter {
   /// Converts a board notated using BOD notation into a `GameBoard`
   static GameBoard bodToGameBoard(String string) {
     if (string != null && string.isNotEmpty) {
+      string = string.replaceAll('\r\n', '\n'); // windows
       var lines = string.split('\n');
       var index1 = lines.indexWhere((element) => element == _horizontalBorder);
       if (index1 != -1 && index1 < lines.length - 1) {
@@ -103,7 +104,7 @@ class BODConverter {
             for (var i = 0; i < count; i++) {
               pieces.add(BoardPiece(
                 pieceType: pieceType,
-                player: PlayerType.gote,
+                player: playerType,
               ));
             }
           }

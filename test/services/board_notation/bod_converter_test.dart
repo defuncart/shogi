@@ -54,6 +54,23 @@ void main() {
 先手の持駒：なし
 ''';
 
+  final tsume2 = '''
+後手の持駒：飛二　角二　金二　銀四　桂四　香四　歩十八　
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+| ・ ・ ・ ・v玉 ・ ・ ・ ・|一
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|二
+| ・ ・ ・ ・ 金 ・ ・ ・ ・|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|七
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|八
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|九
++---------------------------+
+先手の持駒：金　
+''';
+
   test('Ensure from bod as expected', () {
     final gameBoard = BODConverter.bodToGameBoard(tsume);
     expect(gameBoard, isNotNull);
@@ -139,6 +156,79 @@ void main() {
     final gameboard = BODConverter.bodToGameBoard(initialBoard);
     expect(gameboard, isNotNull);
     expect(gameboard, ShogiUtils.initialBoard);
+  });
+
+  test('Ensure from bod as expected', () {
+    final gameBoard = BODConverter.bodToGameBoard(tsume2);
+    expect(gameBoard, isNotNull);
+    expect(
+      gameBoard,
+      GameBoard(
+        boardPieces: [
+          BoardPiece(
+            pieceType: PieceType.king,
+            player: PlayerType.gote,
+            position: Position.fromString('51'),
+          ),
+          BoardPiece(
+            pieceType: PieceType.gold,
+            player: PlayerType.sente,
+            position: Position.fromString('53'),
+          ),
+        ],
+        sentePiecesInHand: [
+          BoardPiece(
+            pieceType: PieceType.gold,
+            player: PlayerType.sente,
+            position: null,
+          ),
+        ],
+        gotePiecesInHand: [
+          for (var i = 0; i < 2; i++)
+            BoardPiece(
+              pieceType: PieceType.rook,
+              player: PlayerType.gote,
+              position: null,
+            ),
+          for (var i = 0; i < 2; i++)
+            BoardPiece(
+              pieceType: PieceType.bishop,
+              player: PlayerType.gote,
+              position: null,
+            ),
+          for (var i = 0; i < 2; i++)
+            BoardPiece(
+              pieceType: PieceType.gold,
+              player: PlayerType.gote,
+              position: null,
+            ),
+          for (var i = 0; i < 4; i++)
+            BoardPiece(
+              pieceType: PieceType.silver,
+              player: PlayerType.gote,
+              position: null,
+            ),
+          for (var i = 0; i < 4; i++)
+            BoardPiece(
+              pieceType: PieceType.knight,
+              player: PlayerType.gote,
+              position: null,
+            ),
+          for (var i = 0; i < 4; i++)
+            BoardPiece(
+              pieceType: PieceType.lance,
+              player: PlayerType.gote,
+              position: null,
+            ),
+          for (var i = 0; i < 18; i++)
+            BoardPiece(
+              pieceType: PieceType.pawn,
+              player: PlayerType.gote,
+              position: null,
+            ),
+        ],
+      ),
+    );
   });
 
   test('fromBOD null', () {
@@ -281,6 +371,76 @@ void main() {
   test('Ensure to bod as expected', () {
     final string = BODConverter.fromGameBoardToBod(ShogiUtils.initialBoard);
     expect(string, initialBoard);
+  });
+
+  test('Ensure to bod as expected', () {
+    final gameBoard = GameBoard(
+      boardPieces: [
+        BoardPiece(
+          pieceType: PieceType.king,
+          player: PlayerType.gote,
+          position: Position.fromString('51'),
+        ),
+        BoardPiece(
+          pieceType: PieceType.gold,
+          player: PlayerType.sente,
+          position: Position.fromString('53'),
+        ),
+      ],
+      sentePiecesInHand: [
+        BoardPiece(
+          pieceType: PieceType.gold,
+          player: PlayerType.sente,
+          position: null,
+        ),
+      ],
+      gotePiecesInHand: [
+        for (var i = 0; i < 2; i++)
+          BoardPiece(
+            pieceType: PieceType.rook,
+            player: PlayerType.gote,
+            position: null,
+          ),
+        for (var i = 0; i < 2; i++)
+          BoardPiece(
+            pieceType: PieceType.bishop,
+            player: PlayerType.gote,
+            position: null,
+          ),
+        for (var i = 0; i < 2; i++)
+          BoardPiece(
+            pieceType: PieceType.gold,
+            player: PlayerType.gote,
+            position: null,
+          ),
+        for (var i = 0; i < 4; i++)
+          BoardPiece(
+            pieceType: PieceType.silver,
+            player: PlayerType.gote,
+            position: null,
+          ),
+        for (var i = 0; i < 4; i++)
+          BoardPiece(
+            pieceType: PieceType.knight,
+            player: PlayerType.gote,
+            position: null,
+          ),
+        for (var i = 0; i < 4; i++)
+          BoardPiece(
+            pieceType: PieceType.lance,
+            player: PlayerType.gote,
+            position: null,
+          ),
+        for (var i = 0; i < 18; i++)
+          BoardPiece(
+            pieceType: PieceType.pawn,
+            player: PlayerType.gote,
+            position: null,
+          ),
+      ],
+    );
+    final string = BODConverter.fromGameBoardToBod(gameBoard);
+    expect(string, tsume2);
   });
 
   test('toBOD, gameboard null', () {
