@@ -104,7 +104,7 @@ class BODConverter {
             for (var i = 0; i < count; i++) {
               pieces.add(BoardPiece(
                 pieceType: pieceType,
-                player: PlayerType.gote,
+                player: playerType,
               ));
             }
           }
