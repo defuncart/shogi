@@ -38,7 +38,7 @@ class SFENConverter {
 
       final matches = _sfenRegExp.allMatches(section);
       for (final match in matches) {
-        final matchText = match.group(0);
+        final matchText = match.group(0)!;
         final valueAsInt = int.tryParse(matchText);
         if (valueAsInt != null) {
           assert(valueAsInt <= BoardConfig.numberColumns);
@@ -72,9 +72,9 @@ class SFENConverter {
     if (sections.last != _noPiecesInHand) {
       final matches = _piecesInHandRegExp.allMatches(sections.last);
       for (final match in matches) {
-        if (match != null && match.groupCount == 2) {
-          final countText = match.group(1);
-          final pieceText = match.group(2);
+        if (match.groupCount == 2) {
+          final countText = match.group(1)!;
+          final pieceText = match.group(2)!;
           final count = int.tryParse(countText) ?? 1;
           final player =
               pieceText.isLowerCase ? PlayerType.gote : PlayerType.sente;

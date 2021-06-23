@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 
 import '../../configs/board_config.dart';
 import '../../enums/piece_type.dart';
@@ -28,7 +28,7 @@ class BODConverter {
   static const _gotePieceSymbol = 'v';
 
   /// Converts a board notated using BOD notation into a `GameBoard`
-  static GameBoard bodToGameBoard(String string) {
+  static GameBoard bodToGameBoard(String? string) {
     if (string != null && string.isNotEmpty) {
       string = string.replaceAll('\r\n', '\n'); // windows
       var lines = string.split('\n');
@@ -44,13 +44,14 @@ class BODConverter {
 
           final boardPieces = <BoardPiece>[];
           final parsedBoard = _parseBoard(lines.sublist(index1, index2));
-          for (var r = 0; r < 9; r++) {
-            for (var c = 0; c < 9; c++) {
-              final pieceType = PackageUtils.pieceStringToType(
-                parsedBoard[r][c][1],
-                usesJapanese: true,
-              );
-              if (pieceType != null) {
+          for (var r = 0; r < BoardConfig.numberRows; r++) {
+            for (var c = 0; c < BoardConfig.numberColumns; c++) {
+              try {
+                final pieceType = PackageUtils.pieceStringToType(
+                  parsedBoard[r][c][1],
+                  usesJapanese: true,
+                );
+
                 final player = parsedBoard[r][c][0] == _gotePieceSymbol
                     ? PlayerType.gote
                     : PlayerType.sente;
@@ -61,7 +62,7 @@ class BODConverter {
                     position: Position(row: r + 1, column: 9 - c),
                   ),
                 );
-              }
+              } on ArgumentError catch (_) {}
             }
           }
 
@@ -84,9 +85,8 @@ class BODConverter {
 
     final pieces = <BoardPiece>[];
 
-    var line = lines.firstWhere(
+    var line = lines.firstWhereOrNull(
       (line) => line.startsWith(senteGotePieces),
-      orElse: () => null,
     );
     if (line != null) {
       line = line.replaceAll(senteGotePieces, '');
@@ -132,8 +132,8 @@ class BODConverter {
     return parsedBoard;
   }
 
-  /// Converts a board notated using SFEN notation into a `GameBoard`
-  static String fromGameBoardToBod(GameBoard gameboard) {
+  /// Converts [gameboard] into a BOD string
+  static String fromGameBoardToBod(GameBoard? gameboard) {
     final sb = StringBuffer();
     if (gameboard != null) {
       // gote pieces in hand
@@ -204,19 +204,17 @@ class BODConverter {
 }
 
 extension GameBoardExtensions on GameBoard {
-  BoardPiece withPosition({
-    @required int col,
-    @required int row,
+  BoardPiece? withPosition({
+    required int col,
+    required int row,
   }) =>
-      this?.boardPieces?.firstWhere(
-            (piece) =>
-                piece.position.column == col && piece.position.row == row,
-            orElse: () => null,
-          );
+      boardPieces.firstWhereOrNull(
+        (piece) => piece.position!.column == col && piece.position!.row == row,
+      );
 
   int countPiecesInHand({
-    @required PieceType pieceType,
-    @required PlayerType playerType,
+    required PieceType? pieceType,
+    required PlayerType playerType,
   }) {
     final piecesInHand =
         playerType.isSente ? sentePiecesInHand : gotePiecesInHand;

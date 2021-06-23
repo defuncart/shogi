@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:shogi/shogi.dart';
 import 'package:test/test.dart';
 
@@ -6,9 +5,9 @@ void main() {
   final boardPieces = ShogiUtils.initialBoard.boardPieces;
 
   void _testPosition({
-    @required int column,
-    @required int row,
-    @required PieceType pieceType,
+    required int column,
+    required int row,
+    required PieceType pieceType,
     playerType = PlayerType.sente,
   }) {
     final boardPiece = boardPieces.pieceAtPosition(column: column, row: row);

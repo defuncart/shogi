@@ -25,14 +25,11 @@ void main() {
     expect(game.winner, isNotNull);
   });
 
-  test('Null kif', () {
-    final game = Game.fromKif(null);
-    expect(game, isNull);
-  });
-
   test('Invalid kif', () {
-    final game = Game.fromKif('bla');
-    expect(game, isNull);
+    expect(
+      () => Game.fromKif('bla'),
+      throwsArgumentError,
+    );
   });
 
   test('Equality', () {

@@ -17,7 +17,7 @@ class Move {
   /// The original position
   ///
   /// `null` if piece is dropped onto the board
-  final Position from;
+  final Position? from;
 
   /// The new position
   final Position to;
@@ -32,24 +32,18 @@ class Move {
   final bool isDrop;
 
   /// A representation of the move in kif notation
-  final String asKif;
+  final String? asKif;
 
   const Move({
-    @required this.player,
-    @required this.piece,
-    @required this.from,
-    @required this.to,
+    required this.player,
+    required this.piece,
+    required this.from,
+    required this.to,
     this.isPromotion = false,
     this.isCapture = false,
     this.isDrop = false,
     this.asKif,
-  })  : assert(player != null),
-        assert(piece != null),
-        assert(to != null),
-        assert(isPromotion != null),
-        assert(isCapture != null),
-        assert(isDrop != null),
-        assert(!(isPromotion &&
+  })  : assert(!(isPromotion &&
             isDrop)), //a move cannot have isDrop and isPromotion
         assert(isDrop
             ? from == null

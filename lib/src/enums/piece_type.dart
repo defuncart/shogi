@@ -55,16 +55,16 @@ extension PieceTypeExtensions on PieceType {
   /// Whether the piece type can be promoted
   bool get canBePromoted => _piecesWhichCanBePromoted.contains(this);
 
-  /// Returns a promoted equivalent for the piece type. Returns `null` if the piece type cannot be promoted.
+  /// Returns a promoted equivalent for the piece type. Returns itself if the piece type cannot be promoted.
   PieceType promote() =>
-      canBePromoted ? _convertPieceTypeToPromotedPieceType[this] : null;
+      canBePromoted ? _convertPieceTypeToPromotedPieceType[this]! : this;
 
   /// Whether the piece type is promoted
   bool get isPromoted => _promotedPieces.contains(this);
 
   /// Returns a normalized equivalent for the piece type (i.e. PieceType.pawnPromoted => PieceType.pawn).
   PieceType normalize() =>
-      isPromoted ? convertPromotedPieceTypeToPieceType[this] : this;
+      isPromoted ? convertPromotedPieceTypeToPieceType[this]! : this;
 
   /// Returns whether a piece can be in hand
   bool get canBeInHand => !isPromoted && this != PieceType.king;

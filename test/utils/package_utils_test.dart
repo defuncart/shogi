@@ -133,7 +133,125 @@ void main() {
     );
   });
 
-  //TODO tests for pieceTypeToDisplayString, pieceStringToType
+  test('pieceStringToType', () {
+    expect(
+      PackageUtils.pieceStringToType('玉', usesJapanese: true),
+      PieceType.king,
+    );
+    expect(
+      PackageUtils.pieceStringToType('飛', usesJapanese: true),
+      PieceType.rook,
+    );
+    expect(
+      PackageUtils.pieceStringToType('角', usesJapanese: true),
+      PieceType.bishop,
+    );
+    expect(
+      PackageUtils.pieceStringToType('金', usesJapanese: true),
+      PieceType.gold,
+    );
+    expect(
+      PackageUtils.pieceStringToType('銀', usesJapanese: true),
+      PieceType.silver,
+    );
+    expect(
+      PackageUtils.pieceStringToType('桂', usesJapanese: true),
+      PieceType.knight,
+    );
+    expect(
+      PackageUtils.pieceStringToType('香', usesJapanese: true),
+      PieceType.lance,
+    );
+    expect(
+      PackageUtils.pieceStringToType('歩', usesJapanese: true),
+      PieceType.pawn,
+    );
+    expect(
+      PackageUtils.pieceStringToType('龍', usesJapanese: true),
+      PieceType.rookPromoted,
+    );
+    expect(
+      PackageUtils.pieceStringToType('馬', usesJapanese: true),
+      PieceType.bishopPromoted,
+    );
+
+    expect(
+      PackageUtils.pieceStringToType('全', usesJapanese: true),
+      PieceType.silverPromoted,
+    );
+    expect(
+      PackageUtils.pieceStringToType('圭', usesJapanese: true),
+      PieceType.knightPromoted,
+    );
+    expect(
+      PackageUtils.pieceStringToType('杏', usesJapanese: true),
+      PieceType.lancePromoted,
+    );
+    expect(
+      PackageUtils.pieceStringToType('と', usesJapanese: true),
+      PieceType.pawnPromoted,
+    );
+
+    expect(
+      PackageUtils.pieceStringToType('K'),
+      PieceType.king,
+    );
+    expect(
+      PackageUtils.pieceStringToType('R'),
+      PieceType.rook,
+    );
+    expect(
+      PackageUtils.pieceStringToType('B'),
+      PieceType.bishop,
+    );
+    expect(
+      PackageUtils.pieceStringToType('G'),
+      PieceType.gold,
+    );
+    expect(
+      PackageUtils.pieceStringToType('S'),
+      PieceType.silver,
+    );
+    expect(
+      PackageUtils.pieceStringToType('N'),
+      PieceType.knight,
+    );
+    expect(
+      PackageUtils.pieceStringToType('L'),
+      PieceType.lance,
+    );
+    expect(
+      PackageUtils.pieceStringToType('P'),
+      PieceType.pawn,
+    );
+    expect(
+      PackageUtils.pieceStringToType('+R'),
+      PieceType.rookPromoted,
+    );
+    expect(
+      PackageUtils.pieceStringToType('+B'),
+      PieceType.bishopPromoted,
+    );
+
+    expect(
+      PackageUtils.pieceStringToType('+S'),
+      PieceType.silverPromoted,
+    );
+    expect(
+      PackageUtils.pieceStringToType('+N'),
+      PieceType.knightPromoted,
+    );
+    expect(
+      PackageUtils.pieceStringToType('+L'),
+      PieceType.lancePromoted,
+    );
+    expect(
+      PackageUtils.pieceStringToType('+P'),
+      PieceType.pawnPromoted,
+    );
+  });
+
+  //TODO tests for pieceTypeToDisplayString
 
   test('arabicToJapaneseDigit', () {
     expect(PackageUtils.arabicToJapaneseDigit(1), '１');

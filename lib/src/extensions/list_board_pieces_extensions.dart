@@ -6,30 +6,26 @@ import 'list_extensions.dart';
 
 extension ListBoardPiecesExtensionsInternal on List<BoardPiece> {
   String toSFEN() {
-    if (this != null) {
-      final buffer = StringBuffer();
+    final buffer = StringBuffer();
 
-      if (length > 0) {
-        final mapPieceCount = map((piece) => piece.pieceType)
-            .toList()
-            .convertToMapWithCountUniqueElements<PieceType>();
-        final player = first.player;
+    if (length > 0) {
+      final mapPieceCount = map((piece) => piece.pieceType)
+          .toList()
+          .convertToMapWithCountUniqueElements<PieceType>();
+      final player = first.player;
 
-        for (final kvp in mapPieceCount.entries) {
-          final pieceText =
-              PackageUtils.pieceTypeToString(kvp.key, usesJapanese: false);
-          if (kvp.value > 1) {
-            buffer.write(kvp.value);
-          }
-          buffer.write(player.isSente ? pieceText : pieceText.toLowerCase());
-          buffer.write(' ');
+      for (final kvp in mapPieceCount.entries) {
+        final pieceText =
+            PackageUtils.pieceTypeToString(kvp.key, usesJapanese: false);
+        if (kvp.value > 1) {
+          buffer.write(kvp.value);
         }
+        buffer.write(player.isSente ? pieceText : pieceText.toLowerCase());
+        buffer.write(' ');
       }
-
-      buffer.writeln();
-      return buffer.toString();
     }
 
-    return null;
+    buffer.writeln();
+    return buffer.toString();
   }
 }

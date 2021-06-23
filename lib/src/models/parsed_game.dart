@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../enums/player_type.dart';
 import '../utils/dart_utils.dart';
 import 'game_board.dart';
@@ -14,23 +12,17 @@ class ParsedGame {
   final List<Move> moves;
 
   /// The game's winner
-  ///
-  /// This can be null
-  final PlayerType winner;
+  final PlayerType? winner;
 
   /// Sente's name
-  ///
-  /// This can be null
-  final String senteName;
+  final String? senteName;
 
   /// Gote's name
-  ///
-  /// This can be null
-  final String goteName;
+  final String? goteName;
 
   ParsedGame({
-    @required this.initalBoard,
-    @required this.moves,
+    required this.initalBoard,
+    required this.moves,
     this.winner,
     this.senteName,
     this.goteName,

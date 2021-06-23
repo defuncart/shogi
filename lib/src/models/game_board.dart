@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../configs/board_config.dart';
 import '../extensions/board_piece_extensions.dart';
 import '../extensions/list_board_pieces_extensions.dart';
@@ -23,9 +21,9 @@ class GameBoard {
   /// If [boardPieces], [sentePiecesInHand] or [gotePiecesInHand]
   /// are null, they are defaulted to empty
   const GameBoard({
-    @required List<BoardPiece> boardPieces,
-    @required List<BoardPiece> sentePiecesInHand,
-    @required List<BoardPiece> gotePiecesInHand,
+    required List<BoardPiece>? boardPieces,
+    required List<BoardPiece>? sentePiecesInHand,
+    required List<BoardPiece>? gotePiecesInHand,
   })  : boardPieces = boardPieces ?? const [],
         sentePiecesInHand = sentePiecesInHand ?? const [],
         gotePiecesInHand = gotePiecesInHand ?? const [];
