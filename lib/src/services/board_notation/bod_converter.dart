@@ -174,7 +174,7 @@ class BODConverter {
           }
         }
         sb.write(_verticalBorder);
-        sb.write('${PackageUtils.arabicToJapaneseKanji(row)}');
+        sb.write(PackageUtils.arabicToJapaneseKanji(row));
         sb.writeln();
       }
       sb.writeln(_horizontalBorder);
