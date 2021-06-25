@@ -24,20 +24,24 @@ class Game {
 
   /// Constructs a [Game] from a kif file
   factory Game.fromKif(String file) {
-    final parsedGame = GameParser.fromKif(file);
+    try {
+      final parsedGame = GameParser.fromKif(file);
 
-    final _gameBoards = [parsedGame.initalBoard];
-    for (final move in parsedGame.moves) {
-      _gameBoards.add(
-        GameEngine.makeMove(_gameBoards.last, move),
+      final _gameBoards = [parsedGame.initalBoard];
+      for (final move in parsedGame.moves) {
+        _gameBoards.add(
+          GameEngine.makeMove(_gameBoards.last, move),
+        );
+      }
+
+      return Game(
+        gameBoards: _gameBoards,
+        moves: parsedGame.moves,
+        winner: parsedGame.winner,
       );
+    } on ArgumentError catch (_) {
+      rethrow;
     }
-
-    return Game(
-      gameBoards: _gameBoards,
-      moves: parsedGame.moves,
-      winner: parsedGame.winner,
-    );
   }
 
   @override
