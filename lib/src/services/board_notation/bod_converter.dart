@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart' show IterableExtension;
 
 import '../../configs/board_config.dart';
-import '../../enums/piece_type.dart';
 import '../../enums/player_type.dart';
+import '../../extensions/game_board_extensions.dart';
 import '../../models/board_piece.dart';
 import '../../models/game_board.dart';
 import '../../models/position.dart';
@@ -198,27 +198,5 @@ class BODConverter {
     }
 
     return sb.toString();
-  }
-}
-
-extension GameBoardExtensions on GameBoard {
-  BoardPiece? withPosition({
-    required int col,
-    required int row,
-  }) =>
-      boardPieces.firstWhereOrNull(
-        (piece) => piece.position!.column == col && piece.position!.row == row,
-      );
-
-  int countPiecesInHand({
-    required PieceType? pieceType,
-    required PlayerType playerType,
-  }) {
-    final piecesInHand =
-        playerType.isSente ? sentePiecesInHand : gotePiecesInHand;
-    return piecesInHand
-        .where((piece) => piece.pieceType == pieceType)
-        .toList()
-        .length;
   }
 }
