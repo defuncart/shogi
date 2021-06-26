@@ -52,7 +52,7 @@ class PackageUtils {
     if (usesJapanese && !isSente && pieceType == PieceType.king) {
       return _kingGoteJP;
     } else {
-      return usesJapanese ? _piecesJP[pieceType] : _piecesEN[pieceType];
+      return usesJapanese ? _piecesJP[pieceType]! : _piecesEN[pieceType]!;
     }
   }
 
@@ -67,11 +67,11 @@ class PackageUtils {
     if (usesJapanese) {
       return !isSente && pieceType == PieceType.king
           ? _kingGoteJP
-          : _piecesJP[pieceType];
+          : _piecesJP[pieceType]!;
     } else {
       return isSente
-          ? _piecesEN[pieceType]
-          : _piecesEN[pieceType].toLowerCase();
+          ? _piecesEN[pieceType]!
+          : _piecesEN[pieceType]!.toLowerCase();
     }
   }
 
@@ -82,14 +82,19 @@ class PackageUtils {
   static PieceType pieceStringToType(
     String pieceString, {
     bool usesJapanese = false,
-  }) =>
-      (usesJapanese ? _piecesJP : _piecesEN)
-          .entries
-          .firstWhere(
-            (kvp) => kvp.value == pieceString,
-            orElse: () => null,
-          )
-          ?.key;
+  }) {
+    final map = usesJapanese ? _piecesJP : _piecesEN;
+    if (!map.containsValue(pieceString)) {
+      throw ArgumentError(
+          '$pieceString is not valid when usesJapanese = $usesJapanese');
+    }
+
+    return map.entries
+        .firstWhere(
+          (kvp) => kvp.value == pieceString,
+        )
+        .key;
+  }
 
   static const _mapArabicJapaneseDigits = {
     1: '１',
@@ -136,7 +141,7 @@ class PackageUtils {
       throw ArgumentError('$number isn\'t a valid argument');
     }
 
-    return _mapArabicJapaneseDigits[number];
+    return _mapArabicJapaneseDigits[number]!;
   }
 
   /// Returns an arabic number for a given japanese digit (i.e. １ -> 1)
@@ -145,7 +150,7 @@ class PackageUtils {
       throw ArgumentError('$digit isn\'t a valid argument');
     }
 
-    return _mapArabicJapaneseDigitsInverse[digit];
+    return _mapArabicJapaneseDigitsInverse[digit]!;
   }
 
   /// Returns an japanese kanji for a given arabic number (i.e. １ -> 一)
@@ -154,7 +159,7 @@ class PackageUtils {
       throw ArgumentError('$number isn\'t a valid argument');
     }
 
-    return _mapArabicJapaneseKanji[number];
+    return _mapArabicJapaneseKanji[number]!;
   }
 
   /// Returns an arabic number for a given japanese kanji (i.e. 一 -> 1)
@@ -163,6 +168,6 @@ class PackageUtils {
       throw ArgumentError('$digit isn\'t a valid argument');
     }
 
-    return _mapArabicJapaneseKanjiInverse[digit];
+    return _mapArabicJapaneseKanjiInverse[digit]!;
   }
 }

@@ -5,10 +5,8 @@ extension ListExtensions on List {
   /// E.g. `[1, 2, 2, 1, 3] => {1:2, 2:2, 3:1}`
   Map<T, int> convertToMapWithCountUniqueElements<T>() {
     final map = <T, int>{};
-    if (this != null) {
-      for (final value in this) {
-        map[value] = (map[value] ?? 0) + 1;
-      }
+    for (final value in this) {
+      map[value] = (map[value] ?? 0) + 1;
     }
 
     return map;

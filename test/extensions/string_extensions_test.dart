@@ -2,37 +2,10 @@ import 'package:shogi/src/extensions/string_extensions.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('isNullOrEmpty', () {
-    test('null', () {
-      String string;
-      expect(string.isNullOrEmpty, isTrue);
-    });
-
-    test('Empty', () {
-      final string = '';
-      expect(string.isNullOrEmpty, isTrue);
-    });
-
-    test('Whitespace', () {
-      final string = ' ';
-      expect(string.isNullOrEmpty, isFalse);
-    });
-
-    test('Character', () {
-      final string = ' hello';
-      expect(string.isNullOrEmpty, isFalse);
-    });
-  });
-
   group('first', () {
-    test('null', () {
-      String string;
-      expect(string.first, isNull);
-    });
-
     test('Empty', () {
       final string = '';
-      expect(string.first, isNull);
+      expect(string.first, isEmpty);
     });
 
     test('Character', () {
@@ -42,14 +15,9 @@ void main() {
   });
 
   group('last', () {
-    test('null', () {
-      String string;
-      expect(string.last, isNull);
-    });
-
     test('Empty', () {
       final string = '';
-      expect(string.last, isNull);
+      expect(string.last, isEmpty);
     });
 
     test('Character', () {
@@ -59,7 +27,6 @@ void main() {
   });
 
   test('isSingleCharacter', () {
-    expect(null.isSingleCharacter, isFalse);
     expect(''.isSingleCharacter, isFalse);
     expect(' '.isSingleCharacter, isTrue);
     expect('a'.isSingleCharacter, isTrue);
@@ -67,11 +34,6 @@ void main() {
   });
 
   group('isUpperCase', () {
-    test('null', () {
-      String string;
-      expect(string.isUpperCase, isFalse);
-    });
-
     test('Empty', () {
       final string = '';
       expect(string.isUpperCase, isFalse);
@@ -94,11 +56,6 @@ void main() {
   });
 
   group('isLowerCase', () {
-    test('null', () {
-      String string;
-      expect(string.isLowerCase, isFalse);
-    });
-
     test('Empty', () {
       final string = '';
       expect(string.isLowerCase, isFalse);

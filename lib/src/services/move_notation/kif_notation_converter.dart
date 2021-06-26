@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 
 import '../../enums/piece_type.dart';
 import '../../enums/player_type.dart';
@@ -76,13 +76,13 @@ class KIFNotationConverter implements IMoveNotationConverter {
   ///
   /// Assumes that Sente and Gote alternate moves.
   @override
-  List<Move> movesFromFile(String file, {@required GameBoard initialBoard}) {
+  List<Move> movesFromFile(String file, {GameBoard? initialBoard}) {
     assert(initialBoard != null && !initialBoard.isEmpty);
 
-    if (file != null) {
-      var player = PlayerType.sente;
-      final lines = _determineMoves(file);
-      final moves = <Move>[];
+    var player = PlayerType.sente;
+    final lines = _determineMoves(file);
+    final moves = <Move>[];
+    if (lines != null) {
       for (final line in lines) {
         final components = _convertMoveAsTextIntoComponents(line);
         if (components != null) {
@@ -99,15 +99,15 @@ class KIFNotationConverter implements IMoveNotationConverter {
 
           int row, column;
           var isCapture = false;
-          if (components[_CaptureGroup.to.index][0] == _sameSymbol) {
+          if (components[_CaptureGroup.to.index]![0] == _sameSymbol) {
             column = moves.last.to.column;
             row = moves.last.to.row;
             isCapture = true;
           } else {
             column = PackageUtils.japaneseDigitToArabic(
-                components[_CaptureGroup.to.index][0]);
+                components[_CaptureGroup.to.index]![0]);
             row = PackageUtils.japaneseKaniToArabic(
-                components[_CaptureGroup.to.index][1]);
+                components[_CaptureGroup.to.index]![1]);
             isCapture = _determineCapture(
               initialBoard,
               moves,
@@ -116,13 +116,14 @@ class KIFNotationConverter implements IMoveNotationConverter {
           }
 
           // parse each component
-          final piece = _mapStringPiece[components[_CaptureGroup.piece.index]];
+          final piece =
+              _mapStringPiece[components[_CaptureGroup.piece.index]!]!;
           final isDrop =
               components[_CaptureGroup.movement.index] == _dropSymbol;
           final from = isDrop
               ? null
               : Position.fromString(
-                  components[_CaptureGroup.from.index]
+                  components[_CaptureGroup.from.index]!
                       .replaceAll('(', '')
                       .replaceAll(')', ''),
                 );
@@ -146,19 +147,17 @@ class KIFNotationConverter implements IMoveNotationConverter {
 
         player = player.flip();
       }
-
-      return moves;
     }
 
-    return null;
+    return moves;
   }
 
   /// Returns the moves from a KIFu by parsing out metadata
-  List<String> _determineMoves(String file) {
+  List<String>? _determineMoves(String file) {
     var lines = file.split('\n');
     final headerIndex =
         lines.indexWhere((line) => RegExp(r'手数-+指手-+消費時間-+').hasMatch(line));
-    if (headerIndex != null) {
+    if (headerIndex != -1) {
       return lines.sublist(headerIndex + 1);
     }
 
@@ -167,16 +166,16 @@ class KIFNotationConverter implements IMoveNotationConverter {
 
   /// Determines if the move results in a capture
   bool _determineCapture(
-    GameBoard initialBoard,
+    GameBoard? initialBoard,
     List<Move> moves,
     Position postion,
   ) {
     var gameBoard = initialBoard;
     for (final move in moves) {
-      gameBoard = GameEngine.makeMove(gameBoard, move);
+      gameBoard = GameEngine.makeMove(gameBoard!, move);
     }
 
-    return gameBoard.boardPieces
+    return gameBoard!.boardPieces
         .where((piece) => piece.position == postion)
         .isNotEmpty;
   }
@@ -199,21 +198,20 @@ class KIFNotationConverter implements IMoveNotationConverter {
       List.generate(_numberCaptureGroups, (index) => index + 1);
 
   /// Converts a move `７七角成(22)` into `[７七, 角, 成, (22)]`
-  List<String> _convertMoveAsTextIntoComponents(String moveAsText) {
+  List<String?>? _convertMoveAsTextIntoComponents(String moveAsText) {
     if (_regExp.hasMatch(moveAsText)) {
       final matches = _regExp.allMatches(moveAsText);
-      return matches?.first?.groups(_groupIndeces);
+      return matches.first.groups(_groupIndeces);
     }
 
     return null;
   }
 
   @override
-  PlayerType determineWinner(String file) {
+  PlayerType? determineWinner(String? file) {
     if (file != null) {
-      final line = file.split('\n').firstWhere(
+      final line = file.split('\n').firstWhereOrNull(
             (element) => element.contains('投了'),
-            orElse: () => null,
           );
       if (line != null) {
         final lineNumber = int.tryParse(line.trimLeft().split(' ').first);
@@ -227,13 +225,9 @@ class KIFNotationConverter implements IMoveNotationConverter {
   }
 
   /// Cleans a line of the form `   1 ７六歩(77) (00:00:00)` into `1 ７六歩(77)`
-  String _cleanKif(String line) {
-    if (line != null) {
-      final moveRegex = RegExp(
-          r'\d+\s[１２３４５６７８９一二三四五六七八九同\s]+[歩香桂銀金角飛玉王と成馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
-      return moveRegex.firstMatch(line)?.group(0);
-    }
-
-    return null;
+  String? _cleanKif(String line) {
+    final moveRegex = RegExp(
+        r'\d+\s[１２３４５６７８９一二三四五六七八九同\s]+[歩香桂銀金角飛玉王と成馬龍]*成*[打引寄上右左直行入]*(?:\((\d\d)\))*');
+    return moveRegex.firstMatch(line)?.group(0);
   }
 }

@@ -1,5 +1,5 @@
 /// A config file for the shogi board
-class BoardConfig {
+abstract class BoardConfig {
   /// The number of rows on a shogi board
   static const numberRows = 9;
 

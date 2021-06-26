@@ -16,23 +16,29 @@ class Position {
   final int row;
 
   const Position({
-    @required this.column,
-    @required this.row,
+    required this.column,
+    required this.row,
   })  : assert(column >= 1 && column <= BoardConfig.numberColumns),
         assert(row >= 1 && row <= BoardConfig.numberRows);
 
   /// Constructs a `Position` from a string `11`
-  ///
-  /// Note that this can return `null`!!
   factory Position.fromString(String position) {
-    if (position != null && position.length == 2) {
-      return Position(
-        column: int.tryParse(position[0]),
-        row: int.tryParse(position[1]),
-      );
+    if (position.length != 2) {
+      throw ArgumentError('$position is invalid position');
+    }
+    final column = int.tryParse(position[0]);
+    if (column == null || column < 1 || column > BoardConfig.numberColumns) {
+      throw ArgumentError('$column is invalid in $position');
+    }
+    final row = int.tryParse(position[1]);
+    if (row == null || row < 1 && row > BoardConfig.numberRows) {
+      throw ArgumentError('$column is invalid in $position');
     }
 
-    return null;
+    return Position(
+      column: column,
+      row: row,
+    );
   }
 
   @override

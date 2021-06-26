@@ -16,7 +16,7 @@ class DartUtils {
   /// The term "deep" above refers to the first level of equality: if the elements are maps, lists, sets, or other collections/composite objects, then the values of those elements are not compared element by element unless their equality operators (Object.==) do so.
   ///
   /// Taken from Flutter foundation https://api.flutter.dev/flutter/foundation/listEquals.html
-  static bool listEquals<T>(List<T> a, List<T> b) {
+  static bool listEquals<T>(List<T>? a, List<T>? b) {
     if (a == null) {
       return b == null;
     }

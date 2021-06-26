@@ -42,7 +42,7 @@ void main() {
     final pieceType = PieceType.gold;
     expect(pieceType.canBePromoted, isFalse);
     expect(pieceType.isPromoted, isFalse);
-    expect(pieceType.promote(), isNull);
+    expect(pieceType.promote(), PieceType.gold);
     expect(pieceType.normalize(), PieceType.gold);
     expect(pieceType.canBeInHand, isTrue);
   });
@@ -51,7 +51,7 @@ void main() {
     final pieceType = PieceType.king;
     expect(pieceType.canBePromoted, isFalse);
     expect(pieceType.isPromoted, isFalse);
-    expect(pieceType.promote(), isNull);
+    expect(pieceType.promote(), PieceType.king);
     expect(pieceType.normalize(), PieceType.king);
     expect(pieceType.canBeInHand, isFalse);
   });
@@ -78,7 +78,7 @@ void main() {
     final pieceType = PieceType.pawnPromoted;
     expect(pieceType.canBePromoted, isFalse);
     expect(pieceType.isPromoted, isTrue);
-    expect(pieceType.promote(), isNull);
+    expect(pieceType.promote(), PieceType.pawnPromoted);
     expect(pieceType.normalize(), PieceType.pawn);
     expect(pieceType.canBeInHand, isFalse);
   });
@@ -87,7 +87,7 @@ void main() {
     final pieceType = PieceType.lancePromoted;
     expect(pieceType.canBePromoted, isFalse);
     expect(pieceType.isPromoted, isTrue);
-    expect(pieceType.promote(), isNull);
+    expect(pieceType.promote(), PieceType.lancePromoted);
     expect(pieceType.normalize(), PieceType.lance);
     expect(pieceType.canBeInHand, isFalse);
   });
@@ -96,7 +96,7 @@ void main() {
     final pieceType = PieceType.knightPromoted;
     expect(pieceType.canBePromoted, isFalse);
     expect(pieceType.isPromoted, isTrue);
-    expect(pieceType.promote(), isNull);
+    expect(pieceType.promote(), PieceType.knightPromoted);
     expect(pieceType.normalize(), PieceType.knight);
     expect(pieceType.canBeInHand, isFalse);
   });
@@ -105,7 +105,7 @@ void main() {
     final pieceType = PieceType.silverPromoted;
     expect(pieceType.canBePromoted, isFalse);
     expect(pieceType.isPromoted, isTrue);
-    expect(pieceType.promote(), isNull);
+    expect(pieceType.promote(), PieceType.silverPromoted);
     expect(pieceType.normalize(), PieceType.silver);
     expect(pieceType.canBeInHand, isFalse);
   });
@@ -114,7 +114,7 @@ void main() {
     final pieceType = PieceType.bishopPromoted;
     expect(pieceType.canBePromoted, isFalse);
     expect(pieceType.isPromoted, isTrue);
-    expect(pieceType.promote(), isNull);
+    expect(pieceType.promote(), PieceType.bishopPromoted);
     expect(pieceType.normalize(), PieceType.bishop);
     expect(pieceType.canBeInHand, isFalse);
   });
@@ -123,7 +123,7 @@ void main() {
     final pieceType = PieceType.rookPromoted;
     expect(pieceType.canBePromoted, isFalse);
     expect(pieceType.isPromoted, isTrue);
-    expect(pieceType.promote(), isNull);
+    expect(pieceType.promote(), PieceType.rookPromoted);
     expect(pieceType.normalize(), PieceType.rook);
     expect(pieceType.canBeInHand, isFalse);
   });

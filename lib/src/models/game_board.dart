@@ -1,8 +1,5 @@
-import 'package:meta/meta.dart';
-
-import '../configs/board_config.dart';
-import '../extensions/board_piece_extensions.dart';
-import '../extensions/list_board_pieces_extensions.dart';
+import '../services/board_notation/bod_converter.dart';
+import '../services/formatter/ascii_formatter.dart';
 import '../utils/dart_utils.dart';
 import 'board_piece.dart';
 
@@ -23,9 +20,9 @@ class GameBoard {
   /// If [boardPieces], [sentePiecesInHand] or [gotePiecesInHand]
   /// are null, they are defaulted to empty
   const GameBoard({
-    @required List<BoardPiece> boardPieces,
-    @required List<BoardPiece> sentePiecesInHand,
-    @required List<BoardPiece> gotePiecesInHand,
+    required List<BoardPiece>? boardPieces,
+    required List<BoardPiece>? sentePiecesInHand,
+    required List<BoardPiece>? gotePiecesInHand,
   })  : boardPieces = boardPieces ?? const [],
         sentePiecesInHand = sentePiecesInHand ?? const [],
         gotePiecesInHand = gotePiecesInHand ?? const [];
@@ -41,33 +38,6 @@ class GameBoard {
       boardPieces.isEmpty &&
       sentePiecesInHand.isEmpty &&
       gotePiecesInHand.isEmpty;
-
-  /// Prints the game board to console using lower case for gote and upper case for sente
-  void printToConsole() {
-    const space = ' ';
-    const delimiter = '|';
-    final buffer = StringBuffer();
-
-    buffer.write(gotePiecesInHand.toSFEN());
-    for (var row = 1; row <= BoardConfig.numberRows; row++) {
-      for (var column = 9; column >= 1; column--) {
-        buffer.write(delimiter);
-        final piece = boardPieces.pieceAtPosition(column: column, row: row);
-        if (piece == null) {
-          buffer.write(space * 2);
-        } else {
-          buffer.write(piece.toSFEN());
-          if (!piece.isPromoted) {
-            buffer.write(space);
-          }
-        }
-      }
-      buffer.writeln(delimiter);
-    }
-    buffer.write(sentePiecesInHand.toSFEN());
-
-    print(buffer.toString());
-  }
 
   @override
   bool operator ==(dynamic other) =>
@@ -85,4 +55,17 @@ class GameBoard {
   @override
   String toString() =>
       '{boardPieces: $boardPieces, sentePiecesInHand: $sentePiecesInHand, gotePiecesInHand: $gotePiecesInHand}';
+}
+
+extension GameBordExtensions on GameBoard {
+  /// Prints the game board to console
+  ///
+  /// When [useJapanese] is true, BOD notation is used
+  /// When [useJapanese] is false, ASCII notation is used
+  void printToConsole({bool useJapanese = true}) {
+    final string = useJapanese
+        ? BODConverter.gameBoardToBod(this)
+        : AsciiFormatter.gameBoardToAscii(this);
+    print(string);
+  }
 }

@@ -5,6 +5,8 @@ import '../move_notation/kif_notation_converter.dart';
 
 abstract class GameParser {
   /// Parses a game from a text file
+  ///
+  /// If [string] is not valid, throws [ArgumentError]
   static ParsedGame fromKif(String file) {
     var initialBoard = BODConverter.bodToGameBoard(file);
     if (initialBoard.isEmpty) {
@@ -14,14 +16,14 @@ abstract class GameParser {
         KIFNotationConverter().movesFromFile(file, initialBoard: initialBoard);
     final winner = KIFNotationConverter().determineWinner(file);
 
-    if (moves != null && moves.isNotEmpty) {
+    if (moves.isNotEmpty) {
       return ParsedGame(
         initalBoard: initialBoard,
         moves: moves,
         winner: winner,
       );
+    } else {
+      throw ArgumentError();
     }
-
-    return null;
   }
 }

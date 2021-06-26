@@ -1,24 +1,17 @@
 /// A class of extension methods for String
 extension StringExtensions on String {
-  /// Returns whether a string is null or empty
-  bool get isNullOrEmpty => this == null || isEmpty;
-
   /// Returns the first character of the string
-  ///
-  /// Returns `null` is the string is null or empty
-  String get first => isNullOrEmpty ? null : this[0];
+  String get first => isNotEmpty ? this[0] : this;
 
   /// Returns the last character of the string
-  ///
-  /// Returns `null` is the string is null or empty
-  String get last => isNullOrEmpty ? null : this[length - 1];
+  String get last => isNotEmpty ? this[length - 1] : this;
 
   /// Returns whether the string is a single character
-  bool get isSingleCharacter => isNullOrEmpty ? false : length == 1;
+  bool get isSingleCharacter => length == 1;
 
   /// Checks if the first character is upper case
   bool get isUpperCase {
-    if (this == null || isEmpty || trim().isEmpty) {
+    if (isEmpty || trim().isEmpty) {
       return false;
     }
 
@@ -28,7 +21,7 @@ extension StringExtensions on String {
 
   /// Checks if the first character is lower case
   bool get isLowerCase {
-    if (this == null || isEmpty || trim().isEmpty) {
+    if (isEmpty || trim().isEmpty) {
       return false;
     }
 

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:meta/meta.dart';
 
 import '../enums/piece_type.dart';
@@ -12,7 +13,7 @@ class BoardPiece {
   /// The piece's board position
   ///
   /// `null` implies that the piece is in hand
-  final Position position;
+  final Position? position;
 
   /// The board piece type
   final PieceType pieceType;
@@ -22,11 +23,9 @@ class BoardPiece {
 
   const BoardPiece({
     this.player = PlayerType.sente,
-    @required this.pieceType,
+    required this.pieceType,
     this.position,
-  })  : assert(player != null),
-        assert(pieceType != null),
-        assert(
+  }) : assert(
           position != null
               ? true
               : (pieceType == PieceType.pawn ||
@@ -68,9 +67,9 @@ class BoardPiece {
 /// A class of extension methods for List<BoardPiece>
 extension ListBoardPieceExtensions on List<BoardPiece> {
   /// Returns the piece at position (column, row). Returns `null` if no piece exists.
-  BoardPiece pieceAtPosition({@required int column, @required int row}) =>
-      firstWhere(
-        (piece) => piece.position.column == column && piece.position.row == row,
-        orElse: () => null,
+  BoardPiece? pieceAtPosition({required int column, required int row}) =>
+      firstWhereOrNull(
+        (piece) =>
+            piece.position?.column == column && piece.position?.row == row,
       );
 }

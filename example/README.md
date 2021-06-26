@@ -9,7 +9,7 @@ dependencies:
   shogi:
 ```
 
-Note that this package requires dart >= 2.7.0.
+Note that this package requires dart >= 2.12.0.
 
 ## Example
 

@@ -1,8 +1,8 @@
-import 'package:meta/meta.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 
 import '../../configs/board_config.dart';
-import '../../enums/piece_type.dart';
 import '../../enums/player_type.dart';
+import '../../extensions/game_board_extensions.dart';
 import '../../models/board_piece.dart';
 import '../../models/game_board.dart';
 import '../../models/position.dart';
@@ -10,7 +10,7 @@ import '../../utils/package_utils.dart';
 import '../../utils/shogi_utils.dart';
 
 /// A service which converts to/from BOD notation for a static game position
-class BODConverter {
+abstract class BODConverter {
   static const _gotePieces = '後手の持駒：';
 
   static const _noPieces = 'なし';
@@ -28,7 +28,7 @@ class BODConverter {
   static const _gotePieceSymbol = 'v';
 
   /// Converts a board notated using BOD notation into a `GameBoard`
-  static GameBoard bodToGameBoard(String string) {
+  static GameBoard bodToGameBoard(String? string) {
     if (string != null && string.isNotEmpty) {
       string = string.replaceAll('\r\n', '\n'); // windows
       var lines = string.split('\n');
@@ -44,13 +44,14 @@ class BODConverter {
 
           final boardPieces = <BoardPiece>[];
           final parsedBoard = _parseBoard(lines.sublist(index1, index2));
-          for (var r = 0; r < 9; r++) {
-            for (var c = 0; c < 9; c++) {
-              final pieceType = PackageUtils.pieceStringToType(
-                parsedBoard[r][c][1],
-                usesJapanese: true,
-              );
-              if (pieceType != null) {
+          for (var r = 0; r < BoardConfig.numberRows; r++) {
+            for (var c = 0; c < BoardConfig.numberColumns; c++) {
+              try {
+                final pieceType = PackageUtils.pieceStringToType(
+                  parsedBoard[r][c][1],
+                  usesJapanese: true,
+                );
+
                 final player = parsedBoard[r][c][0] == _gotePieceSymbol
                     ? PlayerType.gote
                     : PlayerType.sente;
@@ -61,7 +62,7 @@ class BODConverter {
                     position: Position(row: r + 1, column: 9 - c),
                   ),
                 );
-              }
+              } on ArgumentError catch (_) {}
             }
           }
 
@@ -84,9 +85,8 @@ class BODConverter {
 
     final pieces = <BoardPiece>[];
 
-    var line = lines.firstWhere(
+    var line = lines.firstWhereOrNull(
       (line) => line.startsWith(senteGotePieces),
-      orElse: () => null,
     );
     if (line != null) {
       line = line.replaceAll(senteGotePieces, '');
@@ -132,97 +132,71 @@ class BODConverter {
     return parsedBoard;
   }
 
-  /// Converts a board notated using SFEN notation into a `GameBoard`
-  static String fromGameBoardToBod(GameBoard gameboard) {
+  /// Converts [gameboard] into a BOD string
+  static String gameBoardToBod(GameBoard gameboard) {
     final sb = StringBuffer();
-    if (gameboard != null) {
-      // gote pieces in hand
-      sb.write(_gotePieces);
-      if (gameboard.gotePiecesInHand.isEmpty) {
-        sb.writeln(_noPieces);
-      } else {
-        for (final piece in ShogiUtils.piecesInHandOrder) {
-          final count = gameboard.countPiecesInHand(
-              pieceType: piece, playerType: PlayerType.gote);
-          if (count > 0) {
-            sb.write(PackageUtils.pieceTypeToString(piece, usesJapanese: true));
-            if (count > 1) {
-              sb.write(PackageUtils.arabicToJapaneseKanji(count));
-            }
-            sb.write(_space);
+    // gote pieces in hand
+    sb.write(_gotePieces);
+    if (gameboard.gotePiecesInHand.isEmpty) {
+      sb.writeln(_noPieces);
+    } else {
+      for (final piece in ShogiUtils.piecesInHandOrder) {
+        final count = gameboard.countPiecesInHand(
+            pieceType: piece, playerType: PlayerType.gote);
+        if (count > 0) {
+          sb.write(PackageUtils.pieceTypeToString(piece, usesJapanese: true));
+          if (count > 1) {
+            sb.write(PackageUtils.arabicToJapaneseKanji(count));
           }
+          sb.write(_space);
         }
-        sb.writeln();
       }
+      sb.writeln();
+    }
 
-      // board
-      sb.writeln('  ９ ８ ７ ６ ５ ４ ３ ２ １');
-      sb.writeln(_horizontalBorder);
-      for (var row = 1; row <= BoardConfig.numberRows; row++) {
-        sb.write(_verticalBorder);
-        for (var col = BoardConfig.numberColumns; col > 0; col--) {
-          final boardPiece = gameboard.withPosition(col: col, row: row);
-          if (boardPiece != null) {
-            sb.write(boardPiece.isSente ? ' ' : _gotePieceSymbol);
-            sb.write(PackageUtils.pieceTypeToString(
-              boardPiece.pieceType,
-              usesJapanese: true,
-              isSente: true, // sente's king is always used
-            ));
-          } else {
-            sb.write(' $_emptySquare');
-          }
+    // board
+    sb.writeln('  ９ ８ ７ ６ ５ ４ ３ ２ １');
+    sb.writeln(_horizontalBorder);
+    for (var row = 1; row <= BoardConfig.numberRows; row++) {
+      sb.write(_verticalBorder);
+      for (var col = BoardConfig.numberColumns; col > 0; col--) {
+        final boardPiece = gameboard.withPosition(col: col, row: row);
+        if (boardPiece != null) {
+          sb.write(boardPiece.isSente ? ' ' : _gotePieceSymbol);
+          sb.write(PackageUtils.pieceTypeToString(
+            boardPiece.pieceType,
+            usesJapanese: true,
+            isSente: true, // sente's king is always used
+          ));
+        } else {
+          sb.write(' $_emptySquare');
         }
-        sb.write(_verticalBorder);
-        sb.write('${PackageUtils.arabicToJapaneseKanji(row)}');
-        sb.writeln();
       }
-      sb.writeln(_horizontalBorder);
+      sb.write(_verticalBorder);
+      sb.write(PackageUtils.arabicToJapaneseKanji(row));
+      sb.writeln();
+    }
+    sb.writeln(_horizontalBorder);
 
-      // sente pieces in hand
-      sb.write(_sentePieces);
-      if (gameboard.sentePiecesInHand.isEmpty) {
-        sb.writeln(_noPieces);
-      } else {
-        for (final piece in ShogiUtils.piecesInHandOrder) {
-          final count = gameboard.countPiecesInHand(
-              pieceType: piece, playerType: PlayerType.sente);
-          if (count > 0) {
-            sb.write(PackageUtils.pieceTypeToString(piece, usesJapanese: true));
-            if (count > 1) {
-              sb.write(PackageUtils.arabicToJapaneseKanji(count));
-            }
-            sb.write(_space);
+    // sente pieces in hand
+    sb.write(_sentePieces);
+    if (gameboard.sentePiecesInHand.isEmpty) {
+      sb.writeln(_noPieces);
+    } else {
+      for (final piece in ShogiUtils.piecesInHandOrder) {
+        final count = gameboard.countPiecesInHand(
+            pieceType: piece, playerType: PlayerType.sente);
+        if (count > 0) {
+          sb.write(PackageUtils.pieceTypeToString(piece, usesJapanese: true));
+          if (count > 1) {
+            sb.write(PackageUtils.arabicToJapaneseKanji(count));
           }
+          sb.write(_space);
         }
-        sb.writeln();
       }
+      sb.writeln();
     }
 
     return sb.toString();
-  }
-}
-
-extension GameBoardExtensions on GameBoard {
-  BoardPiece withPosition({
-    @required int col,
-    @required int row,
-  }) =>
-      this?.boardPieces?.firstWhere(
-            (piece) =>
-                piece.position.column == col && piece.position.row == row,
-            orElse: () => null,
-          );
-
-  int countPiecesInHand({
-    @required PieceType pieceType,
-    @required PlayerType playerType,
-  }) {
-    final piecesInHand =
-        playerType.isSente ? sentePiecesInHand : gotePiecesInHand;
-    return piecesInHand
-        .where((piece) => piece.pieceType == pieceType)
-        .toList()
-        .length;
   }
 }

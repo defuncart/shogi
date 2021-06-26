@@ -7,7 +7,7 @@ import '../models/move.dart';
 /// A simple shogi game engine
 ///
 /// Presently only moving pieces is supported
-class GameEngine {
+abstract class GameEngine {
   /// Makes a given move for a given game board
   static GameBoard makeMove(GameBoard gameBoard, Move move) {
     final boardPieces = List<BoardPiece>.from(gameBoard.boardPieces);

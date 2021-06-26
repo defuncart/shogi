@@ -1,4 +1,11 @@
 name: example
 description: An example for the shogi package.
-version: 0.0.4
-homepage: https://github.com/defuncart/shogi
+version: 0.0.5-nullsafety.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  shogi:
+    path: ../

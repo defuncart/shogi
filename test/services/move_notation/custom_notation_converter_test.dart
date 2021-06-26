@@ -4,11 +4,6 @@ import 'package:test/test.dart';
 void main() {
   final converter = CustomNotationConverter();
 
-  test('movesFromFile: test against null input', () {
-    final moves = converter.movesFromFile(null);
-    expect(moves, isNull);
-  });
-
   test('movesFromFile: test against empty input', () {
     final moves = converter.movesFromFile('');
     expect(moves, isNotNull);

@@ -1,5 +1,8 @@
 import '../../configs/board_config.dart';
 import '../../enums/player_type.dart';
+import '../../extensions/board_piece_extensions.dart';
+import '../../extensions/game_board_extensions.dart';
+import '../../extensions/list_board_pieces_extensions.dart';
 import '../../extensions/string_extensions.dart';
 import '../../models/board_piece.dart';
 import '../../models/game_board.dart';
@@ -7,7 +10,7 @@ import '../../models/position.dart';
 import '../../utils/package_utils.dart';
 
 /// A service which converts to/from SFEN notation for a static game position
-class SFENConverter {
+abstract class SFENConverter {
   /// The number of sections expected (9 rows, player to move, pieces in hand)
   static const _numberExpectedSections = 11;
 
@@ -38,7 +41,7 @@ class SFENConverter {
 
       final matches = _sfenRegExp.allMatches(section);
       for (final match in matches) {
-        final matchText = match.group(0);
+        final matchText = match.group(0)!;
         final valueAsInt = int.tryParse(matchText);
         if (valueAsInt != null) {
           assert(valueAsInt <= BoardConfig.numberColumns);
@@ -72,9 +75,9 @@ class SFENConverter {
     if (sections.last != _noPiecesInHand) {
       final matches = _piecesInHandRegExp.allMatches(sections.last);
       for (final match in matches) {
-        if (match != null && match.groupCount == 2) {
-          final countText = match.group(1);
-          final pieceText = match.group(2);
+        if (match.groupCount == 2) {
+          final countText = match.group(1)!;
+          final pieceText = match.group(2)!;
           final count = int.tryParse(countText) ?? 1;
           final player =
               pieceText.isLowerCase ? PlayerType.gote : PlayerType.sente;
@@ -98,5 +101,51 @@ class SFENConverter {
       sentePiecesInHand: sentePiecesInHand,
       gotePiecesInHand: gotePiecesInHand,
     );
+  }
+
+  /// Converts [gameBoard] into a SFEN notation [String]
+  static String gameBoardToSFEN(GameBoard gameBoard) {
+    final sb = StringBuffer();
+
+    for (var row = 1; row <= BoardConfig.numberRows; row++) {
+      var countEmpty = 0;
+      for (var column = BoardConfig.numberColumns; column >= 1; column--) {
+        final piece = gameBoard.withPosition(col: column, row: row);
+        if (piece != null) {
+          if (countEmpty != 0) {
+            sb.write(countEmpty.toString());
+            countEmpty = 0;
+          }
+          sb.write(piece.toSFEN());
+        } else {
+          countEmpty++;
+        }
+      }
+      if (countEmpty != 0) {
+        sb.write(countEmpty.toString());
+      }
+      if (row != BoardConfig.numberRows) {
+        sb.write('/');
+      }
+    }
+
+    // TODO player to play
+    sb.write(' b ');
+
+    if (gameBoard.gotePiecesInHand.isEmpty &&
+        gameBoard.sentePiecesInHand.isEmpty) {
+      sb.write('-');
+    } else {
+      sb.write(gameBoard.sentePiecesInHand
+          .toSFEN()
+          .replaceAll(' ', '')
+          .replaceAll('\n', ''));
+      sb.write(gameBoard.gotePiecesInHand
+          .toSFEN()
+          .replaceAll(' ', '')
+          .replaceAll('\n', ''));
+    }
+
+    return sb.toString();
   }
 }

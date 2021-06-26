@@ -364,12 +364,12 @@ void main() {
           position: null,
         ),
     ]);
-    final string = BODConverter.fromGameBoardToBod(gameBoard);
+    final string = BODConverter.gameBoardToBod(gameBoard);
     expect(string, tsume);
   });
 
   test('Ensure to bod as expected', () {
-    final string = BODConverter.fromGameBoardToBod(ShogiUtils.initialBoard);
+    final string = BODConverter.gameBoardToBod(ShogiUtils.initialBoard);
     expect(string, initialBoard);
   });
 
@@ -439,17 +439,12 @@ void main() {
           ),
       ],
     );
-    final string = BODConverter.fromGameBoardToBod(gameBoard);
+    final string = BODConverter.gameBoardToBod(gameBoard);
     expect(string, tsume2);
   });
 
-  test('toBOD, gameboard null', () {
-    final bod = BODConverter.fromGameBoardToBod(null);
-    expect(bod, isEmpty);
-  });
-
   test('toBOD, gameboard empty', () {
-    final bod = BODConverter.fromGameBoardToBod(GameBoard.empty());
+    final bod = BODConverter.gameBoardToBod(GameBoard.empty());
     expect(bod, empty);
   });
 }
