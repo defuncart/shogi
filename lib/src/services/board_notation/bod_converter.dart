@@ -10,7 +10,7 @@ import '../../utils/package_utils.dart';
 import '../../utils/shogi_utils.dart';
 
 /// A service which converts to/from BOD notation for a static game position
-class BODConverter {
+abstract class BODConverter {
   static const _gotePieces = '後手の持駒：';
 
   static const _noPieces = 'なし';
