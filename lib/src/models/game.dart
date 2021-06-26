@@ -22,7 +22,9 @@ class Game {
     this.winner,
   });
 
-  /// Constructs a [Game] from a kif file
+  /// Constructs a [Game] from [string] a kif file
+  ///
+  /// If [string] is not valid, throws [ArgumentError]
   factory Game.fromKif(String file) {
     try {
       final parsedGame = GameParser.fromKif(file);
