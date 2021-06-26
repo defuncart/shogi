@@ -133,70 +133,68 @@ class BODConverter {
   }
 
   /// Converts [gameboard] into a BOD string
-  static String fromGameBoardToBod(GameBoard? gameboard) {
+  static String gameBoardToBod(GameBoard gameboard) {
     final sb = StringBuffer();
-    if (gameboard != null) {
-      // gote pieces in hand
-      sb.write(_gotePieces);
-      if (gameboard.gotePiecesInHand.isEmpty) {
-        sb.writeln(_noPieces);
-      } else {
-        for (final piece in ShogiUtils.piecesInHandOrder) {
-          final count = gameboard.countPiecesInHand(
-              pieceType: piece, playerType: PlayerType.gote);
-          if (count > 0) {
-            sb.write(PackageUtils.pieceTypeToString(piece, usesJapanese: true));
-            if (count > 1) {
-              sb.write(PackageUtils.arabicToJapaneseKanji(count));
-            }
-            sb.write(_space);
+    // gote pieces in hand
+    sb.write(_gotePieces);
+    if (gameboard.gotePiecesInHand.isEmpty) {
+      sb.writeln(_noPieces);
+    } else {
+      for (final piece in ShogiUtils.piecesInHandOrder) {
+        final count = gameboard.countPiecesInHand(
+            pieceType: piece, playerType: PlayerType.gote);
+        if (count > 0) {
+          sb.write(PackageUtils.pieceTypeToString(piece, usesJapanese: true));
+          if (count > 1) {
+            sb.write(PackageUtils.arabicToJapaneseKanji(count));
           }
+          sb.write(_space);
         }
-        sb.writeln();
       }
+      sb.writeln();
+    }
 
-      // board
-      sb.writeln('  ９ ８ ７ ６ ５ ４ ３ ２ １');
-      sb.writeln(_horizontalBorder);
-      for (var row = 1; row <= BoardConfig.numberRows; row++) {
-        sb.write(_verticalBorder);
-        for (var col = BoardConfig.numberColumns; col > 0; col--) {
-          final boardPiece = gameboard.withPosition(col: col, row: row);
-          if (boardPiece != null) {
-            sb.write(boardPiece.isSente ? ' ' : _gotePieceSymbol);
-            sb.write(PackageUtils.pieceTypeToString(
-              boardPiece.pieceType,
-              usesJapanese: true,
-              isSente: true, // sente's king is always used
-            ));
-          } else {
-            sb.write(' $_emptySquare');
-          }
+    // board
+    sb.writeln('  ９ ８ ７ ６ ５ ４ ３ ２ １');
+    sb.writeln(_horizontalBorder);
+    for (var row = 1; row <= BoardConfig.numberRows; row++) {
+      sb.write(_verticalBorder);
+      for (var col = BoardConfig.numberColumns; col > 0; col--) {
+        final boardPiece = gameboard.withPosition(col: col, row: row);
+        if (boardPiece != null) {
+          sb.write(boardPiece.isSente ? ' ' : _gotePieceSymbol);
+          sb.write(PackageUtils.pieceTypeToString(
+            boardPiece.pieceType,
+            usesJapanese: true,
+            isSente: true, // sente's king is always used
+          ));
+        } else {
+          sb.write(' $_emptySquare');
         }
-        sb.write(_verticalBorder);
-        sb.write(PackageUtils.arabicToJapaneseKanji(row));
-        sb.writeln();
       }
-      sb.writeln(_horizontalBorder);
+      sb.write(_verticalBorder);
+      sb.write(PackageUtils.arabicToJapaneseKanji(row));
+      sb.writeln();
+    }
+    sb.writeln(_horizontalBorder);
 
-      // sente pieces in hand
-      sb.write(_sentePieces);
-      if (gameboard.sentePiecesInHand.isEmpty) {
-        sb.writeln(_noPieces);
-      } else {
-        for (final piece in ShogiUtils.piecesInHandOrder) {
-          final count = gameboard.countPiecesInHand(
-              pieceType: piece, playerType: PlayerType.sente);
-          if (count > 0) {
-            sb.write(PackageUtils.pieceTypeToString(piece, usesJapanese: true));
-            if (count > 1) {
-              sb.write(PackageUtils.arabicToJapaneseKanji(count));
-            }
-            sb.write(_space);
+    // sente pieces in hand
+    sb.write(_sentePieces);
+    if (gameboard.sentePiecesInHand.isEmpty) {
+      sb.writeln(_noPieces);
+    } else {
+      for (final piece in ShogiUtils.piecesInHandOrder) {
+        final count = gameboard.countPiecesInHand(
+            pieceType: piece, playerType: PlayerType.sente);
+        if (count > 0) {
+          sb.write(PackageUtils.pieceTypeToString(piece, usesJapanese: true));
+          if (count > 1) {
+            sb.write(PackageUtils.arabicToJapaneseKanji(count));
           }
+          sb.write(_space);
         }
-        sb.writeln();
       }
+      sb.writeln();
     }
 
     return sb.toString();
