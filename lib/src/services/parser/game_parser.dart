@@ -12,7 +12,8 @@ abstract class GameParser {
     if (initialBoard.isEmpty) {
       initialBoard = ShogiUtils.initialBoard;
     }
-    final moves = KIFNotationConverter().movesFromFile(file, initialBoard: initialBoard);
+    final moves =
+        KIFNotationConverter().movesFromFile(file, initialBoard: initialBoard);
     final winner = KIFNotationConverter().determineWinner(file);
 
     if (moves.isNotEmpty) {
