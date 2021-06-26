@@ -1,7 +1,14 @@
+## [0.0.5] - XX/XX/2021
+
+- Migrates to null safety.
+- Adds KIF & BOD support.
+- Adds Game model which can be constructed from KIF.
+- Migrates to lints analysis options from pedantic.
+
 ## [0.0.4] - 22/08/2020
 
 * Removes dependency on Flutter, thus Dart-only projects can now also avail of this package.
-* To improve readability, gote's latin piece symbols now use lower case (when usesJapaneses = false).
+* To improve readability, Gote's latin piece symbols now use lower case (when usesJapaneses = false).
 * Raises sdk version to >= 2.7.
 * Aligns analysis options with pedantic.
 
