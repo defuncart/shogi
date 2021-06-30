@@ -1,6 +1,6 @@
 name: example
 description: An example for the shogi package.
-version: 0.0.5-nullsafety.0
+version: 0.0.5
 publish_to: 'none'
 
 environment:

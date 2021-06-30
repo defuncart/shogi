@@ -1,4 +1,4 @@
-## [0.0.5] - XX/XX/2021
+## [0.0.5] - 30/06/2021
 
 - Migrates to null safety.
 - Adds KIF & BOD support.

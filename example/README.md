@@ -9,8 +9,6 @@ dependencies:
   shogi:
 ```
 
-Note that this package requires dart >= 2.12.0.
-
 ## Example
 
 ```dart

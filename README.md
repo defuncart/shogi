@@ -17,8 +17,6 @@ dependencies:
   shogi:
 ```
 
-Note that this package requires dart >= 2.12.0.
-
 ### Example
 
 ```dart
@@ -26,20 +24,8 @@ import 'package:shogi/shogi.dart';
 
 void main() {
   final gameBoard = ShogiUtils.initialBoard;
-  gameBoard.printToConsole();
+  gameBoard.printToConsole(useJapanese: false);
 }
-```
-
-## Importing a Game Board
-
-### SFEN
-
-A game board can be imported using a SFEN ascii string:
-
-```dart
-final sfenString = 'lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -';
-final gameBoard = ShogiUtils.sfenStringToGameBoard(sfenString);
-gameBoard.printToConsole();
 ```
 
 ```
@@ -52,6 +38,17 @@ gameBoard.printToConsole();
 |P |P |P |P |P |P |P |P |P |
 |  |B |  |  |  |  |  |R |  |
 |L |N |S |G |K |G |S |N |L |
+```
+
+## Importing a Game Board
+
+### SFEN
+
+A game board can be imported using a SFEN ascii string:
+
+```dart
+final sfenString = 'lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b -';
+final gameBoard = ShogiUtils.sfenStringToGameBoard(sfenString);
 ```
 
 ### BOD
@@ -132,12 +129,12 @@ Thus, given an initial board for Sente, a *Yagura castle* could be build using t
 
 ## Future Plans
 
-The packages `shogi` and `flutter_shogi_board` grew out of my desired to visualize shogi castles in Flutter, and with no game board widget or even a shogi engine available, I decided to roll my own.
-
-In the future I would like to utilize these packages not just for displaying static game boards, but also for tsume problems, thus user interaction may be considered.
+* Investigate Bitboards
+* Determine if a move is valid
+* Simple Computer AI
 
 ## Raising Issues and Contributing
 
-Please report bugs and issues, and raise feature requests on [GitHub](https://github.com/defuncart/flutter_shogi_board/issues).
+Please report bugs and issues, and raise feature requests on [GitHub](https://github.com/defuncart/shogi/issues).
 
 To contribute, submit a PR with a detailed description and tests, if applicable.

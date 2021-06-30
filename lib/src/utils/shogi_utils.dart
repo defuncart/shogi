@@ -14,7 +14,7 @@ class ShogiUtils {
   static GameBoard bodStringToGameBoard(String string) =>
       BODConverter.bodToGameBoard(string);
 
-  /// A list of the order in which pieces in hand are displayed
+  /// A list of the order in which pieces in hand are displayed (sente's perspective)
   static const piecesInHandOrder = [
     PieceType.rook,
     PieceType.bishop,
