@@ -10,9 +10,17 @@ class ShogiUtils {
   static GameBoard sfenStringToGameBoard(String string) =>
       SFENConverter.sfenToGameBoard(string);
 
+  /// Converts a `GameBoard` into SFEN ascii string
+  static String gameBoardToSfenString(GameBoard gameBoard) =>
+      SFENConverter.gameBoardToSFEN(gameBoard);
+
   /// Converts a BOD string into a `GameBoard`
   static GameBoard bodStringToGameBoard(String string) =>
       BODConverter.bodToGameBoard(string);
+
+  /// Converts a `GameBoard` into a BOD string
+  static String gameBoardToBodString(GameBoard gameBoard) =>
+      BODConverter.gameBoardToBod(gameBoard);
 
   /// A list of the order in which pieces in hand are displayed (sente's perspective)
   static const piecesInHandOrder = [
