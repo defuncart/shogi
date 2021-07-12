@@ -1,3 +1,7 @@
+## [0.0.6] - 12/07/2021
+
+- Add `gameBoardToSfenString()` and `gameBoardToBodString()` utils.
+
 ## [0.0.5] - 30/06/2021
 
 - Migrates to null safety.
